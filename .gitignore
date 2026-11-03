@@ -1,0 +1,21 @@
+# Keep reproducible sources and compact summaries; generated FPGA artifacts stay outside Git.
+.Xil/
+*.jou
+*.log
+*.str
+*.dcp
+*.bit
+*.ltx
+*.wdb
+*.wcfg
+*.vcd
+*.pb
+*.rpt
+*.cache/
+*.gen/
+*.runs/
+*.sim/
+build/
+vendor/
+captures/
+node_modules/
