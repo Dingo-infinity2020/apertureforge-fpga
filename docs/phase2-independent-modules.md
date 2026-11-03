@@ -4,7 +4,7 @@
 
 ## 对齐 AFP1 报头检查 `af_afp1_header_check`
 
-输入为完整 64B AFP1 报头，`s_header[8*i+:8]` 对应字节 i，配置在 `s_valid && s_ready` 时一起采样。两级弹性寄存器；输出在 `m_valid && !m_ready` 时保持报头和错误位稳定。复位清除在途 valid。
+输入为完整 64B AFP1 报头，`s_header[8*i+:8]` 对应字节 i，配置在 `s_valid && s_ready` 时一起采样。当前为八级统一停顿流水，输出阻塞时整条流水保持，复位清除在途valid。首批两级版本和失败时序仍保留在固定提交 `9961c69`。
 
 错误位 0..7 分别对应：magic/version/header length；flags/format/input count/reserved；epoch/config；source/destination；frequency/T；payload length；spectrum alignment/sequence；ADC time mapping/overflow。64bit 时间运算不经过 JavaScript Number；参考向量包含大于 2^53 的 ADC 标签和乘积溢出。
 
@@ -34,6 +34,6 @@ RTL 请求 `ram_style="ultra"`，实际 URAM 映射以综合报告为准。宽�
 
 ## 后续连接顺序
 
-补齐非停顿包暂存及跨拍 parser，接入 reserve/write/commit/abort 和 generation/source bitmap，再让本存储与真实消费者同时运行。首先验证坏尾包、pending 重复、deadline/epoch 与提交竞争，之后才能把这个存储称为可用 ring buffer。
+独立 `af_ring_control` 已有事务和边界仿真，见[接口合同](phase2-ring-control.md)，尚未与本存储连接。补齐非停顿包暂存及跨拍parser，再让控制、存储与消费者同时运行。首先联测坏尾包、pending重复、deadline/epoch与提交竞争，之后才能把整个组合称为可用ring buffer。
 
 OOC 只约束内部时钟，没有板级输入输出时延或实际 CMAC 时钟树。无外部 IO 约束与 `HD.CLK_SRC` 告警须保留在证据限制中；内部 routed 时序结果不能升级为板卡接口通过。

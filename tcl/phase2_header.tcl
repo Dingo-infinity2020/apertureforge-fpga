@@ -29,8 +29,19 @@ proc af_header_simulate {} {
  if {[file exists $marker]} {file delete $marker}
  launch_simulation -mode behavioral
  if {![file exists $marker]} {error "Simulation did not produce acceptance marker"}
+ file copy -force $marker [file join $af_header_build vectors behavioral_simulation_pass.txt]
  close_sim
  puts AF_HEADER_SIM_ACCEPTED
+}
+proc af_header_netlist_simulate {} {
+ global af_header_build
+ if {[get_property PROGRESS [get_runs impl_1]] ne "100%"} {error "Route first"}
+ set marker [file join $af_header_build vectors simulation_pass.txt]
+ if {[file exists $marker]} {file delete $marker}
+ launch_simulation -mode post-implementation -type functional
+ if {![file exists $marker]} {error "No fresh netlist marker"}
+ file copy -force $marker [file join $af_header_build vectors post_implementation_simulation_pass.txt]
+ close_sim
 }
 proc af_header_start_synthesis {} {
  global af_header_build

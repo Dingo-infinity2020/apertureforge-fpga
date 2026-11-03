@@ -6,7 +6,7 @@
 
 ## 当前范围
 
-2026-11-03：**第一阶段验收完成，第二阶段正在执行**。已有 Vivado MCP 实际报头 RTL 仿真/综合，以及两档完整容量 raw 存储仿真；综合和 routed 结果分开记录。尚未完成完整接收器和科学算法核，未上板。CMAC 实际 IP 综合因缺少授权失败，按用户决定先推进独立模块。详见[第二阶段中间结果](reports/phase2-progress.zh-CN.md)。
+2026-11-03：**第一阶段验收完成，第二阶段正在执行**。报头八级流水已通过250MHz内部routed时序及功能网表仿真；两档完整容量raw存储也有实际证据。ring事务控制已通过541条事务及64bit边界仿真，默认综合完成但250MHz时序失败，正在布局布线。完整接收器和科学算法核未完成，未上板；CMAC缺授权，先推进独立模块。详见[最新中间结果](reports/phase2-control.zh-CN.md)。
 
 - 1024 个物理天线，双极化，共 2048 路电压。
 - 可调谐范围 0.5–1.5 GHz；同时处理带宽优先 200 MHz，扩展 500 MHz，1 GHz 为对照。
@@ -17,7 +17,7 @@
 
 ## 阅读入口
 
-- [第二阶段中间结果](reports/phase2-progress.zh-CN.md)、[机器可读证据](reports/phase2-progress.json)
+- [第二阶段最新中间结果](reports/phase2-control.zh-CN.md)、[首批历史结果](reports/phase2-progress.zh-CN.md)、[机器可读证据](reports/phase2-progress.json)
 - [环境与依赖实查](docs/phase2-environment.md)、[独立模块接口与复现](docs/phase2-independent-modules.md)
 - [第二阶段详细计划：RTL、综合与布局布线](docs/phase-2-plan.zh-CN.md)（执行中）
 - [第一阶段实施进度与证据](reports/phase1-progress.md)

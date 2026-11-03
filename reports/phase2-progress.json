@@ -6,18 +6,29 @@
   "phase_status": "IN_PROGRESS",
   "source_hash_normalization": "UTF-8 text, CRLF converted to LF; artifact hashes retain raw report bytes",
   "source_sha256": {
+    "constraints/af_control_ooc.xdc": "525aeb7aa59c127709cce4c2a094b5bf791e10a222bb8b5387d0faeb31bea47c",
     "constraints/af_header_ooc.xdc": "4e8658c0c316d36d8b7ecdd4c126364931b467a0f6ff831cf0da5b32a64d0f08",
     "constraints/af_store_ooc.xdc": "8c7a07afd81b9b363a932b92b3d6856ca5eda3a043b64f783e50362162db3719",
+    "models/ethernet-frame.mjs": "46a52dfa02ea68e2105a9b0ea02a3eedd54822c839d156cc80a0ed0d22158a84",
     "models/packet.mjs": "e1fbbc61f67f286a90f01d03a8d55e94d96a3ea75e41fe865168815243251033",
-    "rtl/af_afp1_header_check.sv": "02a4939c6e64ab1b3a71cfb6a8ce599d5a39f118532b6e737a4f8319f739758d",
+    "rtl/af_afp1_header_check.sv": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+    "rtl/af_ring_control.sv": "baea246f902ffd3d4e5769712d9eb77969389df873d415b737331c83edf6e161",
     "rtl/af_ring_store.sv": "53870341ae019c6ac52b426993b20a93dd8f183cd7690936dac2c9718134cc03",
-    "scripts/generate-phase2-header-vectors.mjs": "ab6a23aa8dd5b33b6aa44ec9cc5e49783aa8a52ac768b4be6df427c87b8fa3d6",
-    "scripts/phase2-evidence.mjs": "87c994ddfe1fd832376d4a751a8eb9a79c17bf712faa9f0a2a8c52f2f5715aaf",
-    "sim/tb_af_afp1_header_check.sv": "55c3dde762cf8c4c16ee6642789e0ba78a0a4a025e3dc6cb116c26fae74b77ac",
+    "scripts/generate-phase2-header-vectors.mjs": "925f688dc15bc2a66fb0a7540f20ef84bcc8e5c068bff361acb440ebe7d265e5",
+    "scripts/generate-phase2-network-vectors.mjs": "4e2212027278a9fef47824484c87d3683f46187371ac6541adc5b8c21411d53b",
+    "scripts/phase2-evidence.mjs": "03db2b39dfcc068539ca279a978a4461f849e61b25d5bb0c6c5a8dfc29603596",
+    "scripts/phase2-snapshot.mjs": "238d072e80be1b5f1208baba6d2b0580179354c0885faec73108c604e9d9a659",
+    "sim/tb_af_afp1_header_check.sv": "b3c37b81728f49f77e2b4dd4e006caccdf3ec9a291834e968f16c3d066906fca",
+    "sim/tb_af_ring_control.sv": "41ba9f4c62bf11fedb59bdc00f45d7c64cda20ad2aeee660d2803a248929f154",
+    "sim/tb_af_ring_control_time.sv": "7c5375c83886dbb846a4d5023a7aaca1bdf5454e504e85f50aa2f04c86c60f5f",
     "sim/tb_af_ring_store.sv": "b78f054c56cac6aa3928ae65bb9780ee87568c1b415199a3490caf15479efeb1",
+    "tcl/phase2_control.tcl": "50b8cba61d445ca8ab24e440aa42fecafd01ba0efb3c13a66ba14aa918aa4459",
+    "tcl/phase2_control_time.tcl": "0c5af4304f482d3cf3005457e3885d3a3c94545bf94ef1d1ca08cd613029ac10",
     "tcl/phase2_environment.tcl": "59671d85f9fc12958bb54e1927e44addbac317f8180c847b64737ba1162977bb",
-    "tcl/phase2_header.tcl": "7ff7d28e1afbcee29b2805027685d54c08f825d0d0dea3936dd18e21172c78d2",
-    "tcl/phase2_store.tcl": "ade67bb628eaf301bc3a6b8af2af1401b4b7b708393673c30960d05a672fa65a"
+    "tcl/phase2_header.tcl": "050a9438984d991fe2be6433b5a87348cc4bc4cfec02793c3a6c4192924b1500",
+    "tcl/phase2_observe.tcl": "ee935ca62c526660a989f18b73e19d3374bb860ac3c38c4ba343ba9efbc6bd88",
+    "tcl/phase2_store.tcl": "ade67bb628eaf301bc3a6b8af2af1401b4b7b708393673c30960d05a672fa65a",
+    "tests/ethernet-frame.test.mjs": "4925cff62b4c81b3cbd782da8756fab4623f993f6b2daefd2a757825e67eecdf"
   },
   "dependencies": {
     "cmac": {
@@ -34,6 +45,27 @@
     ],
     "hardware": "NOT_RUN"
   },
+  "network_reference": {
+    "evidence": "SOFTWARE_REFERENCE_PASS; RTL_REPLAY_NOT_RUN",
+    "external_vector_file": "D:/work/build/apertureforge-fpga/p2_01_network_20261103_01/vectors/network_vectors.json",
+    "sha256": "70903dbd1c0d737b6cfd02c0183a732a504c5035bff31d71d464c587ee88c3a3",
+    "cases": 102,
+    "positive": 96,
+    "negative": 6,
+    "widths": [
+      32,
+      64,
+      512
+    ],
+    "science_start_byte": 106,
+    "udp_checksum_policy": "ZERO_ONLY",
+    "source_sha256": {
+      "models/packet.mjs": "e1fbbc61f67f286a90f01d03a8d55e94d96a3ea75e41fe865168815243251033",
+      "models/ethernet-frame.mjs": "46a52dfa02ea68e2105a9b0ea02a3eedd54822c839d156cc80a0ed0d22158a84",
+      "config/phase1.json": "fcf56353b5f458d8c239555f4a0e813e79c33e7cb8b2efbc88164387cb63fecf",
+      "scripts/generate-phase2-network-vectors.mjs": "4e2212027278a9fef47824484c87d3683f46187371ac6541adc5b8c21411d53b"
+    }
+  },
   "rejected_experiments": [
     {
       "id": "p2_01_header_20261103_01",
@@ -48,11 +80,25 @@
     {
       "id": "p2_01_header_20261103_02",
       "scope": "aligned AFP1 header only",
+      "source_snapshot": {
+        "commit": "9961c69e11f5e124f7ba6abc3afec26bf8fade5b",
+        "source_sha256": {
+          "rtl/af_afp1_header_check.sv": "02a4939c6e64ab1b3a71cfb6a8ce599d5a39f118532b6e737a4f8319f739758d",
+          "sim/tb_af_afp1_header_check.sv": "55c3dde762cf8c4c16ee6642789e0ba78a0a4a025e3dc6cb116c26fae74b77ac",
+          "constraints/af_header_ooc.xdc": "4e8658c0c316d36d8b7ecdd4c126364931b467a0f6ff831cf0da5b32a64d0f08",
+          "tcl/phase2_header.tcl": "7ff7d28e1afbcee29b2805027685d54c08f825d0d0dea3936dd18e21172c78d2",
+          "models/packet.mjs": "e1fbbc61f67f286a90f01d03a8d55e94d96a3ea75e41fe865168815243251033",
+          "scripts/generate-phase2-header-vectors.mjs": "ab6a23aa8dd5b33b6aa44ec9cc5e49783aa8a52ac768b4be6df427c87b8fa3d6"
+        }
+      },
       "external_build_dir": "D:/work/build/apertureforge-fpga/p2_01_header_20261103_02",
       "part": "xcku5p-ffvb676-1-i",
       "clock_period_ns": 4,
       "simulation": "PASS cases=20 cycles=39 stalls=15",
       "post_implementation_simulation": "NOT_COLLECTED",
+      "time_edges": "NOT_RUN",
+      "last_observed_run_state": null,
+      "supplementary_source_snapshot": null,
       "synthesis": {
         "status": "COLLECTED",
         "resources": {
@@ -132,11 +178,23 @@
     {
       "id": "p2_05_store_mapped_20261103_01",
       "scope": "raw store, mapped128 full payload capacity",
+      "source_snapshot": {
+        "commit": "9961c69e11f5e124f7ba6abc3afec26bf8fade5b",
+        "source_sha256": {
+          "rtl/af_ring_store.sv": "53870341ae019c6ac52b426993b20a93dd8f183cd7690936dac2c9718134cc03",
+          "sim/tb_af_ring_store.sv": "b78f054c56cac6aa3928ae65bb9780ee87568c1b415199a3490caf15479efeb1",
+          "constraints/af_store_ooc.xdc": "8c7a07afd81b9b363a932b92b3d6856ca5eda3a043b64f783e50362162db3719",
+          "tcl/phase2_store.tcl": "ade67bb628eaf301bc3a6b8af2af1401b4b7b708393673c30960d05a672fa65a"
+        }
+      },
       "external_build_dir": "D:/work/build/apertureforge-fpga/p2_05_store_mapped_20261103_01",
       "part": "xcku5p-ffvb676-1-i",
       "clock_period_ns": 4,
       "simulation": "PASS words=25600 read_cycles=37110 stalls=9921 collisions=2183",
       "post_implementation_simulation": "PASS words=25600 read_cycles=37110 stalls=9921 collisions=2183",
+      "time_edges": "NOT_RUN",
+      "last_observed_run_state": null,
+      "supplementary_source_snapshot": null,
       "synthesis": {
         "status": "COLLECTED",
         "resources": {
@@ -194,11 +252,23 @@
     {
       "id": "p2_05_store_candidate_20261103_01",
       "scope": "raw store, candidate128 full payload capacity",
+      "source_snapshot": {
+        "commit": "9961c69e11f5e124f7ba6abc3afec26bf8fade5b",
+        "source_sha256": {
+          "rtl/af_ring_store.sv": "53870341ae019c6ac52b426993b20a93dd8f183cd7690936dac2c9718134cc03",
+          "sim/tb_af_ring_store.sv": "b78f054c56cac6aa3928ae65bb9780ee87568c1b415199a3490caf15479efeb1",
+          "constraints/af_store_ooc.xdc": "8c7a07afd81b9b363a932b92b3d6856ca5eda3a043b64f783e50362162db3719",
+          "tcl/phase2_store.tcl": "ade67bb628eaf301bc3a6b8af2af1401b4b7b708393673c30960d05a672fa65a"
+        }
+      },
       "external_build_dir": "D:/work/build/apertureforge-fpga/p2_05_store_candidate_20261103_01",
       "part": "xcku5p-ffvb676-1-i",
       "clock_period_ns": 4,
       "simulation": "PASS words=28672 read_cycles=41564 stalls=11112 collisions=2445",
       "post_implementation_simulation": "PASS words=28672 read_cycles=41564 stalls=11112 collisions=2445",
+      "time_edges": "NOT_RUN",
+      "last_observed_run_state": null,
+      "supplementary_source_snapshot": null,
       "synthesis": {
         "status": "COLLECTED",
         "resources": {
@@ -252,11 +322,226 @@
         "vectors/behavioral_simulation_pass.txt": "c68065c50a9296133c1e0c29dc6d474581600f8116d03ebf825515d9e3750c18",
         "vectors/post_implementation_simulation_pass.txt": "c68065c50a9296133c1e0c29dc6d474581600f8116d03ebf825515d9e3750c18"
       }
+    },
+    {
+      "id": "p2_03_header_pipe_20261103_01",
+      "scope": "8-stage aligned AFP1 header, variable runtime arithmetic",
+      "source_snapshot": {
+        "schema": 1,
+        "baseline_commit": "9961c69e11f5e124f7ba6abc3afec26bf8fade5b",
+        "normalization": "UTF-8 text, CRLF converted to LF",
+        "source_sha256": {
+          "rtl/af_afp1_header_check.sv": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+          "sim/tb_af_afp1_header_check.sv": "b3c37b81728f49f77e2b4dd4e006caccdf3ec9a291834e968f16c3d066906fca",
+          "constraints/af_header_ooc.xdc": "4e8658c0c316d36d8b7ecdd4c126364931b467a0f6ff831cf0da5b32a64d0f08",
+          "tcl/phase2_header.tcl": "050a9438984d991fe2be6433b5a87348cc4bc4cfec02793c3a6c4192924b1500",
+          "models/packet.mjs": "e1fbbc61f67f286a90f01d03a8d55e94d96a3ea75e41fe865168815243251033",
+          "scripts/generate-phase2-header-vectors.mjs": "925f688dc15bc2a66fb0a7540f20ef84bcc8e5c068bff361acb440ebe7d265e5"
+        }
+      },
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_03_header_pipe_20261103_01",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS cases=276 outputs=552 cycles=848 stalls=239 steady_ii=1 reset_inflight=PASS",
+      "post_implementation_simulation": "PASS cases=276 outputs=552 cycles=848 stalls=239 steady_ii=1 reset_inflight=PASS",
+      "time_edges": "NOT_RUN",
+      "last_observed_run_state": null,
+      "supplementary_source_snapshot": null,
+      "synthesis": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 1019,
+          "ff": 1721,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 8
+        },
+        "timing": {
+          "wns_ns": 2.094,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.058,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "routed": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 713,
+          "ff": 1721,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 8
+        },
+        "timing": {
+          "wns_ns": 1.638,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.01,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "same_route_clock_rechecks": {},
+      "artifact_sha256": {
+        "reports/utilization_synth.rpt": "102a4de56d74d35484bb75fcd62b9782662d2c4cf3020f82da551903ba39e794",
+        "reports/timing_synth.rpt": "35c0ee0205e7995575cc2c09a5dbb3365bd4bbc3957250616b6b24103c87adbd",
+        "reports/utilization_route.rpt": "7986fb3125197d058040d9c3d8e5cc3ec4b0986727c82186165d44ad88f2bb0e",
+        "reports/timing_route.rpt": "b9b85d18eb3de8808ed5f6f6daa53da7a41a9739ee27c09e408204c206298cff",
+        "reports/route_status.rpt": "0ddd47065d076f8eecba7e8edf7bdd52ab4dc12d1ded5833146748341788ad17",
+        "reports/drc.rpt": "5bafb3908e734ea7e2d684c168592d3615cc16540a8bacafd1dbb768f34d6476",
+        "reports/cdc.rpt": "40c3a69c8b2f139097eef964dfbbba5560ddfc7871009c7c6c898ea87a44d1ec",
+        "vectors/simulation_pass.txt": "98194a04462b88f1531e666cae1f70f44c76406dadb993fb70384d09f187bcd8",
+        "vectors/behavioral_simulation_pass.txt": "98194a04462b88f1531e666cae1f70f44c76406dadb993fb70384d09f187bcd8",
+        "vectors/post_implementation_simulation_pass.txt": "98194a04462b88f1531e666cae1f70f44c76406dadb993fb70384d09f187bcd8",
+        "vectors/vector_manifest.json": "96db8875635a76b1ce1b19afc9e27d088498308b7a7573f588ee9c0ab8e63fa3"
+      }
+    },
+    {
+      "id": "p2_04_control_20261103_01",
+      "scope": "256-source 10-slot transaction metadata, payload store not connected",
+      "source_snapshot": {
+        "schema": 1,
+        "baseline_commit": "9961c69e11f5e124f7ba6abc3afec26bf8fade5b",
+        "normalization": "UTF-8 text, CRLF converted to LF",
+        "source_sha256": {
+          "rtl/af_ring_control.sv": "baea246f902ffd3d4e5769712d9eb77969389df873d415b737331c83edf6e161",
+          "sim/tb_af_ring_control.sv": "41ba9f4c62bf11fedb59bdc00f45d7c64cda20ad2aeee660d2803a248929f154",
+          "constraints/af_control_ooc.xdc": "525aeb7aa59c127709cce4c2a094b5bf791e10a222bb8b5387d0faeb31bea47c",
+          "tcl/phase2_control.tcl": "50b8cba61d445ca8ab24e440aa42fecafd01ba0efb3c13a66ba14aa918aa4459"
+        }
+      },
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_04_control_20261103_01",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS sources=256 slots=10 commands=541 descriptors=13 committed=259 consumed=258 discarded=1 canceled=4",
+      "post_implementation_simulation": "NOT_COLLECTED",
+      "time_edges": "PASS invalid_configs=4 max_sequence=PASS deadline_above_2p63=PASS",
+      "last_observed_run_state": {
+        "observed_utc": "2026-11-03T11:25:32Z",
+        "synthesis_status": "synth_design Complete!",
+        "synthesis_progress": "100%",
+        "synthesis_directive": "Default",
+        "implementation_status": "Running route_design..."
+      },
+      "supplementary_source_snapshot": {
+        "schema": 1,
+        "baseline_commit": "9961c69e11f5e124f7ba6abc3afec26bf8fade5b",
+        "normalization": "UTF-8 text, CRLF converted to LF",
+        "source_sha256": {
+          "rtl/af_ring_control.sv": "baea246f902ffd3d4e5769712d9eb77969389df873d415b737331c83edf6e161",
+          "sim/tb_af_ring_control_time.sv": "7c5375c83886dbb846a4d5023a7aaca1bdf5454e504e85f50aa2f04c86c60f5f",
+          "tcl/phase2_control_time.tcl": "0c5af4304f482d3cf3005457e3885d3a3c94545bf94ef1d1ca08cd613029ac10"
+        }
+      },
+      "synthesis": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 12357,
+          "ff": 8342,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 0
+        },
+        "timing": {
+          "wns_ns": -1.149,
+          "tns_ns": -4551.951,
+          "setup_failing_endpoints": 5685,
+          "whs_ns": 0.069,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "routed": {
+        "status": "NOT_COLLECTED"
+      },
+      "same_route_clock_rechecks": {},
+      "artifact_sha256": {
+        "reports/utilization_synth_1.rpt": "bf7e54f0b4d038c4bb0db303674dc503f00fca0b95eca95b4ab64126b5c51326",
+        "reports/timing_synth_1.rpt": "850136f1141146319d71a55546a659fe3058ce18f587d4cf9c0ec63458346815",
+        "vectors/simulation_pass.txt": "b7b989a6c07301dc175572edc707c8e040ed84b38143ece7a48183599a9ceabb",
+        "vectors/time_edges_pass.txt": "68db4461393217217028ce3855299836be1b09bcd2d8ba64d8b35a7e80497ae7"
+      }
+    },
+    {
+      "id": "p2_04_control_runtime_20261103_01",
+      "scope": "same full-size control, RuntimeOptimized synthesis comparison",
+      "source_snapshot": {
+        "schema": 1,
+        "baseline_commit": "9961c69e11f5e124f7ba6abc3afec26bf8fade5b",
+        "normalization": "UTF-8 text, CRLF converted to LF",
+        "source_sha256": {
+          "rtl/af_ring_control.sv": "baea246f902ffd3d4e5769712d9eb77969389df873d415b737331c83edf6e161",
+          "sim/tb_af_ring_control.sv": "41ba9f4c62bf11fedb59bdc00f45d7c64cda20ad2aeee660d2803a248929f154",
+          "constraints/af_control_ooc.xdc": "525aeb7aa59c127709cce4c2a094b5bf791e10a222bb8b5387d0faeb31bea47c",
+          "tcl/phase2_control.tcl": "50b8cba61d445ca8ab24e440aa42fecafd01ba0efb3c13a66ba14aa918aa4459"
+        }
+      },
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_04_control_runtime_20261103_01",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS sources=256 slots=10 commands=541 descriptors=13 committed=259 consumed=258 discarded=1 canceled=4",
+      "post_implementation_simulation": "NOT_COLLECTED",
+      "time_edges": "PASS invalid_configs=4 max_sequence=PASS deadline_above_2p63=PASS",
+      "last_observed_run_state": {
+        "observed_utc": "2026-11-03T11:25:32Z",
+        "synthesis_status": "synth_design Complete!",
+        "synthesis_progress": "100%",
+        "synthesis_directive": "RuntimeOptimized",
+        "implementation_status": "Running place_design..."
+      },
+      "supplementary_source_snapshot": {
+        "schema": 1,
+        "baseline_commit": "9961c69e11f5e124f7ba6abc3afec26bf8fade5b",
+        "normalization": "UTF-8 text, CRLF converted to LF",
+        "source_sha256": {
+          "rtl/af_ring_control.sv": "baea246f902ffd3d4e5769712d9eb77969389df873d415b737331c83edf6e161",
+          "sim/tb_af_ring_control_time.sv": "7c5375c83886dbb846a4d5023a7aaca1bdf5454e504e85f50aa2f04c86c60f5f",
+          "tcl/phase2_control_time.tcl": "0c5af4304f482d3cf3005457e3885d3a3c94545bf94ef1d1ca08cd613029ac10"
+        }
+      },
+      "synthesis": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 14921,
+          "ff": 8343,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 0
+        },
+        "timing": {
+          "wns_ns": -0.818,
+          "tns_ns": -3425.326,
+          "setup_failing_endpoints": 5685,
+          "whs_ns": 0.069,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "routed": {
+        "status": "NOT_COLLECTED"
+      },
+      "same_route_clock_rechecks": {},
+      "artifact_sha256": {
+        "reports/utilization_synth_1.rpt": "fb732052ed70d1630b120e903dedb7296abe346d742dc78592566a8b46596f71",
+        "reports/timing_synth_1.rpt": "0582770e44125615a6c461df21bb87115313cc0999265d44bf02a54ab9c34437",
+        "vectors/simulation_pass.txt": "b7b989a6c07301dc175572edc707c8e040ed84b38143ece7a48183599a9ceabb",
+        "vectors/time_edges_pass.txt": "68db4461393217217028ce3855299836be1b09bcd2d8ba64d8b35a7e80497ae7"
+      }
     }
   ],
   "limits": [
     "Modules not connected into a receiver",
-    "No full Ethernet/IP/UDP parser, admission, commit or CDC evidence",
+    "No Ethernet/IP/UDP RTL parser or CDC yet; transaction metadata tested independently",
     "OOC external I/O delays and physical CMAC clock tree absent; internal timing only",
     "RAM store does not implement slot ownership, generation or source masks",
     "Science algorithms and RFSoC equivalent frontend not yet built",

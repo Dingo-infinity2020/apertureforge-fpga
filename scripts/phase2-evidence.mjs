@@ -1,5 +1,6 @@
 // Publish compact, sanitized evidence only. Raw tool/license logs remain external.
 import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const external=path.resolve(process.argv[2]??'D:/work/build/apertureforge-fpga');
 const hash=b=>createHash('sha256').update(b).digest('hex');
@@ -22,8 +23,13 @@ function timing(text){
 const configs=[
  ['p2_01_header_20261103_02','aligned AFP1 header only', 'utilization_synth.rpt','timing_synth.rpt','utilization_route.rpt','timing_route.rpt'],
  ['p2_05_store_mapped_20261103_01','raw store, mapped128 full payload capacity','utilization_synth_1.rpt','timing_synth_1.rpt','utilization_impl_1.rpt','timing_impl_1.rpt'],
- ['p2_05_store_candidate_20261103_01','raw store, candidate128 full payload capacity','utilization_synth_1.rpt','timing_synth_1.rpt','utilization_impl_1.rpt','timing_impl_1.rpt']
+ ['p2_05_store_candidate_20261103_01','raw store, candidate128 full payload capacity','utilization_synth_1.rpt','timing_synth_1.rpt','utilization_impl_1.rpt','timing_impl_1.rpt'],
+ ['p2_03_header_pipe_20261103_01','8-stage aligned AFP1 header, variable runtime arithmetic','utilization_synth.rpt','timing_synth.rpt','utilization_route.rpt','timing_route.rpt'],
+ ['p2_04_control_20261103_01','256-source 10-slot transaction metadata, payload store not connected','utilization_synth_1.rpt','timing_synth_1.rpt','utilization_impl_1.rpt','timing_impl_1.rpt'],
+ ['p2_04_control_runtime_20261103_01','same full-size control, RuntimeOptimized synthesis comparison','utilization_synth_1.rpt','timing_synth_1.rpt','utilization_impl_1.rpt','timing_impl_1.rpt']
 ];
+const firstCommit='9961c69e11f5e124f7ba6abc3afec26bf8fade5b';
+const firstBatch=JSON.parse(execFileSync('git',['show',`${firstCommit}:reports/phase2-progress.json`],{cwd:root,encoding:'utf8'}));
 const runs=configs.map(([id,scope,su,st,ru,rt])=>{
  const dir=path.join(external,id),reports=path.join(dir,'reports'),artifacts={};
  function report(name){const p=path.join(reports,name),t=read(p);if(t!==null)artifacts[`reports/${name}`]=hash(t);return t;}
@@ -31,30 +37,46 @@ const runs=configs.map(([id,scope,su,st,ru,rt])=>{
   return {status:'COLLECTED',resources:utilization(ut),timing:timing(tt)};}
  const simulation=read(path.join(dir,'vectors/behavioral_simulation_pass.txt'))??read(path.join(dir,'vectors/simulation_pass.txt'));
  const post_implementation_simulation=read(path.join(dir,'vectors/post_implementation_simulation_pass.txt'))?.trim()??'NOT_COLLECTED';
+ const time_edges=read(path.join(dir,'vectors/time_edges_pass.txt'))?.trim()??'NOT_RUN';
+ const run_state_text=read(path.join(dir,'reports/run_state.json'));
  if(simulation && !simulation.startsWith('PASS '))throw Error('Invalid PASS marker');
  const synthesis=stage(su,st),routed=stage(ru,rt),same_route_clock_rechecks={};
  if(id.includes('header'))for(const mhz of [200,125]){
   const t=report(`timing_route_recheck_${mhz}mhz.rpt`);if(t)same_route_clock_rechecks[mhz]=timing(t);
  }
  for(const n of ['route_status.rpt','drc.rpt','cdc.rpt'])report(n);
- for(const n of ['simulation_pass.txt','behavioral_simulation_pass.txt','post_implementation_simulation_pass.txt']){
+ for(const n of ['simulation_pass.txt','behavioral_simulation_pass.txt','post_implementation_simulation_pass.txt','time_edges_pass.txt']){
   const t=read(path.join(dir,'vectors',n));if(t!==null)artifacts[`vectors/${n}`]=hash(t);
  }
  if(fs.existsSync(path.join(dir,'vectors/vector_manifest.json')))artifacts['vectors/vector_manifest.json']=hash(fs.readFileSync(path.join(dir,'vectors/vector_manifest.json')));
- return {id,scope,external_build_dir:dir.replaceAll('\\','/'),part:'xcku5p-ffvb676-1-i',clock_period_ns:4,
-  simulation:simulation?.trim()??'NOT_COLLECTED',post_implementation_simulation,synthesis,routed,same_route_clock_rechecks,artifact_sha256:artifacts};
+ const historical=firstBatch.runs.some(r=>r.id===id);
+ const historicalFiles=id.includes('header')?
+  ['rtl/af_afp1_header_check.sv','sim/tb_af_afp1_header_check.sv','constraints/af_header_ooc.xdc','tcl/phase2_header.tcl','models/packet.mjs','scripts/generate-phase2-header-vectors.mjs']:
+  ['rtl/af_ring_store.sv','sim/tb_af_ring_store.sv','constraints/af_store_ooc.xdc','tcl/phase2_store.tcl'];
+ const snapshot=historical?{commit:firstCommit,source_sha256:Object.fromEntries(historicalFiles.map(f=>[f,firstBatch.source_sha256[f]]))}:JSON.parse(fs.readFileSync(path.join(dir,'source_snapshot.json'),'utf8'));
+ return {id,scope,source_snapshot:snapshot,external_build_dir:dir.replaceAll('\\','/'),part:'xcku5p-ffvb676-1-i',clock_period_ns:4,
+  simulation:simulation?.trim()??'NOT_COLLECTED',post_implementation_simulation,time_edges,
+  last_observed_run_state:run_state_text?JSON.parse(run_state_text):null,
+  supplementary_source_snapshot:id.includes('control')?JSON.parse(fs.readFileSync(path.join(dir,'time_edge_sources/source_snapshot.json'),'utf8')):null,
+  synthesis,routed,same_route_clock_rechecks,artifact_sha256:artifacts};
 });
-const files=['models/packet.mjs','scripts/generate-phase2-header-vectors.mjs','scripts/phase2-evidence.mjs'];
+const files=['models/packet.mjs','models/ethernet-frame.mjs','scripts/generate-phase2-header-vectors.mjs','scripts/generate-phase2-network-vectors.mjs',
+ 'tests/ethernet-frame.test.mjs','scripts/phase2-evidence.mjs','scripts/phase2-snapshot.mjs'];
 for(const dir of ['rtl','sim','constraints','tcl'])for(const f of fs.readdirSync(path.join(root,dir)))files.push(`${dir}/${f}`);
 const manifest={schema:1,date:'2026-11-03',tool:'Vivado 2026.1 via MCP',baseline_commit:'75b4bc6ea90015a96db94e1b18c2672802581d3e',
  phase_status:'IN_PROGRESS',source_hash_normalization:'UTF-8 text, CRLF converted to LF; artifact hashes retain raw report bytes',
  source_sha256:Object.fromEntries(files.sort().map(p=>[p,hash(fs.readFileSync(path.join(root,p),'utf8').replaceAll('\r\n','\n'))])),
  dependencies:{cmac:{status:'ACTUAL_IP_SYNTH_FAILED_LICENSE',ip:'cmac_usplus:3.1',feature:'cmac_usplus@2020.05',caui4:true,interface:'AXIS'},
   missing_part_prefixes:['xcku11p','xcku15p','xczu47dr'],hardware:'NOT_RUN'},
+ network_reference:(()=>{const dir=path.join(external,'p2_01_network_20261103_01/vectors'),p=path.join(dir,'network_vectors.json'),raw=fs.readFileSync(p,'utf8'),n=JSON.parse(raw);
+  return {evidence:n.evidence,external_vector_file:p.replaceAll('\\','/'),sha256:hash(raw),cases:n.cases.length,
+   positive:n.cases.filter(c=>c.expected==='ACCEPT_AT_FINAL_BEAT').length,negative:n.cases.filter(c=>c.expected==='REJECT').length,
+   widths:[32,64,512],science_start_byte:n.science_start_byte,udp_checksum_policy:n.udp_checksum_policy,source_sha256:n.source_sha256};})(),
  rejected_experiments:[{id:'p2_01_header_20261103_01',reason:'OOC property misspelled; physical I/O buffers inferred; implementation stopped; not accepted as OOC evidence'},
  {id:'p2_05_store_mapped_20261103_01/netlist-startup',reason:'Original bench initialized RAM during glbl.GSR; post-synthesis and post-implementation mismatch at word 1; bench startup moved from 20ns to 140ns and full routed netlist test rerun, RTL unchanged'}],runs,
- limits:['Modules not connected into a receiver','No full Ethernet/IP/UDP parser, admission, commit or CDC evidence',
+ limits:['Modules not connected into a receiver','No Ethernet/IP/UDP RTL parser or CDC yet; transaction metadata tested independently',
  'OOC external I/O delays and physical CMAC clock tree absent; internal timing only','RAM store does not implement slot ownership, generation or source masks',
  'Science algorithms and RFSoC equivalent frontend not yet built','Full shell and alternative parts remain NOT VERIFIED']};
 fs.writeFileSync(path.join(root,'reports/phase2-progress.json'),JSON.stringify(manifest,null,2)+'\n');
-console.log(JSON.stringify(runs.map(r=>({id:r.id,sim:r.simulation,synth:r.synthesis,routed:r.routed})),null,2));
+console.log(JSON.stringify(runs.map(r=>({id:r.id,sim:r.simulation,synth:r.synthesis.status,
+ routed:r.routed.status,wns_ns:r.routed.timing?.wns_ns??null})),null,2));
