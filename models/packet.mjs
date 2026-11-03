@@ -51,6 +51,7 @@ export function decode(b) {
 export function validate(p,c,s,session) {
   const route=routes(s)[p.destination];
   if(p.epoch!==session.epoch || p.config!==session.config) throw new Error('epoch/config');
+  if(session.destination!==undefined&&session.destination!==p.destination)throw new Error('receiver destination');
   if(!route||route.first_frequency!==p.first_frequency||route.frequencies!==p.frequencies) throw new Error('route');
   if(p.source>=c.antennas*c.polarizations/c.inputs_per_source || p.inputs!==c.inputs_per_source) throw new Error('source');
   if(p.spectra!==s.spectra_per_packet || p.first_spectrum%BigInt(p.spectra)!==0n) throw new Error('block alignment');

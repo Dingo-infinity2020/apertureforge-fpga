@@ -59,6 +59,7 @@ test('malformed wire and wrong session/route/time are rejected',()=>{
  assert.throws(()=>decode(b.subarray(0,63)));assert.throws(()=>decode(b.subarray(0,b.length-1)));
  assert.throws(()=>decode(Buffer.concat([b,Buffer.from([0])])));
  const d=decode(b);
+  assert.throws(()=>validate(d,c,s,{...session,destination:1}));
  for(const patch of [{epoch:8},{config:2},{source:256},{destination:99},{first_frequency:1},
   {frequencies:55},{first_adc_sample:d.first_adc_sample+1n},{first_spectrum:1n},{sequence:1n},{inputs:7}])
   assert.throws(()=>validate({...d,...patch},c,s,session));

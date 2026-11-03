@@ -1,0 +1,11 @@
+{
+  "blocks": 32,
+  "seed": 20261103,
+  "source_queue_copies": 2,
+  "source_assembly_banks": 3,
+  "switch_queue_bytes": 524288,
+  "latency_us": 1,
+  "policies": ["burst", "rotated", "phased", "paced"],
+  "jitter_us": [0, 10, 100, 1000],
+  "notes": "Per-packet bounded pre-output-queue delay; store-and-forward unbounded fabric bandwidth, finite source/output queues; not a real switch model"
+}

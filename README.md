@@ -18,6 +18,7 @@
 ## 阅读入口
 
 - [第一阶段实施进度与证据](reports/phase1-progress.md)
+- [事件模型语义](docs/event-model-contract.zh-CN.md)、[网络结果](reports/phase1-transport.md)、[环形槽扫描](reports/phase1-ring.md)
 - [输入与硬件契约](docs/input-and-hardware-contract.zh-CN.md)、[AFP1包格式](docs/packet-contract-v1.zh-CN.md)
 - [第一阶段任务目标与验收清单](docs/phase-1-objectives.zh-CN.md)
 - [架构、器件选择与容量推导](docs/feasibility.zh-CN.md)
