@@ -6,21 +6,22 @@
 
 ## 当前范围
 
-2026-11-03：**第一阶段验收完成，第二阶段正在执行**。完整帧parser已通过三拍宽166个结果重放，512bit通过250MHz内部routed时序；理想准入的局部测试为24拍/包。ring控制已取得布线边界，当前125MHz重查通过、200/250MHz失败；两档完整容量存储有独立证据。组件尚未连接成完整接收器，科学核未完成、未上板；CMAC缺授权。详见[最新中间结果](reports/phase2-parser.zh-CN.md)。
+2026-11-03：**第一阶段验收完成，第二阶段暂停，尚未验收**。已连接完整帧解包、真实ring事务控制和1.5625MiB原始数据存储；异常用例及4096包/40960个数据字的RTL比较通过。组合实际布线占18415 LUT、13012 FF、8 DSP、56 URAM；250MHz时序失败，同一布线125MHz重查通过。即使假设250MHz，周期吞吐也只有约9.615Mpps，未达到10Mpps目标。科学核、非停顿入口/CDC和完整CMAC组合未完成，未上板。用户已取得CMAC授权，新授权尚待实际验证。详见[最新组合结果](reports/phase2-core.zh-CN.md)。
 
 - 1024 个物理天线，双极化，共 2048 路电压。
 - 可调谐范围 0.5–1.5 GHz；同时处理带宽优先 200 MHz，扩展 500 MHz，1 GHz 为对照。
-- 新架构假设 RFSoC 完成 PFB/FFT，随后重新量化成 I/Q 各 8 bit，通过交换网络进行 corner turn。
+- 新架构假设 RFSoC 完成 PFB/FFT，随后重新量化成 I/Q 各 8 bit，通过交换网络进行 corner turn。**本项目不开发RFSoC**，只用其数据格式、速率和到包节奏作为KU5P测试输入。
 - 已有 FNIC-KU5P：`xcku5p-ffvb676-1-i`，两个 QSFP28，只有一个硬核 100G MAC/PCS。
 - KU15P 尚未选板，主方案暂按 2×100G 假设预算；器件级四个硬核不等于板卡四个可用端口。KU5P 双口聚合、KU15P 四口均已移出默认容量表。
-- **当前首要工作包 AF-000：RFSoC 频率分发、源端 pacing、KU5P 时间重排与有界 ring buffer 的联合设计。** 先确定接收契约和 DDR 吞吐约束，再宣称算法可持续带宽。
+- **重点工作包 AF-000：输入频率分片/pacing合同、KU5P时间重排与有界ring buffer评估。** 输入端只建模，不实现RFSoC前端；先验证接收与缓存开销，再确定算法可持续带宽。
 
 ## 阅读入口
 
-- [第二阶段最新中间结果](reports/phase2-parser.zh-CN.md)、[第二批](reports/phase2-control.zh-CN.md)、[首批历史结果](reports/phase2-progress.zh-CN.md)、[机器可读证据](reports/phase2-progress.json)
+- [第二阶段最新组合结果](reports/phase2-core.zh-CN.md)、[第三批解包结果](reports/phase2-parser.zh-CN.md)、[第二批](reports/phase2-control.zh-CN.md)、[首批历史结果](reports/phase2-progress.zh-CN.md)、[机器可读证据](reports/phase2-progress.json)
+- [组合接收核接口与复现](docs/phase2-receive-core.md)
 - [完整帧解包接口与复现](docs/phase2-parser.md)、[ring事务控制](docs/phase2-ring-control.md)
 - [环境与依赖实查](docs/phase2-environment.md)、[独立模块接口与复现](docs/phase2-independent-modules.md)
-- [第二阶段详细计划：RTL、综合与布局布线](docs/phase-2-plan.zh-CN.md)（执行中）
+- [第二阶段详细计划：RTL、综合与布局布线](docs/phase-2-plan.zh-CN.md)（暂停）
 - [第一阶段实施进度与证据](reports/phase1-progress.md)
 - [第一阶段决策报告](reports/phase1-decision.zh-CN.md)、[逐项验收审计](docs/phase1-acceptance-audit.zh-CN.md)
 - [事件模型语义](docs/event-model-contract.zh-CN.md)、[网络结果](reports/phase1-transport.md)、[环形槽扫描](reports/phase1-ring.md)

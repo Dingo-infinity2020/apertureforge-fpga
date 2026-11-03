@@ -1,18 +1,18 @@
 # 第二阶段环境与依赖实查
 
-日期：2026-11-03。以下为实际 Vivado MCP 会话结果；不是 catalog 推测。
+日期：2026-11-03。下表保留最初实际Vivado MCP探针结果。**最新变化：用户已取得CMAC 100G授权，尚未重新执行checkout/IP综合**，不能把历史失败当作当前仍缺授权，也不能将新授权写成已实测通过。
 
 | 项目 | 已验证事实 | 限制 |
 |---|---|---|
 | 工具 | Vivado 2026.1，使用已有安装，通过 MCP 启动及执行 Tcl | 未修改安装、驱动或硬件 |
 | KU5P | `xcku5p-ffvb676-1-i` 存在；通用 RTL 综合许可成功取得 | 此处不证明板级接口 |
-| KU11P / KU15P / ZU47DR | `get_parts` 对应前缀均返回 0 | 当前缺少器件库，不能生成该器件的资源/时序比较 |
+| KU11P / KU15P / ZU47DR | 历史探针中`get_parts`对应前缀均返回0 | KU11P/KU15P比较仍受器件库限制；ZU47DR不再属于本项目开发/综合要求 |
 | CMAC | catalog 为 `cmac_usplus:3.1`，要求许可；实际生成目标并启动 IP 综合 | secure feature `cmac_usplus@2020.05` 许可失败，IP 综合终止；完整 shell **NOT VERIFIED** |
 | FFT | catalog 为 `xfft:9.1`，`REQUIRES_LICENSE=0` | 本记录尚未执行 FFT 核构建，不能据此写成综合 PASS |
 | FIFO | catalog 含 `fifo_generator:13.0/13.1/13.2`、`axi_data_fifo:2.1` | 同上，仅 catalog 证据 |
 | 板级 | **NOT RUN** | 无 JTAG、光纤、DDR、PCIe、驱动操作 |
 
-用户已确认暂时没有缺失授权/器件支持，先推进独立模块。该决定允许继续算法及接收 RTL；不改变第二阶段完整 CMAC 组合与替代器件比较的验收条件。
+此前按用户指示先推进独立模块；现已完成处理域parser/ring/RAM组合的仿真、综合和布线，见[最新结果](../reports/phase2-core.zh-CN.md)。整体工作当前暂停。RFSoC只作为输入格式/速率/流量模型，不开发其前端。完整CMAC组合与替代器件比较仍需实际证据。
 
 ## CMAC 探针与接口边界
 
