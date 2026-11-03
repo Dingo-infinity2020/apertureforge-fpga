@@ -1,0 +1,265 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "tool": "Vivado 2026.1 via MCP",
+  "baseline_commit": "75b4bc6ea90015a96db94e1b18c2672802581d3e",
+  "phase_status": "IN_PROGRESS",
+  "source_hash_normalization": "UTF-8 text, CRLF converted to LF; artifact hashes retain raw report bytes",
+  "source_sha256": {
+    "constraints/af_header_ooc.xdc": "4e8658c0c316d36d8b7ecdd4c126364931b467a0f6ff831cf0da5b32a64d0f08",
+    "constraints/af_store_ooc.xdc": "8c7a07afd81b9b363a932b92b3d6856ca5eda3a043b64f783e50362162db3719",
+    "models/packet.mjs": "e1fbbc61f67f286a90f01d03a8d55e94d96a3ea75e41fe865168815243251033",
+    "rtl/af_afp1_header_check.sv": "02a4939c6e64ab1b3a71cfb6a8ce599d5a39f118532b6e737a4f8319f739758d",
+    "rtl/af_ring_store.sv": "53870341ae019c6ac52b426993b20a93dd8f183cd7690936dac2c9718134cc03",
+    "scripts/generate-phase2-header-vectors.mjs": "ab6a23aa8dd5b33b6aa44ec9cc5e49783aa8a52ac768b4be6df427c87b8fa3d6",
+    "scripts/phase2-evidence.mjs": "87c994ddfe1fd832376d4a751a8eb9a79c17bf712faa9f0a2a8c52f2f5715aaf",
+    "sim/tb_af_afp1_header_check.sv": "55c3dde762cf8c4c16ee6642789e0ba78a0a4a025e3dc6cb116c26fae74b77ac",
+    "sim/tb_af_ring_store.sv": "b78f054c56cac6aa3928ae65bb9780ee87568c1b415199a3490caf15479efeb1",
+    "tcl/phase2_environment.tcl": "59671d85f9fc12958bb54e1927e44addbac317f8180c847b64737ba1162977bb",
+    "tcl/phase2_header.tcl": "7ff7d28e1afbcee29b2805027685d54c08f825d0d0dea3936dd18e21172c78d2",
+    "tcl/phase2_store.tcl": "ade67bb628eaf301bc3a6b8af2af1401b4b7b708393673c30960d05a672fa65a"
+  },
+  "dependencies": {
+    "cmac": {
+      "status": "ACTUAL_IP_SYNTH_FAILED_LICENSE",
+      "ip": "cmac_usplus:3.1",
+      "feature": "cmac_usplus@2020.05",
+      "caui4": true,
+      "interface": "AXIS"
+    },
+    "missing_part_prefixes": [
+      "xcku11p",
+      "xcku15p",
+      "xczu47dr"
+    ],
+    "hardware": "NOT_RUN"
+  },
+  "rejected_experiments": [
+    {
+      "id": "p2_01_header_20261103_01",
+      "reason": "OOC property misspelled; physical I/O buffers inferred; implementation stopped; not accepted as OOC evidence"
+    },
+    {
+      "id": "p2_05_store_mapped_20261103_01/netlist-startup",
+      "reason": "Original bench initialized RAM during glbl.GSR; post-synthesis and post-implementation mismatch at word 1; bench startup moved from 20ns to 140ns and full routed netlist test rerun, RTL unchanged"
+    }
+  ],
+  "runs": [
+    {
+      "id": "p2_01_header_20261103_02",
+      "scope": "aligned AFP1 header only",
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_01_header_20261103_02",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS cases=20 cycles=39 stalls=15",
+      "post_implementation_simulation": "NOT_COLLECTED",
+      "synthesis": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 411,
+          "ff": 1260,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 8
+        },
+        "timing": {
+          "wns_ns": -2.259,
+          "tns_ns": -2.259,
+          "setup_failing_endpoints": 1,
+          "whs_ns": 0.078,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "routed": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 409,
+          "ff": 1260,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 8
+        },
+        "timing": {
+          "wns_ns": -2.288,
+          "tns_ns": -2.288,
+          "setup_failing_endpoints": 1,
+          "whs_ns": 0.05,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "same_route_clock_rechecks": {
+        "125": {
+          "wns_ns": 1.712,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.05,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        },
+        "200": {
+          "wns_ns": -1.288,
+          "tns_ns": -1.288,
+          "setup_failing_endpoints": 1,
+          "whs_ns": 0.05,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "artifact_sha256": {
+        "reports/utilization_synth.rpt": "64c9a71f5d23646257016cadbedd1239a78415bdd9fd3821f9ab11d5731f7a78",
+        "reports/timing_synth.rpt": "162a9e8782382d8a6c1b4d31c159381bd10d11aba5d03d6c920b60a4c4da2692",
+        "reports/utilization_route.rpt": "f349827c6b82b7608d1ab6f2c80de47e032d64561297b2d11a87f680e2718dc5",
+        "reports/timing_route.rpt": "5eec6f494af5e386f4a1b140bc3b6f654b5d373cb76bfce4b3de40649f12ce38",
+        "reports/timing_route_recheck_200mhz.rpt": "7dcf52e0bec03062c431548a69608b57986263f9a17fa97be5abaac6544c495b",
+        "reports/timing_route_recheck_125mhz.rpt": "64377af2369ab22abefe0b53e26368fcce136e70a44f572c5b1879d1167e296a",
+        "reports/route_status.rpt": "f8fbc83e8e90553103977ef93962c43d63b4dfcab951942db8c85b6795e6db89",
+        "reports/drc.rpt": "861e8f8cd13c5082c4eb451571f8dbef74c49f7512e1960693d7272cd72ed42f",
+        "reports/cdc.rpt": "1fe1a00d62545c92e14399019f5c2167f688ecc8b79920e9beefaad34319c8e3",
+        "vectors/simulation_pass.txt": "f33dc3367517ba18774fdb7a9b90333dd0f15307ca129e07d7229a45cb294d6e",
+        "vectors/vector_manifest.json": "c0ad40dfe4f05cd2b1f927caf78920cf807a0be1691226193b5846810338a769"
+      }
+    },
+    {
+      "id": "p2_05_store_mapped_20261103_01",
+      "scope": "raw store, mapped128 full payload capacity",
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_05_store_mapped_20261103_01",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS words=25600 read_cycles=37110 stalls=9921 collisions=2183",
+      "post_implementation_simulation": "PASS words=25600 read_cycles=37110 stalls=9921 collisions=2183",
+      "synthesis": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 15,
+          "ff": 514,
+          "bram36_tiles": 0,
+          "uram": 56,
+          "dsp": 0
+        },
+        "timing": {
+          "wns_ns": 0.772,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.08,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "routed": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 13,
+          "ff": 514,
+          "bram36_tiles": 0,
+          "uram": 56,
+          "dsp": 0
+        },
+        "timing": {
+          "wns_ns": 0.345,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.114,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "same_route_clock_rechecks": {},
+      "artifact_sha256": {
+        "reports/utilization_synth_1.rpt": "add739fed358fda7a75680a0f50efea2bf4e2343407be22f22c3da91caac4f76",
+        "reports/timing_synth_1.rpt": "faaf89f89b1cde2cae4659d666e80bcaaa8a6bfbaf2e31d901eba7990ddb171a",
+        "reports/utilization_impl_1.rpt": "898e6ff3ab3351ad7749b2e1eb39fa8c51a2b2ad9db6ba28acf3effa492bd03a",
+        "reports/timing_impl_1.rpt": "d2067cdeb9665e91b42f3851063dee39d59c22a7af4ec8733f0cb769ed62e198",
+        "reports/route_status.rpt": "144ac2e683fb6d804972d62755dd96b48a6d2e311055e4cb3f538fc3400a48c9",
+        "reports/drc.rpt": "e73b29890160812af3c1f08c91d233f2c4d69651feda2746d32e7facda7c07c4",
+        "reports/cdc.rpt": "e1ac6e927a7f639dacca8305ac24db8618373b808f4de4d2c513b5e4e3ae5316",
+        "vectors/simulation_pass.txt": "c6cbd9c6b8803d6868ad1456afba1f4416e32db88a8cf1d74a6b0f7873bae0dc",
+        "vectors/behavioral_simulation_pass.txt": "c6cbd9c6b8803d6868ad1456afba1f4416e32db88a8cf1d74a6b0f7873bae0dc",
+        "vectors/post_implementation_simulation_pass.txt": "c6cbd9c6b8803d6868ad1456afba1f4416e32db88a8cf1d74a6b0f7873bae0dc"
+      }
+    },
+    {
+      "id": "p2_05_store_candidate_20261103_01",
+      "scope": "raw store, candidate128 full payload capacity",
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_05_store_candidate_20261103_01",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS words=28672 read_cycles=41564 stalls=11112 collisions=2445",
+      "post_implementation_simulation": "PASS words=28672 read_cycles=41564 stalls=11112 collisions=2445",
+      "synthesis": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 14,
+          "ff": 514,
+          "bram36_tiles": 0,
+          "uram": 56,
+          "dsp": 0
+        },
+        "timing": {
+          "wns_ns": 0.772,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.08,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "routed": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 13,
+          "ff": 514,
+          "bram36_tiles": 0,
+          "uram": 56,
+          "dsp": 0
+        },
+        "timing": {
+          "wns_ns": 0.361,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.077,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "same_route_clock_rechecks": {},
+      "artifact_sha256": {
+        "reports/utilization_synth_1.rpt": "6421d6debaa9bb8b5c1cdc1b52f644c267575eb230316a2867333017ebc7f622",
+        "reports/timing_synth_1.rpt": "e5f818c35287a8684ad19f19cd9af24e8395c2561fb9730aa42c41de69c847d9",
+        "reports/utilization_impl_1.rpt": "fea4aeaaf0025e8e2332b43d8deda238e72806fe23ccfb81888ec7ad269b1e67",
+        "reports/timing_impl_1.rpt": "401797ee148f38ec6f004cb10d21fa0295bc837555f05c6d35005bc4139f5b6d",
+        "reports/route_status.rpt": "144ac2e683fb6d804972d62755dd96b48a6d2e311055e4cb3f538fc3400a48c9",
+        "reports/drc.rpt": "915277020462b6d983f5de2458409cd3883c5682e5021be3f1103f9356e76cd8",
+        "reports/cdc.rpt": "9d1caa16fa7c34d88b69ada2f3f698ee31341c66f743c78fbba19a2a30f26756",
+        "vectors/simulation_pass.txt": "c68065c50a9296133c1e0c29dc6d474581600f8116d03ebf825515d9e3750c18",
+        "vectors/behavioral_simulation_pass.txt": "c68065c50a9296133c1e0c29dc6d474581600f8116d03ebf825515d9e3750c18",
+        "vectors/post_implementation_simulation_pass.txt": "c68065c50a9296133c1e0c29dc6d474581600f8116d03ebf825515d9e3750c18"
+      }
+    }
+  ],
+  "limits": [
+    "Modules not connected into a receiver",
+    "No full Ethernet/IP/UDP parser, admission, commit or CDC evidence",
+    "OOC external I/O delays and physical CMAC clock tree absent; internal timing only",
+    "RAM store does not implement slot ownership, generation or source masks",
+    "Science algorithms and RFSoC equivalent frontend not yet built",
+    "Full shell and alternative parts remain NOT VERIFIED"
+  ]
+}
