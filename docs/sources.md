@@ -29,4 +29,6 @@ Retrieved / inspected 2026-11-03. Web sources below are primary documentation, r
 
 ## Explicit limits of this deliverable
 
-No new Vivado project or hardware session was started. Only the existing Vivado MCP session status was read; no session was running. The installed Vivado 2026.1 executable was located, but device/IP license and alternative part availability were not probed. The capacity calculator runs locally with Node.js and produces analytical tables. No GitHub repository, commit, issue or message was created.
+No new Vivado project or hardware session was started. Only the existing Vivado MCP session status was read during the initial planning turn; no session was running. The installed Vivado 2026.1 executable was located, but device/IP license and alternative part availability were not probed. The capacity and transport-budget calculators run locally with Node.js and produce analytical tables. The user subsequently supplied an empty GitHub repository and explicitly requested synchronization: the initial plan was pushed to `main` as `06f7e47`. The repository was created by the user. No GitHub issue or message was sent.
+
+The KU15P four-hard-CMAC count was rechecked against XMP103 on 2026-11-03 after the user's interface question. This is device-level information, not proof of four usable board ports; the default capacity profiles now retain KU5P single-port and hypothetical KU11P/KU15P dual-port configurations only.

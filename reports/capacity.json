@@ -53,13 +53,6 @@
         "status": "Existing board; 100G sustained receive NOT YET VERIFIED"
       },
       {
-        "id": "ku5p_200g_conditional",
-        "label": "FNIC-KU5P / 200G conditional aggregate",
-        "dsp": 1824,
-        "ports_100g": 2,
-        "status": "NOT a second hard CMAC: requires additional validated MAC/PCS/FEC or 4x25G and resource accounting"
-      },
-      {
         "id": "ku11p_2x100",
         "label": "KU11P / 2x100G hypothetical board",
         "dsp": 2928,
@@ -68,18 +61,15 @@
       },
       {
         "id": "ku15p_2x100",
-        "label": "KU15P / 2x100G hypothetical board",
+        "label": "KU15P / 2x100G planning assumption",
         "dsp": 1968,
         "ports_100g": 2,
-        "status": "No board selected; pinout, memory, package and license unverified"
-      },
-      {
-        "id": "ku15p_4x100",
-        "label": "KU15P / 4x100G hypothetical board",
-        "dsp": 1968,
-        "ports_100g": 4,
-        "status": "No board selected; all four hard CMACs and board ports must be usable"
+        "status": "No board selected; two usable ports are an assumption, not verified board capability"
       }
+    ],
+    "excluded_interface_studies": [
+      "KU5P 200G aggregate excluded from default: second QSFP28 has no second hard CMAC",
+      "KU15P 4x100G excluded from default: four device hard blocks do not establish four usable board ports"
     ],
     "imagers": [
       {
@@ -292,147 +282,6 @@
           ]
         },
         {
-          "id": "ku5p_200g_conditional",
-          "label": "FNIC-KU5P / 200G conditional aggregate",
-          "dsp": 1824,
-          "ports_100g": 2,
-          "status": "NOT a second hard CMAC: requires additional validated MAC/PCS/FEC or 4x25G and resource accounting",
-          "science_capacity_bps": 180000000000,
-          "continuous_network_min_cards": 37,
-          "integer_channel_network_min_cards": 37,
-          "channels_per_card_network": 112,
-          "bandwidth_mhz_per_full_card_network": 5.46875,
-          "generic_cmac_s_assumed": 79800000000,
-          "reorder": [
-            {
-              "window_us": 10,
-              "single_copy_bytes_at_capacity": 225000
-            },
-            {
-              "window_us": 100,
-              "single_copy_bytes_at_capacity": 2250000
-            },
-            {
-              "window_us": 1000,
-              "single_copy_bytes_at_capacity": 22500000
-            },
-            {
-              "window_us": 10000,
-              "single_copy_bytes_at_capacity": 225000000
-            }
-          ],
-          "ddr_write_plus_read_bytes_s_at_capacity": 45000000000,
-          "beamforming": [
-            {
-              "beams": 1,
-              "total_cmac_s": 409600000000,
-              "continuous_dsp_model_cards": 6,
-              "channels_per_card_model": 112,
-              "network_and_dsp_model_cards": 37,
-              "voltage_output_bps_total": 12800000000,
-              "coefficient_bytes_single_bank_per_full_card": 917504
-            },
-            {
-              "beams": 4,
-              "total_cmac_s": 1638400000000,
-              "continuous_dsp_model_cards": 21,
-              "channels_per_card_model": 112,
-              "network_and_dsp_model_cards": 37,
-              "voltage_output_bps_total": 51200000000,
-              "coefficient_bytes_single_bank_per_full_card": 3670016
-            },
-            {
-              "beams": 16,
-              "total_cmac_s": 6553600000000,
-              "continuous_dsp_model_cards": 83,
-              "channels_per_card_model": 49,
-              "network_and_dsp_model_cards": 84,
-              "voltage_output_bps_total": 204800000000,
-              "coefficient_bytes_single_bank_per_full_card": 6422528
-            },
-            {
-              "beams": 64,
-              "total_cmac_s": 26214400000000,
-              "continuous_dsp_model_cards": 329,
-              "channels_per_card_model": 12,
-              "network_and_dsp_model_cards": 342,
-              "voltage_output_bps_total": 819200000000,
-              "coefficient_bytes_single_bank_per_full_card": 6291456
-            },
-            {
-              "beams": 256,
-              "total_cmac_s": 104857600000000,
-              "continuous_dsp_model_cards": 1315,
-              "channels_per_card_model": 3,
-              "network_and_dsp_model_cards": 1366,
-              "voltage_output_bps_total": 3276800000000,
-              "coefficient_bytes_single_bank_per_full_card": 6291456
-            }
-          ],
-          "imaging": [
-            {
-              "id": "fftt_32",
-              "note": "Unpadded electric-field beam bank; not a sufficient default image sampling grid",
-              "grid_points": 1024,
-              "butterflies_s_total": 2048000000000,
-              "generic_complex_multiplies_s_total": 2457600000000,
-              "real_product_multiplications_s_total": 1638400000000,
-              "continuous_dsp_placeholder_cards": 36,
-              "channels_per_card_placeholder": 112,
-              "network_and_dsp_placeholder_cards": 37,
-              "output_bps_total": 524288000000
-            },
-            {
-              "id": "fftt_64",
-              "note": "32x32 regular aperture with 2x padding in each dimension; full dense FFT placeholder",
-              "grid_points": 4096,
-              "butterflies_s_total": 9830400000000,
-              "generic_complex_multiplies_s_total": 10240000000000,
-              "real_product_multiplications_s_total": 6553600000000,
-              "continuous_dsp_placeholder_cards": 149,
-              "channels_per_card_placeholder": 27,
-              "network_and_dsp_placeholder_cards": 152,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k9",
-              "note": "Irregular aperture; illustrative 3x3 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 9830400000000,
-              "generic_complex_multiplies_s_total": 13926400000000,
-              "real_product_multiplications_s_total": 6553600000000,
-              "continuous_dsp_placeholder_cards": 196,
-              "channels_per_card_placeholder": 21,
-              "network_and_dsp_placeholder_cards": 196,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k25",
-              "note": "Irregular aperture; illustrative 5x5 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 9830400000000,
-              "generic_complex_multiplies_s_total": 20480000000000,
-              "real_product_multiplications_s_total": 6553600000000,
-              "continuous_dsp_placeholder_cards": 278,
-              "channels_per_card_placeholder": 14,
-              "network_and_dsp_placeholder_cards": 293,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_128_k9",
-              "note": "Larger/padded grid; requires geometry and embedded-element beam justification",
-              "grid_points": 16384,
-              "butterflies_s_total": 45875200000000,
-              "generic_complex_multiplies_s_total": 49971200000000,
-              "real_product_multiplications_s_total": 26214400000000,
-              "continuous_dsp_placeholder_cards": 709,
-              "channels_per_card_placeholder": 5,
-              "network_and_dsp_placeholder_cards": 820,
-              "output_bps_total": 8388608000000
-            }
-          ]
-        },
-        {
           "id": "ku11p_2x100",
           "label": "KU11P / 2x100G hypothetical board",
           "dsp": 2928,
@@ -575,10 +424,10 @@
         },
         {
           "id": "ku15p_2x100",
-          "label": "KU15P / 2x100G hypothetical board",
+          "label": "KU15P / 2x100G planning assumption",
           "dsp": 1968,
           "ports_100g": 2,
-          "status": "No board selected; pinout, memory, package and license unverified",
+          "status": "No board selected; two usable ports are an assumption, not verified board capability",
           "science_capacity_bps": 180000000000,
           "continuous_network_min_cards": 37,
           "integer_channel_network_min_cards": 37,
@@ -662,147 +511,6 @@
               "continuous_dsp_placeholder_cards": 34,
               "channels_per_card_placeholder": 112,
               "network_and_dsp_placeholder_cards": 37,
-              "output_bps_total": 524288000000
-            },
-            {
-              "id": "fftt_64",
-              "note": "32x32 regular aperture with 2x padding in each dimension; full dense FFT placeholder",
-              "grid_points": 4096,
-              "butterflies_s_total": 9830400000000,
-              "generic_complex_multiplies_s_total": 10240000000000,
-              "real_product_multiplications_s_total": 6553600000000,
-              "continuous_dsp_placeholder_cards": 138,
-              "channels_per_card_placeholder": 29,
-              "network_and_dsp_placeholder_cards": 142,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k9",
-              "note": "Irregular aperture; illustrative 3x3 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 9830400000000,
-              "generic_complex_multiplies_s_total": 13926400000000,
-              "real_product_multiplications_s_total": 6553600000000,
-              "continuous_dsp_placeholder_cards": 181,
-              "channels_per_card_placeholder": 22,
-              "network_and_dsp_placeholder_cards": 187,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k25",
-              "note": "Irregular aperture; illustrative 5x5 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 9830400000000,
-              "generic_complex_multiplies_s_total": 20480000000000,
-              "real_product_multiplications_s_total": 6553600000000,
-              "continuous_dsp_placeholder_cards": 257,
-              "channels_per_card_placeholder": 15,
-              "network_and_dsp_placeholder_cards": 274,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_128_k9",
-              "note": "Larger/padded grid; requires geometry and embedded-element beam justification",
-              "grid_points": 16384,
-              "butterflies_s_total": 45875200000000,
-              "generic_complex_multiplies_s_total": 49971200000000,
-              "real_product_multiplications_s_total": 26214400000000,
-              "continuous_dsp_placeholder_cards": 657,
-              "channels_per_card_placeholder": 6,
-              "network_and_dsp_placeholder_cards": 683,
-              "output_bps_total": 8388608000000
-            }
-          ]
-        },
-        {
-          "id": "ku15p_4x100",
-          "label": "KU15P / 4x100G hypothetical board",
-          "dsp": 1968,
-          "ports_100g": 4,
-          "status": "No board selected; all four hard CMACs and board ports must be usable",
-          "science_capacity_bps": 360000000000,
-          "continuous_network_min_cards": 19,
-          "integer_channel_network_min_cards": 19,
-          "channels_per_card_network": 225,
-          "bandwidth_mhz_per_full_card_network": 10.986328125,
-          "generic_cmac_s_assumed": 86100000000,
-          "reorder": [
-            {
-              "window_us": 10,
-              "single_copy_bytes_at_capacity": 450000
-            },
-            {
-              "window_us": 100,
-              "single_copy_bytes_at_capacity": 4500000
-            },
-            {
-              "window_us": 1000,
-              "single_copy_bytes_at_capacity": 45000000
-            },
-            {
-              "window_us": 10000,
-              "single_copy_bytes_at_capacity": 450000000
-            }
-          ],
-          "ddr_write_plus_read_bytes_s_at_capacity": 90000000000,
-          "beamforming": [
-            {
-              "beams": 1,
-              "total_cmac_s": 409600000000,
-              "continuous_dsp_model_cards": 5,
-              "channels_per_card_model": 225,
-              "network_and_dsp_model_cards": 19,
-              "voltage_output_bps_total": 12800000000,
-              "coefficient_bytes_single_bank_per_full_card": 1843200
-            },
-            {
-              "beams": 4,
-              "total_cmac_s": 1638400000000,
-              "continuous_dsp_model_cards": 20,
-              "channels_per_card_model": 215,
-              "network_and_dsp_model_cards": 20,
-              "voltage_output_bps_total": 51200000000,
-              "coefficient_bytes_single_bank_per_full_card": 7045120
-            },
-            {
-              "beams": 16,
-              "total_cmac_s": 6553600000000,
-              "continuous_dsp_model_cards": 77,
-              "channels_per_card_model": 53,
-              "network_and_dsp_model_cards": 78,
-              "voltage_output_bps_total": 204800000000,
-              "coefficient_bytes_single_bank_per_full_card": 6946816
-            },
-            {
-              "beams": 64,
-              "total_cmac_s": 26214400000000,
-              "continuous_dsp_model_cards": 305,
-              "channels_per_card_model": 13,
-              "network_and_dsp_model_cards": 316,
-              "voltage_output_bps_total": 819200000000,
-              "coefficient_bytes_single_bank_per_full_card": 6815744
-            },
-            {
-              "beams": 256,
-              "total_cmac_s": 104857600000000,
-              "continuous_dsp_model_cards": 1218,
-              "channels_per_card_model": 3,
-              "network_and_dsp_model_cards": 1366,
-              "voltage_output_bps_total": 3276800000000,
-              "coefficient_bytes_single_bank_per_full_card": 6291456
-            }
-          ],
-          "imaging": [
-            {
-              "id": "fftt_32",
-              "note": "Unpadded electric-field beam bank; not a sufficient default image sampling grid",
-              "grid_points": 1024,
-              "butterflies_s_total": 2048000000000,
-              "generic_complex_multiplies_s_total": 2457600000000,
-              "real_product_multiplications_s_total": 1638400000000,
-              "continuous_dsp_placeholder_cards": 34,
-              "channels_per_card_placeholder": 123,
-              "network_and_dsp_placeholder_cards": 34,
               "output_bps_total": 524288000000
             },
             {
@@ -1010,147 +718,6 @@
           ]
         },
         {
-          "id": "ku5p_200g_conditional",
-          "label": "FNIC-KU5P / 200G conditional aggregate",
-          "dsp": 1824,
-          "ports_100g": 2,
-          "status": "NOT a second hard CMAC: requires additional validated MAC/PCS/FEC or 4x25G and resource accounting",
-          "science_capacity_bps": 180000000000,
-          "continuous_network_min_cards": 92,
-          "integer_channel_network_min_cards": 92,
-          "channels_per_card_network": 45,
-          "bandwidth_mhz_per_full_card_network": 5.4931640625,
-          "generic_cmac_s_assumed": 79800000000,
-          "reorder": [
-            {
-              "window_us": 10,
-              "single_copy_bytes_at_capacity": 225000
-            },
-            {
-              "window_us": 100,
-              "single_copy_bytes_at_capacity": 2250000
-            },
-            {
-              "window_us": 1000,
-              "single_copy_bytes_at_capacity": 22500000
-            },
-            {
-              "window_us": 10000,
-              "single_copy_bytes_at_capacity": 225000000
-            }
-          ],
-          "ddr_write_plus_read_bytes_s_at_capacity": 45000000000,
-          "beamforming": [
-            {
-              "beams": 1,
-              "total_cmac_s": 1024000000000,
-              "continuous_dsp_model_cards": 13,
-              "channels_per_card_model": 45,
-              "network_and_dsp_model_cards": 92,
-              "voltage_output_bps_total": 32000000000,
-              "coefficient_bytes_single_bank_per_full_card": 368640
-            },
-            {
-              "beams": 4,
-              "total_cmac_s": 4096000000000,
-              "continuous_dsp_model_cards": 52,
-              "channels_per_card_model": 45,
-              "network_and_dsp_model_cards": 92,
-              "voltage_output_bps_total": 128000000000,
-              "coefficient_bytes_single_bank_per_full_card": 1474560
-            },
-            {
-              "beams": 16,
-              "total_cmac_s": 16384000000000,
-              "continuous_dsp_model_cards": 206,
-              "channels_per_card_model": 19,
-              "network_and_dsp_model_cards": 216,
-              "voltage_output_bps_total": 512000000000,
-              "coefficient_bytes_single_bank_per_full_card": 2490368
-            },
-            {
-              "beams": 64,
-              "total_cmac_s": 65536000000000,
-              "continuous_dsp_model_cards": 822,
-              "channels_per_card_model": 4,
-              "network_and_dsp_model_cards": 1024,
-              "voltage_output_bps_total": 2048000000000,
-              "coefficient_bytes_single_bank_per_full_card": 2097152
-            },
-            {
-              "beams": 256,
-              "total_cmac_s": 262144000000000,
-              "continuous_dsp_model_cards": 3286,
-              "channels_per_card_model": 1,
-              "network_and_dsp_model_cards": 4096,
-              "voltage_output_bps_total": 8192000000000,
-              "coefficient_bytes_single_bank_per_full_card": 2097152
-            }
-          ],
-          "imaging": [
-            {
-              "id": "fftt_32",
-              "note": "Unpadded electric-field beam bank; not a sufficient default image sampling grid",
-              "grid_points": 1024,
-              "butterflies_s_total": 5120000000000,
-              "generic_complex_multiplies_s_total": 6144000000000,
-              "real_product_multiplications_s_total": 4096000000000,
-              "continuous_dsp_placeholder_cards": 90,
-              "channels_per_card_placeholder": 45,
-              "network_and_dsp_placeholder_cards": 92,
-              "output_bps_total": 524288000000
-            },
-            {
-              "id": "fftt_64",
-              "note": "32x32 regular aperture with 2x padding in each dimension; full dense FFT placeholder",
-              "grid_points": 4096,
-              "butterflies_s_total": 24576000000000,
-              "generic_complex_multiplies_s_total": 25600000000000,
-              "real_product_multiplications_s_total": 16384000000000,
-              "continuous_dsp_placeholder_cards": 373,
-              "channels_per_card_placeholder": 11,
-              "network_and_dsp_placeholder_cards": 373,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k9",
-              "note": "Irregular aperture; illustrative 3x3 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 24576000000000,
-              "generic_complex_multiplies_s_total": 34816000000000,
-              "real_product_multiplications_s_total": 16384000000000,
-              "continuous_dsp_placeholder_cards": 488,
-              "channels_per_card_placeholder": 8,
-              "network_and_dsp_placeholder_cards": 512,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k25",
-              "note": "Irregular aperture; illustrative 5x5 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 24576000000000,
-              "generic_complex_multiplies_s_total": 51200000000000,
-              "real_product_multiplications_s_total": 16384000000000,
-              "continuous_dsp_placeholder_cards": 693,
-              "channels_per_card_placeholder": 5,
-              "network_and_dsp_placeholder_cards": 820,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_128_k9",
-              "note": "Larger/padded grid; requires geometry and embedded-element beam justification",
-              "grid_points": 16384,
-              "butterflies_s_total": 114688000000000,
-              "generic_complex_multiplies_s_total": 124928000000000,
-              "real_product_multiplications_s_total": 65536000000000,
-              "continuous_dsp_placeholder_cards": 1771,
-              "channels_per_card_placeholder": 2,
-              "network_and_dsp_placeholder_cards": 2048,
-              "output_bps_total": 8388608000000
-            }
-          ]
-        },
-        {
           "id": "ku11p_2x100",
           "label": "KU11P / 2x100G hypothetical board",
           "dsp": 2928,
@@ -1293,10 +860,10 @@
         },
         {
           "id": "ku15p_2x100",
-          "label": "KU15P / 2x100G hypothetical board",
+          "label": "KU15P / 2x100G planning assumption",
           "dsp": 1968,
           "ports_100g": 2,
-          "status": "No board selected; pinout, memory, package and license unverified",
+          "status": "No board selected; two usable ports are an assumption, not verified board capability",
           "science_capacity_bps": 180000000000,
           "continuous_network_min_cards": 92,
           "integer_channel_network_min_cards": 92,
@@ -1380,147 +947,6 @@
               "continuous_dsp_placeholder_cards": 84,
               "channels_per_card_placeholder": 45,
               "network_and_dsp_placeholder_cards": 92,
-              "output_bps_total": 524288000000
-            },
-            {
-              "id": "fftt_64",
-              "note": "32x32 regular aperture with 2x padding in each dimension; full dense FFT placeholder",
-              "grid_points": 4096,
-              "butterflies_s_total": 24576000000000,
-              "generic_complex_multiplies_s_total": 25600000000000,
-              "real_product_multiplications_s_total": 16384000000000,
-              "continuous_dsp_placeholder_cards": 345,
-              "channels_per_card_placeholder": 11,
-              "network_and_dsp_placeholder_cards": 373,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k9",
-              "note": "Irregular aperture; illustrative 3x3 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 24576000000000,
-              "generic_complex_multiplies_s_total": 34816000000000,
-              "real_product_multiplications_s_total": 16384000000000,
-              "continuous_dsp_placeholder_cards": 452,
-              "channels_per_card_placeholder": 9,
-              "network_and_dsp_placeholder_cards": 456,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k25",
-              "note": "Irregular aperture; illustrative 5x5 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 24576000000000,
-              "generic_complex_multiplies_s_total": 51200000000000,
-              "real_product_multiplications_s_total": 16384000000000,
-              "continuous_dsp_placeholder_cards": 643,
-              "channels_per_card_placeholder": 6,
-              "network_and_dsp_placeholder_cards": 683,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_128_k9",
-              "note": "Larger/padded grid; requires geometry and embedded-element beam justification",
-              "grid_points": 16384,
-              "butterflies_s_total": 114688000000000,
-              "generic_complex_multiplies_s_total": 124928000000000,
-              "real_product_multiplications_s_total": 65536000000000,
-              "continuous_dsp_placeholder_cards": 1642,
-              "channels_per_card_placeholder": 2,
-              "network_and_dsp_placeholder_cards": 2048,
-              "output_bps_total": 8388608000000
-            }
-          ]
-        },
-        {
-          "id": "ku15p_4x100",
-          "label": "KU15P / 4x100G hypothetical board",
-          "dsp": 1968,
-          "ports_100g": 4,
-          "status": "No board selected; all four hard CMACs and board ports must be usable",
-          "science_capacity_bps": 360000000000,
-          "continuous_network_min_cards": 46,
-          "integer_channel_network_min_cards": 46,
-          "channels_per_card_network": 90,
-          "bandwidth_mhz_per_full_card_network": 10.986328125,
-          "generic_cmac_s_assumed": 86100000000,
-          "reorder": [
-            {
-              "window_us": 10,
-              "single_copy_bytes_at_capacity": 450000
-            },
-            {
-              "window_us": 100,
-              "single_copy_bytes_at_capacity": 4500000
-            },
-            {
-              "window_us": 1000,
-              "single_copy_bytes_at_capacity": 45000000
-            },
-            {
-              "window_us": 10000,
-              "single_copy_bytes_at_capacity": 450000000
-            }
-          ],
-          "ddr_write_plus_read_bytes_s_at_capacity": 90000000000,
-          "beamforming": [
-            {
-              "beams": 1,
-              "total_cmac_s": 1024000000000,
-              "continuous_dsp_model_cards": 12,
-              "channels_per_card_model": 90,
-              "network_and_dsp_model_cards": 46,
-              "voltage_output_bps_total": 32000000000,
-              "coefficient_bytes_single_bank_per_full_card": 737280
-            },
-            {
-              "beams": 4,
-              "total_cmac_s": 4096000000000,
-              "continuous_dsp_model_cards": 48,
-              "channels_per_card_model": 86,
-              "network_and_dsp_model_cards": 48,
-              "voltage_output_bps_total": 128000000000,
-              "coefficient_bytes_single_bank_per_full_card": 2818048
-            },
-            {
-              "beams": 16,
-              "total_cmac_s": 16384000000000,
-              "continuous_dsp_model_cards": 191,
-              "channels_per_card_model": 21,
-              "network_and_dsp_model_cards": 196,
-              "voltage_output_bps_total": 512000000000,
-              "coefficient_bytes_single_bank_per_full_card": 2752512
-            },
-            {
-              "beams": 64,
-              "total_cmac_s": 65536000000000,
-              "continuous_dsp_model_cards": 762,
-              "channels_per_card_model": 5,
-              "network_and_dsp_model_cards": 820,
-              "voltage_output_bps_total": 2048000000000,
-              "coefficient_bytes_single_bank_per_full_card": 2621440
-            },
-            {
-              "beams": 256,
-              "total_cmac_s": 262144000000000,
-              "continuous_dsp_model_cards": 3045,
-              "channels_per_card_model": 1,
-              "network_and_dsp_model_cards": 4096,
-              "voltage_output_bps_total": 8192000000000,
-              "coefficient_bytes_single_bank_per_full_card": 2097152
-            }
-          ],
-          "imaging": [
-            {
-              "id": "fftt_32",
-              "note": "Unpadded electric-field beam bank; not a sufficient default image sampling grid",
-              "grid_points": 1024,
-              "butterflies_s_total": 5120000000000,
-              "generic_complex_multiplies_s_total": 6144000000000,
-              "real_product_multiplications_s_total": 4096000000000,
-              "continuous_dsp_placeholder_cards": 84,
-              "channels_per_card_placeholder": 49,
-              "network_and_dsp_placeholder_cards": 84,
               "output_bps_total": 524288000000
             },
             {
@@ -1728,147 +1154,6 @@
           ]
         },
         {
-          "id": "ku5p_200g_conditional",
-          "label": "FNIC-KU5P / 200G conditional aggregate",
-          "dsp": 1824,
-          "ports_100g": 2,
-          "status": "NOT a second hard CMAC: requires additional validated MAC/PCS/FEC or 4x25G and resource accounting",
-          "science_capacity_bps": 180000000000,
-          "continuous_network_min_cards": 183,
-          "integer_channel_network_min_cards": 187,
-          "channels_per_card_network": 22,
-          "bandwidth_mhz_per_full_card_network": 5.37109375,
-          "generic_cmac_s_assumed": 79800000000,
-          "reorder": [
-            {
-              "window_us": 10,
-              "single_copy_bytes_at_capacity": 225000
-            },
-            {
-              "window_us": 100,
-              "single_copy_bytes_at_capacity": 2250000
-            },
-            {
-              "window_us": 1000,
-              "single_copy_bytes_at_capacity": 22500000
-            },
-            {
-              "window_us": 10000,
-              "single_copy_bytes_at_capacity": 225000000
-            }
-          ],
-          "ddr_write_plus_read_bytes_s_at_capacity": 45000000000,
-          "beamforming": [
-            {
-              "beams": 1,
-              "total_cmac_s": 2048000000000,
-              "continuous_dsp_model_cards": 26,
-              "channels_per_card_model": 22,
-              "network_and_dsp_model_cards": 187,
-              "voltage_output_bps_total": 64000000000,
-              "coefficient_bytes_single_bank_per_full_card": 180224
-            },
-            {
-              "beams": 4,
-              "total_cmac_s": 8192000000000,
-              "continuous_dsp_model_cards": 103,
-              "channels_per_card_model": 22,
-              "network_and_dsp_model_cards": 187,
-              "voltage_output_bps_total": 256000000000,
-              "coefficient_bytes_single_bank_per_full_card": 720896
-            },
-            {
-              "beams": 16,
-              "total_cmac_s": 32768000000000,
-              "continuous_dsp_model_cards": 411,
-              "channels_per_card_model": 9,
-              "network_and_dsp_model_cards": 456,
-              "voltage_output_bps_total": 1024000000000,
-              "coefficient_bytes_single_bank_per_full_card": 1179648
-            },
-            {
-              "beams": 64,
-              "total_cmac_s": 131072000000000,
-              "continuous_dsp_model_cards": 1643,
-              "channels_per_card_model": 2,
-              "network_and_dsp_model_cards": 2048,
-              "voltage_output_bps_total": 4096000000000,
-              "coefficient_bytes_single_bank_per_full_card": 1048576
-            },
-            {
-              "beams": 256,
-              "total_cmac_s": 524288000000000,
-              "continuous_dsp_model_cards": 6571,
-              "channels_per_card_model": 0,
-              "network_and_dsp_model_cards": null,
-              "voltage_output_bps_total": 16384000000000,
-              "coefficient_bytes_single_bank_per_full_card": 0
-            }
-          ],
-          "imaging": [
-            {
-              "id": "fftt_32",
-              "note": "Unpadded electric-field beam bank; not a sufficient default image sampling grid",
-              "grid_points": 1024,
-              "butterflies_s_total": 10240000000000,
-              "generic_complex_multiplies_s_total": 12288000000000,
-              "real_product_multiplications_s_total": 8192000000000,
-              "continuous_dsp_placeholder_cards": 180,
-              "channels_per_card_placeholder": 22,
-              "network_and_dsp_placeholder_cards": 187,
-              "output_bps_total": 524288000000
-            },
-            {
-              "id": "fftt_64",
-              "note": "32x32 regular aperture with 2x padding in each dimension; full dense FFT placeholder",
-              "grid_points": 4096,
-              "butterflies_s_total": 49152000000000,
-              "generic_complex_multiplies_s_total": 51200000000000,
-              "real_product_multiplications_s_total": 32768000000000,
-              "continuous_dsp_placeholder_cards": 745,
-              "channels_per_card_placeholder": 5,
-              "network_and_dsp_placeholder_cards": 820,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k9",
-              "note": "Irregular aperture; illustrative 3x3 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 49152000000000,
-              "generic_complex_multiplies_s_total": 69632000000000,
-              "real_product_multiplications_s_total": 32768000000000,
-              "continuous_dsp_placeholder_cards": 976,
-              "channels_per_card_placeholder": 4,
-              "network_and_dsp_placeholder_cards": 1024,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k25",
-              "note": "Irregular aperture; illustrative 5x5 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 49152000000000,
-              "generic_complex_multiplies_s_total": 102400000000000,
-              "real_product_multiplications_s_total": 32768000000000,
-              "continuous_dsp_placeholder_cards": 1386,
-              "channels_per_card_placeholder": 2,
-              "network_and_dsp_placeholder_cards": 2048,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_128_k9",
-              "note": "Larger/padded grid; requires geometry and embedded-element beam justification",
-              "grid_points": 16384,
-              "butterflies_s_total": 229376000000000,
-              "generic_complex_multiplies_s_total": 249856000000000,
-              "real_product_multiplications_s_total": 131072000000000,
-              "continuous_dsp_placeholder_cards": 3542,
-              "channels_per_card_placeholder": 1,
-              "network_and_dsp_placeholder_cards": 4096,
-              "output_bps_total": 8388608000000
-            }
-          ]
-        },
-        {
           "id": "ku11p_2x100",
           "label": "KU11P / 2x100G hypothetical board",
           "dsp": 2928,
@@ -2011,10 +1296,10 @@
         },
         {
           "id": "ku15p_2x100",
-          "label": "KU15P / 2x100G hypothetical board",
+          "label": "KU15P / 2x100G planning assumption",
           "dsp": 1968,
           "ports_100g": 2,
-          "status": "No board selected; pinout, memory, package and license unverified",
+          "status": "No board selected; two usable ports are an assumption, not verified board capability",
           "science_capacity_bps": 180000000000,
           "continuous_network_min_cards": 183,
           "integer_channel_network_min_cards": 187,
@@ -2098,147 +1383,6 @@
               "continuous_dsp_placeholder_cards": 167,
               "channels_per_card_placeholder": 22,
               "network_and_dsp_placeholder_cards": 187,
-              "output_bps_total": 524288000000
-            },
-            {
-              "id": "fftt_64",
-              "note": "32x32 regular aperture with 2x padding in each dimension; full dense FFT placeholder",
-              "grid_points": 4096,
-              "butterflies_s_total": 49152000000000,
-              "generic_complex_multiplies_s_total": 51200000000000,
-              "real_product_multiplications_s_total": 32768000000000,
-              "continuous_dsp_placeholder_cards": 690,
-              "channels_per_card_placeholder": 5,
-              "network_and_dsp_placeholder_cards": 820,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k9",
-              "note": "Irregular aperture; illustrative 3x3 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 49152000000000,
-              "generic_complex_multiplies_s_total": 69632000000000,
-              "real_product_multiplications_s_total": 32768000000000,
-              "continuous_dsp_placeholder_cards": 904,
-              "channels_per_card_placeholder": 4,
-              "network_and_dsp_placeholder_cards": 1024,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_64_k25",
-              "note": "Irregular aperture; illustrative 5x5 kernel, accuracy not established",
-              "grid_points": 4096,
-              "butterflies_s_total": 49152000000000,
-              "generic_complex_multiplies_s_total": 102400000000000,
-              "real_product_multiplications_s_total": 32768000000000,
-              "continuous_dsp_placeholder_cards": 1285,
-              "channels_per_card_placeholder": 3,
-              "network_and_dsp_placeholder_cards": 1366,
-              "output_bps_total": 2097152000000
-            },
-            {
-              "id": "epic_128_k9",
-              "note": "Larger/padded grid; requires geometry and embedded-element beam justification",
-              "grid_points": 16384,
-              "butterflies_s_total": 229376000000000,
-              "generic_complex_multiplies_s_total": 249856000000000,
-              "real_product_multiplications_s_total": 131072000000000,
-              "continuous_dsp_placeholder_cards": 3283,
-              "channels_per_card_placeholder": 1,
-              "network_and_dsp_placeholder_cards": 4096,
-              "output_bps_total": 8388608000000
-            }
-          ]
-        },
-        {
-          "id": "ku15p_4x100",
-          "label": "KU15P / 4x100G hypothetical board",
-          "dsp": 1968,
-          "ports_100g": 4,
-          "status": "No board selected; all four hard CMACs and board ports must be usable",
-          "science_capacity_bps": 360000000000,
-          "continuous_network_min_cards": 92,
-          "integer_channel_network_min_cards": 92,
-          "channels_per_card_network": 45,
-          "bandwidth_mhz_per_full_card_network": 10.986328125,
-          "generic_cmac_s_assumed": 86100000000,
-          "reorder": [
-            {
-              "window_us": 10,
-              "single_copy_bytes_at_capacity": 450000
-            },
-            {
-              "window_us": 100,
-              "single_copy_bytes_at_capacity": 4500000
-            },
-            {
-              "window_us": 1000,
-              "single_copy_bytes_at_capacity": 45000000
-            },
-            {
-              "window_us": 10000,
-              "single_copy_bytes_at_capacity": 450000000
-            }
-          ],
-          "ddr_write_plus_read_bytes_s_at_capacity": 90000000000,
-          "beamforming": [
-            {
-              "beams": 1,
-              "total_cmac_s": 2048000000000,
-              "continuous_dsp_model_cards": 24,
-              "channels_per_card_model": 45,
-              "network_and_dsp_model_cards": 92,
-              "voltage_output_bps_total": 64000000000,
-              "coefficient_bytes_single_bank_per_full_card": 368640
-            },
-            {
-              "beams": 4,
-              "total_cmac_s": 8192000000000,
-              "continuous_dsp_model_cards": 96,
-              "channels_per_card_model": 43,
-              "network_and_dsp_model_cards": 96,
-              "voltage_output_bps_total": 256000000000,
-              "coefficient_bytes_single_bank_per_full_card": 1409024
-            },
-            {
-              "beams": 16,
-              "total_cmac_s": 32768000000000,
-              "continuous_dsp_model_cards": 381,
-              "channels_per_card_model": 10,
-              "network_and_dsp_model_cards": 410,
-              "voltage_output_bps_total": 1024000000000,
-              "coefficient_bytes_single_bank_per_full_card": 1310720
-            },
-            {
-              "beams": 64,
-              "total_cmac_s": 131072000000000,
-              "continuous_dsp_model_cards": 1523,
-              "channels_per_card_model": 2,
-              "network_and_dsp_model_cards": 2048,
-              "voltage_output_bps_total": 4096000000000,
-              "coefficient_bytes_single_bank_per_full_card": 1048576
-            },
-            {
-              "beams": 256,
-              "total_cmac_s": 524288000000000,
-              "continuous_dsp_model_cards": 6090,
-              "channels_per_card_model": 0,
-              "network_and_dsp_model_cards": null,
-              "voltage_output_bps_total": 16384000000000,
-              "coefficient_bytes_single_bank_per_full_card": 0
-            }
-          ],
-          "imaging": [
-            {
-              "id": "fftt_32",
-              "note": "Unpadded electric-field beam bank; not a sufficient default image sampling grid",
-              "grid_points": 1024,
-              "butterflies_s_total": 10240000000000,
-              "generic_complex_multiplies_s_total": 12288000000000,
-              "real_product_multiplications_s_total": 8192000000000,
-              "continuous_dsp_placeholder_cards": 167,
-              "channels_per_card_placeholder": 24,
-              "network_and_dsp_placeholder_cards": 171,
               "output_bps_total": 524288000000
             },
             {

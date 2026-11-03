@@ -25,10 +25,12 @@
   "ddr_efficiency_assumed": 0.75,
   "profiles": [
     {"id": "ku5p_1x100", "label": "FNIC-KU5P / 1x100G candidate", "dsp": 1824, "ports_100g": 1, "status": "Existing board; 100G sustained receive NOT YET VERIFIED"},
-    {"id": "ku5p_200g_conditional", "label": "FNIC-KU5P / 200G conditional aggregate", "dsp": 1824, "ports_100g": 2, "status": "NOT a second hard CMAC: requires additional validated MAC/PCS/FEC or 4x25G and resource accounting"},
     {"id": "ku11p_2x100", "label": "KU11P / 2x100G hypothetical board", "dsp": 2928, "ports_100g": 2, "status": "No board selected; pinout, memory, package and license unverified"},
-    {"id": "ku15p_2x100", "label": "KU15P / 2x100G hypothetical board", "dsp": 1968, "ports_100g": 2, "status": "No board selected; pinout, memory, package and license unverified"},
-    {"id": "ku15p_4x100", "label": "KU15P / 4x100G hypothetical board", "dsp": 1968, "ports_100g": 4, "status": "No board selected; all four hard CMACs and board ports must be usable"}
+    {"id": "ku15p_2x100", "label": "KU15P / 2x100G planning assumption", "dsp": 1968, "ports_100g": 2, "status": "No board selected; two usable ports are an assumption, not verified board capability"}
+  ],
+  "excluded_interface_studies": [
+    "KU5P 200G aggregate excluded from default: second QSFP28 has no second hard CMAC",
+    "KU15P 4x100G excluded from default: four device hard blocks do not establish four usable board ports"
   ],
   "imagers": [
     {"id": "fftt_32", "grid_side": 32, "kernel_points": 0, "note": "Unpadded electric-field beam bank; not a sufficient default image sampling grid"},
