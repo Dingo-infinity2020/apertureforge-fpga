@@ -1,0 +1,1708 @@
+{
+  "version": 1,
+  "source_count": 256,
+  "scenarios": [
+    {
+      "id": "ideal200",
+      "fft_bin_convention": "fftshift ascending RF",
+      "bin_width_hz": 48828.125,
+      "science_hz": 200000000,
+      "first_rf_bin_center_hz": 500000000,
+      "routes": [
+        {
+          "destination": 0,
+          "first_frequency": 0,
+          "frequencies": 56
+        },
+        {
+          "destination": 1,
+          "first_frequency": 56,
+          "frequencies": 56
+        },
+        {
+          "destination": 2,
+          "first_frequency": 112,
+          "frequencies": 56
+        },
+        {
+          "destination": 3,
+          "first_frequency": 168,
+          "frequencies": 56
+        },
+        {
+          "destination": 4,
+          "first_frequency": 224,
+          "frequencies": 56
+        },
+        {
+          "destination": 5,
+          "first_frequency": 280,
+          "frequencies": 56
+        },
+        {
+          "destination": 6,
+          "first_frequency": 336,
+          "frequencies": 56
+        },
+        {
+          "destination": 7,
+          "first_frequency": 392,
+          "frequencies": 56
+        },
+        {
+          "destination": 8,
+          "first_frequency": 448,
+          "frequencies": 56
+        },
+        {
+          "destination": 9,
+          "first_frequency": 504,
+          "frequencies": 56
+        },
+        {
+          "destination": 10,
+          "first_frequency": 560,
+          "frequencies": 56
+        },
+        {
+          "destination": 11,
+          "first_frequency": 616,
+          "frequencies": 56
+        },
+        {
+          "destination": 12,
+          "first_frequency": 672,
+          "frequencies": 56
+        },
+        {
+          "destination": 13,
+          "first_frequency": 728,
+          "frequencies": 56
+        },
+        {
+          "destination": 14,
+          "first_frequency": 784,
+          "frequencies": 56
+        },
+        {
+          "destination": 15,
+          "first_frequency": 840,
+          "frequencies": 56
+        },
+        {
+          "destination": 16,
+          "first_frequency": 896,
+          "frequencies": 56
+        },
+        {
+          "destination": 17,
+          "first_frequency": 952,
+          "frequencies": 56
+        },
+        {
+          "destination": 18,
+          "first_frequency": 1008,
+          "frequencies": 56
+        },
+        {
+          "destination": 19,
+          "first_frequency": 1064,
+          "frequencies": 56
+        },
+        {
+          "destination": 20,
+          "first_frequency": 1120,
+          "frequencies": 56
+        },
+        {
+          "destination": 21,
+          "first_frequency": 1176,
+          "frequencies": 56
+        },
+        {
+          "destination": 22,
+          "first_frequency": 1232,
+          "frequencies": 56
+        },
+        {
+          "destination": 23,
+          "first_frequency": 1288,
+          "frequencies": 56
+        },
+        {
+          "destination": 24,
+          "first_frequency": 1344,
+          "frequencies": 56
+        },
+        {
+          "destination": 25,
+          "first_frequency": 1400,
+          "frequencies": 56
+        },
+        {
+          "destination": 26,
+          "first_frequency": 1456,
+          "frequencies": 56
+        },
+        {
+          "destination": 27,
+          "first_frequency": 1512,
+          "frequencies": 56
+        },
+        {
+          "destination": 28,
+          "first_frequency": 1568,
+          "frequencies": 56
+        },
+        {
+          "destination": 29,
+          "first_frequency": 1624,
+          "frequencies": 56
+        },
+        {
+          "destination": 30,
+          "first_frequency": 1680,
+          "frequencies": 56
+        },
+        {
+          "destination": 31,
+          "first_frequency": 1736,
+          "frequencies": 56
+        },
+        {
+          "destination": 32,
+          "first_frequency": 1792,
+          "frequencies": 56
+        },
+        {
+          "destination": 33,
+          "first_frequency": 1848,
+          "frequencies": 56
+        },
+        {
+          "destination": 34,
+          "first_frequency": 1904,
+          "frequencies": 56
+        },
+        {
+          "destination": 35,
+          "first_frequency": 1960,
+          "frequencies": 56
+        },
+        {
+          "destination": 36,
+          "first_frequency": 2016,
+          "frequencies": 56
+        },
+        {
+          "destination": 37,
+          "first_frequency": 2072,
+          "frequencies": 56
+        },
+        {
+          "destination": 38,
+          "first_frequency": 2128,
+          "frequencies": 56
+        },
+        {
+          "destination": 39,
+          "first_frequency": 2184,
+          "frequencies": 56
+        },
+        {
+          "destination": 40,
+          "first_frequency": 2240,
+          "frequencies": 56
+        },
+        {
+          "destination": 41,
+          "first_frequency": 2296,
+          "frequencies": 56
+        },
+        {
+          "destination": 42,
+          "first_frequency": 2352,
+          "frequencies": 56
+        },
+        {
+          "destination": 43,
+          "first_frequency": 2408,
+          "frequencies": 56
+        },
+        {
+          "destination": 44,
+          "first_frequency": 2464,
+          "frequencies": 56
+        },
+        {
+          "destination": 45,
+          "first_frequency": 2520,
+          "frequencies": 56
+        },
+        {
+          "destination": 46,
+          "first_frequency": 2576,
+          "frequencies": 56
+        },
+        {
+          "destination": 47,
+          "first_frequency": 2632,
+          "frequencies": 56
+        },
+        {
+          "destination": 48,
+          "first_frequency": 2688,
+          "frequencies": 56
+        },
+        {
+          "destination": 49,
+          "first_frequency": 2744,
+          "frequencies": 56
+        },
+        {
+          "destination": 50,
+          "first_frequency": 2800,
+          "frequencies": 56
+        },
+        {
+          "destination": 51,
+          "first_frequency": 2856,
+          "frequencies": 56
+        },
+        {
+          "destination": 52,
+          "first_frequency": 2912,
+          "frequencies": 56
+        },
+        {
+          "destination": 53,
+          "first_frequency": 2968,
+          "frequencies": 56
+        },
+        {
+          "destination": 54,
+          "first_frequency": 3024,
+          "frequencies": 56
+        },
+        {
+          "destination": 55,
+          "first_frequency": 3080,
+          "frequencies": 56
+        },
+        {
+          "destination": 56,
+          "first_frequency": 3136,
+          "frequencies": 56
+        },
+        {
+          "destination": 57,
+          "first_frequency": 3192,
+          "frequencies": 56
+        },
+        {
+          "destination": 58,
+          "first_frequency": 3248,
+          "frequencies": 56
+        },
+        {
+          "destination": 59,
+          "first_frequency": 3304,
+          "frequencies": 56
+        },
+        {
+          "destination": 60,
+          "first_frequency": 3360,
+          "frequencies": 56
+        },
+        {
+          "destination": 61,
+          "first_frequency": 3416,
+          "frequencies": 56
+        },
+        {
+          "destination": 62,
+          "first_frequency": 3472,
+          "frequencies": 56
+        },
+        {
+          "destination": 63,
+          "first_frequency": 3528,
+          "frequencies": 56
+        },
+        {
+          "destination": 64,
+          "first_frequency": 3584,
+          "frequencies": 56
+        },
+        {
+          "destination": 65,
+          "first_frequency": 3640,
+          "frequencies": 56
+        },
+        {
+          "destination": 66,
+          "first_frequency": 3696,
+          "frequencies": 56
+        },
+        {
+          "destination": 67,
+          "first_frequency": 3752,
+          "frequencies": 56
+        },
+        {
+          "destination": 68,
+          "first_frequency": 3808,
+          "frequencies": 56
+        },
+        {
+          "destination": 69,
+          "first_frequency": 3864,
+          "frequencies": 56
+        },
+        {
+          "destination": 70,
+          "first_frequency": 3920,
+          "frequencies": 56
+        },
+        {
+          "destination": 71,
+          "first_frequency": 3976,
+          "frequencies": 56
+        },
+        {
+          "destination": 72,
+          "first_frequency": 4032,
+          "frequencies": 56
+        },
+        {
+          "destination": 73,
+          "first_frequency": 4088,
+          "frequencies": 8
+        }
+      ]
+    },
+    {
+      "id": "mapped320",
+      "fft_bin_convention": "fftshift ascending RF",
+      "bin_width_hz": 78125,
+      "science_hz": 200000000,
+      "first_rf_bin_center_hz": 500000000,
+      "routes": [
+        {
+          "destination": 0,
+          "first_frequency": 0,
+          "frequencies": 35
+        },
+        {
+          "destination": 1,
+          "first_frequency": 35,
+          "frequencies": 35
+        },
+        {
+          "destination": 2,
+          "first_frequency": 70,
+          "frequencies": 35
+        },
+        {
+          "destination": 3,
+          "first_frequency": 105,
+          "frequencies": 35
+        },
+        {
+          "destination": 4,
+          "first_frequency": 140,
+          "frequencies": 35
+        },
+        {
+          "destination": 5,
+          "first_frequency": 175,
+          "frequencies": 35
+        },
+        {
+          "destination": 6,
+          "first_frequency": 210,
+          "frequencies": 35
+        },
+        {
+          "destination": 7,
+          "first_frequency": 245,
+          "frequencies": 35
+        },
+        {
+          "destination": 8,
+          "first_frequency": 280,
+          "frequencies": 35
+        },
+        {
+          "destination": 9,
+          "first_frequency": 315,
+          "frequencies": 35
+        },
+        {
+          "destination": 10,
+          "first_frequency": 350,
+          "frequencies": 35
+        },
+        {
+          "destination": 11,
+          "first_frequency": 385,
+          "frequencies": 35
+        },
+        {
+          "destination": 12,
+          "first_frequency": 420,
+          "frequencies": 35
+        },
+        {
+          "destination": 13,
+          "first_frequency": 455,
+          "frequencies": 35
+        },
+        {
+          "destination": 14,
+          "first_frequency": 490,
+          "frequencies": 35
+        },
+        {
+          "destination": 15,
+          "first_frequency": 525,
+          "frequencies": 35
+        },
+        {
+          "destination": 16,
+          "first_frequency": 560,
+          "frequencies": 35
+        },
+        {
+          "destination": 17,
+          "first_frequency": 595,
+          "frequencies": 35
+        },
+        {
+          "destination": 18,
+          "first_frequency": 630,
+          "frequencies": 35
+        },
+        {
+          "destination": 19,
+          "first_frequency": 665,
+          "frequencies": 35
+        },
+        {
+          "destination": 20,
+          "first_frequency": 700,
+          "frequencies": 35
+        },
+        {
+          "destination": 21,
+          "first_frequency": 735,
+          "frequencies": 35
+        },
+        {
+          "destination": 22,
+          "first_frequency": 770,
+          "frequencies": 35
+        },
+        {
+          "destination": 23,
+          "first_frequency": 805,
+          "frequencies": 35
+        },
+        {
+          "destination": 24,
+          "first_frequency": 840,
+          "frequencies": 35
+        },
+        {
+          "destination": 25,
+          "first_frequency": 875,
+          "frequencies": 35
+        },
+        {
+          "destination": 26,
+          "first_frequency": 910,
+          "frequencies": 35
+        },
+        {
+          "destination": 27,
+          "first_frequency": 945,
+          "frequencies": 35
+        },
+        {
+          "destination": 28,
+          "first_frequency": 980,
+          "frequencies": 35
+        },
+        {
+          "destination": 29,
+          "first_frequency": 1015,
+          "frequencies": 35
+        },
+        {
+          "destination": 30,
+          "first_frequency": 1050,
+          "frequencies": 35
+        },
+        {
+          "destination": 31,
+          "first_frequency": 1085,
+          "frequencies": 35
+        },
+        {
+          "destination": 32,
+          "first_frequency": 1120,
+          "frequencies": 35
+        },
+        {
+          "destination": 33,
+          "first_frequency": 1155,
+          "frequencies": 35
+        },
+        {
+          "destination": 34,
+          "first_frequency": 1190,
+          "frequencies": 35
+        },
+        {
+          "destination": 35,
+          "first_frequency": 1225,
+          "frequencies": 35
+        },
+        {
+          "destination": 36,
+          "first_frequency": 1260,
+          "frequencies": 35
+        },
+        {
+          "destination": 37,
+          "first_frequency": 1295,
+          "frequencies": 35
+        },
+        {
+          "destination": 38,
+          "first_frequency": 1330,
+          "frequencies": 35
+        },
+        {
+          "destination": 39,
+          "first_frequency": 1365,
+          "frequencies": 35
+        },
+        {
+          "destination": 40,
+          "first_frequency": 1400,
+          "frequencies": 35
+        },
+        {
+          "destination": 41,
+          "first_frequency": 1435,
+          "frequencies": 35
+        },
+        {
+          "destination": 42,
+          "first_frequency": 1470,
+          "frequencies": 35
+        },
+        {
+          "destination": 43,
+          "first_frequency": 1505,
+          "frequencies": 35
+        },
+        {
+          "destination": 44,
+          "first_frequency": 1540,
+          "frequencies": 35
+        },
+        {
+          "destination": 45,
+          "first_frequency": 1575,
+          "frequencies": 35
+        },
+        {
+          "destination": 46,
+          "first_frequency": 1610,
+          "frequencies": 35
+        },
+        {
+          "destination": 47,
+          "first_frequency": 1645,
+          "frequencies": 35
+        },
+        {
+          "destination": 48,
+          "first_frequency": 1680,
+          "frequencies": 35
+        },
+        {
+          "destination": 49,
+          "first_frequency": 1715,
+          "frequencies": 35
+        },
+        {
+          "destination": 50,
+          "first_frequency": 1750,
+          "frequencies": 35
+        },
+        {
+          "destination": 51,
+          "first_frequency": 1785,
+          "frequencies": 35
+        },
+        {
+          "destination": 52,
+          "first_frequency": 1820,
+          "frequencies": 35
+        },
+        {
+          "destination": 53,
+          "first_frequency": 1855,
+          "frequencies": 35
+        },
+        {
+          "destination": 54,
+          "first_frequency": 1890,
+          "frequencies": 35
+        },
+        {
+          "destination": 55,
+          "first_frequency": 1925,
+          "frequencies": 35
+        },
+        {
+          "destination": 56,
+          "first_frequency": 1960,
+          "frequencies": 35
+        },
+        {
+          "destination": 57,
+          "first_frequency": 1995,
+          "frequencies": 35
+        },
+        {
+          "destination": 58,
+          "first_frequency": 2030,
+          "frequencies": 35
+        },
+        {
+          "destination": 59,
+          "first_frequency": 2065,
+          "frequencies": 35
+        },
+        {
+          "destination": 60,
+          "first_frequency": 2100,
+          "frequencies": 35
+        },
+        {
+          "destination": 61,
+          "first_frequency": 2135,
+          "frequencies": 35
+        },
+        {
+          "destination": 62,
+          "first_frequency": 2170,
+          "frequencies": 35
+        },
+        {
+          "destination": 63,
+          "first_frequency": 2205,
+          "frequencies": 35
+        },
+        {
+          "destination": 64,
+          "first_frequency": 2240,
+          "frequencies": 35
+        },
+        {
+          "destination": 65,
+          "first_frequency": 2275,
+          "frequencies": 35
+        },
+        {
+          "destination": 66,
+          "first_frequency": 2310,
+          "frequencies": 35
+        },
+        {
+          "destination": 67,
+          "first_frequency": 2345,
+          "frequencies": 35
+        },
+        {
+          "destination": 68,
+          "first_frequency": 2380,
+          "frequencies": 35
+        },
+        {
+          "destination": 69,
+          "first_frequency": 2415,
+          "frequencies": 35
+        },
+        {
+          "destination": 70,
+          "first_frequency": 2450,
+          "frequencies": 35
+        },
+        {
+          "destination": 71,
+          "first_frequency": 2485,
+          "frequencies": 35
+        },
+        {
+          "destination": 72,
+          "first_frequency": 2520,
+          "frequencies": 35
+        },
+        {
+          "destination": 73,
+          "first_frequency": 2555,
+          "frequencies": 5
+        }
+      ]
+    },
+    {
+      "id": "ideal500",
+      "fft_bin_convention": "fftshift ascending RF",
+      "bin_width_hz": 122070.3125,
+      "science_hz": 500000000,
+      "first_rf_bin_center_hz": 750000000,
+      "routes": [
+        {
+          "destination": 0,
+          "first_frequency": 0,
+          "frequencies": 22
+        },
+        {
+          "destination": 1,
+          "first_frequency": 22,
+          "frequencies": 22
+        },
+        {
+          "destination": 2,
+          "first_frequency": 44,
+          "frequencies": 22
+        },
+        {
+          "destination": 3,
+          "first_frequency": 66,
+          "frequencies": 22
+        },
+        {
+          "destination": 4,
+          "first_frequency": 88,
+          "frequencies": 22
+        },
+        {
+          "destination": 5,
+          "first_frequency": 110,
+          "frequencies": 22
+        },
+        {
+          "destination": 6,
+          "first_frequency": 132,
+          "frequencies": 22
+        },
+        {
+          "destination": 7,
+          "first_frequency": 154,
+          "frequencies": 22
+        },
+        {
+          "destination": 8,
+          "first_frequency": 176,
+          "frequencies": 22
+        },
+        {
+          "destination": 9,
+          "first_frequency": 198,
+          "frequencies": 22
+        },
+        {
+          "destination": 10,
+          "first_frequency": 220,
+          "frequencies": 22
+        },
+        {
+          "destination": 11,
+          "first_frequency": 242,
+          "frequencies": 22
+        },
+        {
+          "destination": 12,
+          "first_frequency": 264,
+          "frequencies": 22
+        },
+        {
+          "destination": 13,
+          "first_frequency": 286,
+          "frequencies": 22
+        },
+        {
+          "destination": 14,
+          "first_frequency": 308,
+          "frequencies": 22
+        },
+        {
+          "destination": 15,
+          "first_frequency": 330,
+          "frequencies": 22
+        },
+        {
+          "destination": 16,
+          "first_frequency": 352,
+          "frequencies": 22
+        },
+        {
+          "destination": 17,
+          "first_frequency": 374,
+          "frequencies": 22
+        },
+        {
+          "destination": 18,
+          "first_frequency": 396,
+          "frequencies": 22
+        },
+        {
+          "destination": 19,
+          "first_frequency": 418,
+          "frequencies": 22
+        },
+        {
+          "destination": 20,
+          "first_frequency": 440,
+          "frequencies": 22
+        },
+        {
+          "destination": 21,
+          "first_frequency": 462,
+          "frequencies": 22
+        },
+        {
+          "destination": 22,
+          "first_frequency": 484,
+          "frequencies": 22
+        },
+        {
+          "destination": 23,
+          "first_frequency": 506,
+          "frequencies": 22
+        },
+        {
+          "destination": 24,
+          "first_frequency": 528,
+          "frequencies": 22
+        },
+        {
+          "destination": 25,
+          "first_frequency": 550,
+          "frequencies": 22
+        },
+        {
+          "destination": 26,
+          "first_frequency": 572,
+          "frequencies": 22
+        },
+        {
+          "destination": 27,
+          "first_frequency": 594,
+          "frequencies": 22
+        },
+        {
+          "destination": 28,
+          "first_frequency": 616,
+          "frequencies": 22
+        },
+        {
+          "destination": 29,
+          "first_frequency": 638,
+          "frequencies": 22
+        },
+        {
+          "destination": 30,
+          "first_frequency": 660,
+          "frequencies": 22
+        },
+        {
+          "destination": 31,
+          "first_frequency": 682,
+          "frequencies": 22
+        },
+        {
+          "destination": 32,
+          "first_frequency": 704,
+          "frequencies": 22
+        },
+        {
+          "destination": 33,
+          "first_frequency": 726,
+          "frequencies": 22
+        },
+        {
+          "destination": 34,
+          "first_frequency": 748,
+          "frequencies": 22
+        },
+        {
+          "destination": 35,
+          "first_frequency": 770,
+          "frequencies": 22
+        },
+        {
+          "destination": 36,
+          "first_frequency": 792,
+          "frequencies": 22
+        },
+        {
+          "destination": 37,
+          "first_frequency": 814,
+          "frequencies": 22
+        },
+        {
+          "destination": 38,
+          "first_frequency": 836,
+          "frequencies": 22
+        },
+        {
+          "destination": 39,
+          "first_frequency": 858,
+          "frequencies": 22
+        },
+        {
+          "destination": 40,
+          "first_frequency": 880,
+          "frequencies": 22
+        },
+        {
+          "destination": 41,
+          "first_frequency": 902,
+          "frequencies": 22
+        },
+        {
+          "destination": 42,
+          "first_frequency": 924,
+          "frequencies": 22
+        },
+        {
+          "destination": 43,
+          "first_frequency": 946,
+          "frequencies": 22
+        },
+        {
+          "destination": 44,
+          "first_frequency": 968,
+          "frequencies": 22
+        },
+        {
+          "destination": 45,
+          "first_frequency": 990,
+          "frequencies": 22
+        },
+        {
+          "destination": 46,
+          "first_frequency": 1012,
+          "frequencies": 22
+        },
+        {
+          "destination": 47,
+          "first_frequency": 1034,
+          "frequencies": 22
+        },
+        {
+          "destination": 48,
+          "first_frequency": 1056,
+          "frequencies": 22
+        },
+        {
+          "destination": 49,
+          "first_frequency": 1078,
+          "frequencies": 22
+        },
+        {
+          "destination": 50,
+          "first_frequency": 1100,
+          "frequencies": 22
+        },
+        {
+          "destination": 51,
+          "first_frequency": 1122,
+          "frequencies": 22
+        },
+        {
+          "destination": 52,
+          "first_frequency": 1144,
+          "frequencies": 22
+        },
+        {
+          "destination": 53,
+          "first_frequency": 1166,
+          "frequencies": 22
+        },
+        {
+          "destination": 54,
+          "first_frequency": 1188,
+          "frequencies": 22
+        },
+        {
+          "destination": 55,
+          "first_frequency": 1210,
+          "frequencies": 22
+        },
+        {
+          "destination": 56,
+          "first_frequency": 1232,
+          "frequencies": 22
+        },
+        {
+          "destination": 57,
+          "first_frequency": 1254,
+          "frequencies": 22
+        },
+        {
+          "destination": 58,
+          "first_frequency": 1276,
+          "frequencies": 22
+        },
+        {
+          "destination": 59,
+          "first_frequency": 1298,
+          "frequencies": 22
+        },
+        {
+          "destination": 60,
+          "first_frequency": 1320,
+          "frequencies": 22
+        },
+        {
+          "destination": 61,
+          "first_frequency": 1342,
+          "frequencies": 22
+        },
+        {
+          "destination": 62,
+          "first_frequency": 1364,
+          "frequencies": 22
+        },
+        {
+          "destination": 63,
+          "first_frequency": 1386,
+          "frequencies": 22
+        },
+        {
+          "destination": 64,
+          "first_frequency": 1408,
+          "frequencies": 22
+        },
+        {
+          "destination": 65,
+          "first_frequency": 1430,
+          "frequencies": 22
+        },
+        {
+          "destination": 66,
+          "first_frequency": 1452,
+          "frequencies": 22
+        },
+        {
+          "destination": 67,
+          "first_frequency": 1474,
+          "frequencies": 22
+        },
+        {
+          "destination": 68,
+          "first_frequency": 1496,
+          "frequencies": 22
+        },
+        {
+          "destination": 69,
+          "first_frequency": 1518,
+          "frequencies": 22
+        },
+        {
+          "destination": 70,
+          "first_frequency": 1540,
+          "frequencies": 22
+        },
+        {
+          "destination": 71,
+          "first_frequency": 1562,
+          "frequencies": 22
+        },
+        {
+          "destination": 72,
+          "first_frequency": 1584,
+          "frequencies": 22
+        },
+        {
+          "destination": 73,
+          "first_frequency": 1606,
+          "frequencies": 22
+        },
+        {
+          "destination": 74,
+          "first_frequency": 1628,
+          "frequencies": 22
+        },
+        {
+          "destination": 75,
+          "first_frequency": 1650,
+          "frequencies": 22
+        },
+        {
+          "destination": 76,
+          "first_frequency": 1672,
+          "frequencies": 22
+        },
+        {
+          "destination": 77,
+          "first_frequency": 1694,
+          "frequencies": 22
+        },
+        {
+          "destination": 78,
+          "first_frequency": 1716,
+          "frequencies": 22
+        },
+        {
+          "destination": 79,
+          "first_frequency": 1738,
+          "frequencies": 22
+        },
+        {
+          "destination": 80,
+          "first_frequency": 1760,
+          "frequencies": 22
+        },
+        {
+          "destination": 81,
+          "first_frequency": 1782,
+          "frequencies": 22
+        },
+        {
+          "destination": 82,
+          "first_frequency": 1804,
+          "frequencies": 22
+        },
+        {
+          "destination": 83,
+          "first_frequency": 1826,
+          "frequencies": 22
+        },
+        {
+          "destination": 84,
+          "first_frequency": 1848,
+          "frequencies": 22
+        },
+        {
+          "destination": 85,
+          "first_frequency": 1870,
+          "frequencies": 22
+        },
+        {
+          "destination": 86,
+          "first_frequency": 1892,
+          "frequencies": 22
+        },
+        {
+          "destination": 87,
+          "first_frequency": 1914,
+          "frequencies": 22
+        },
+        {
+          "destination": 88,
+          "first_frequency": 1936,
+          "frequencies": 22
+        },
+        {
+          "destination": 89,
+          "first_frequency": 1958,
+          "frequencies": 22
+        },
+        {
+          "destination": 90,
+          "first_frequency": 1980,
+          "frequencies": 22
+        },
+        {
+          "destination": 91,
+          "first_frequency": 2002,
+          "frequencies": 22
+        },
+        {
+          "destination": 92,
+          "first_frequency": 2024,
+          "frequencies": 22
+        },
+        {
+          "destination": 93,
+          "first_frequency": 2046,
+          "frequencies": 22
+        },
+        {
+          "destination": 94,
+          "first_frequency": 2068,
+          "frequencies": 22
+        },
+        {
+          "destination": 95,
+          "first_frequency": 2090,
+          "frequencies": 22
+        },
+        {
+          "destination": 96,
+          "first_frequency": 2112,
+          "frequencies": 22
+        },
+        {
+          "destination": 97,
+          "first_frequency": 2134,
+          "frequencies": 22
+        },
+        {
+          "destination": 98,
+          "first_frequency": 2156,
+          "frequencies": 22
+        },
+        {
+          "destination": 99,
+          "first_frequency": 2178,
+          "frequencies": 22
+        },
+        {
+          "destination": 100,
+          "first_frequency": 2200,
+          "frequencies": 22
+        },
+        {
+          "destination": 101,
+          "first_frequency": 2222,
+          "frequencies": 22
+        },
+        {
+          "destination": 102,
+          "first_frequency": 2244,
+          "frequencies": 22
+        },
+        {
+          "destination": 103,
+          "first_frequency": 2266,
+          "frequencies": 22
+        },
+        {
+          "destination": 104,
+          "first_frequency": 2288,
+          "frequencies": 22
+        },
+        {
+          "destination": 105,
+          "first_frequency": 2310,
+          "frequencies": 22
+        },
+        {
+          "destination": 106,
+          "first_frequency": 2332,
+          "frequencies": 22
+        },
+        {
+          "destination": 107,
+          "first_frequency": 2354,
+          "frequencies": 22
+        },
+        {
+          "destination": 108,
+          "first_frequency": 2376,
+          "frequencies": 22
+        },
+        {
+          "destination": 109,
+          "first_frequency": 2398,
+          "frequencies": 22
+        },
+        {
+          "destination": 110,
+          "first_frequency": 2420,
+          "frequencies": 22
+        },
+        {
+          "destination": 111,
+          "first_frequency": 2442,
+          "frequencies": 22
+        },
+        {
+          "destination": 112,
+          "first_frequency": 2464,
+          "frequencies": 22
+        },
+        {
+          "destination": 113,
+          "first_frequency": 2486,
+          "frequencies": 22
+        },
+        {
+          "destination": 114,
+          "first_frequency": 2508,
+          "frequencies": 22
+        },
+        {
+          "destination": 115,
+          "first_frequency": 2530,
+          "frequencies": 22
+        },
+        {
+          "destination": 116,
+          "first_frequency": 2552,
+          "frequencies": 22
+        },
+        {
+          "destination": 117,
+          "first_frequency": 2574,
+          "frequencies": 22
+        },
+        {
+          "destination": 118,
+          "first_frequency": 2596,
+          "frequencies": 22
+        },
+        {
+          "destination": 119,
+          "first_frequency": 2618,
+          "frequencies": 22
+        },
+        {
+          "destination": 120,
+          "first_frequency": 2640,
+          "frequencies": 22
+        },
+        {
+          "destination": 121,
+          "first_frequency": 2662,
+          "frequencies": 22
+        },
+        {
+          "destination": 122,
+          "first_frequency": 2684,
+          "frequencies": 22
+        },
+        {
+          "destination": 123,
+          "first_frequency": 2706,
+          "frequencies": 22
+        },
+        {
+          "destination": 124,
+          "first_frequency": 2728,
+          "frequencies": 22
+        },
+        {
+          "destination": 125,
+          "first_frequency": 2750,
+          "frequencies": 22
+        },
+        {
+          "destination": 126,
+          "first_frequency": 2772,
+          "frequencies": 22
+        },
+        {
+          "destination": 127,
+          "first_frequency": 2794,
+          "frequencies": 22
+        },
+        {
+          "destination": 128,
+          "first_frequency": 2816,
+          "frequencies": 22
+        },
+        {
+          "destination": 129,
+          "first_frequency": 2838,
+          "frequencies": 22
+        },
+        {
+          "destination": 130,
+          "first_frequency": 2860,
+          "frequencies": 22
+        },
+        {
+          "destination": 131,
+          "first_frequency": 2882,
+          "frequencies": 22
+        },
+        {
+          "destination": 132,
+          "first_frequency": 2904,
+          "frequencies": 22
+        },
+        {
+          "destination": 133,
+          "first_frequency": 2926,
+          "frequencies": 22
+        },
+        {
+          "destination": 134,
+          "first_frequency": 2948,
+          "frequencies": 22
+        },
+        {
+          "destination": 135,
+          "first_frequency": 2970,
+          "frequencies": 22
+        },
+        {
+          "destination": 136,
+          "first_frequency": 2992,
+          "frequencies": 22
+        },
+        {
+          "destination": 137,
+          "first_frequency": 3014,
+          "frequencies": 22
+        },
+        {
+          "destination": 138,
+          "first_frequency": 3036,
+          "frequencies": 22
+        },
+        {
+          "destination": 139,
+          "first_frequency": 3058,
+          "frequencies": 22
+        },
+        {
+          "destination": 140,
+          "first_frequency": 3080,
+          "frequencies": 22
+        },
+        {
+          "destination": 141,
+          "first_frequency": 3102,
+          "frequencies": 22
+        },
+        {
+          "destination": 142,
+          "first_frequency": 3124,
+          "frequencies": 22
+        },
+        {
+          "destination": 143,
+          "first_frequency": 3146,
+          "frequencies": 22
+        },
+        {
+          "destination": 144,
+          "first_frequency": 3168,
+          "frequencies": 22
+        },
+        {
+          "destination": 145,
+          "first_frequency": 3190,
+          "frequencies": 22
+        },
+        {
+          "destination": 146,
+          "first_frequency": 3212,
+          "frequencies": 22
+        },
+        {
+          "destination": 147,
+          "first_frequency": 3234,
+          "frequencies": 22
+        },
+        {
+          "destination": 148,
+          "first_frequency": 3256,
+          "frequencies": 22
+        },
+        {
+          "destination": 149,
+          "first_frequency": 3278,
+          "frequencies": 22
+        },
+        {
+          "destination": 150,
+          "first_frequency": 3300,
+          "frequencies": 22
+        },
+        {
+          "destination": 151,
+          "first_frequency": 3322,
+          "frequencies": 22
+        },
+        {
+          "destination": 152,
+          "first_frequency": 3344,
+          "frequencies": 22
+        },
+        {
+          "destination": 153,
+          "first_frequency": 3366,
+          "frequencies": 22
+        },
+        {
+          "destination": 154,
+          "first_frequency": 3388,
+          "frequencies": 22
+        },
+        {
+          "destination": 155,
+          "first_frequency": 3410,
+          "frequencies": 22
+        },
+        {
+          "destination": 156,
+          "first_frequency": 3432,
+          "frequencies": 22
+        },
+        {
+          "destination": 157,
+          "first_frequency": 3454,
+          "frequencies": 22
+        },
+        {
+          "destination": 158,
+          "first_frequency": 3476,
+          "frequencies": 22
+        },
+        {
+          "destination": 159,
+          "first_frequency": 3498,
+          "frequencies": 22
+        },
+        {
+          "destination": 160,
+          "first_frequency": 3520,
+          "frequencies": 22
+        },
+        {
+          "destination": 161,
+          "first_frequency": 3542,
+          "frequencies": 22
+        },
+        {
+          "destination": 162,
+          "first_frequency": 3564,
+          "frequencies": 22
+        },
+        {
+          "destination": 163,
+          "first_frequency": 3586,
+          "frequencies": 22
+        },
+        {
+          "destination": 164,
+          "first_frequency": 3608,
+          "frequencies": 22
+        },
+        {
+          "destination": 165,
+          "first_frequency": 3630,
+          "frequencies": 22
+        },
+        {
+          "destination": 166,
+          "first_frequency": 3652,
+          "frequencies": 22
+        },
+        {
+          "destination": 167,
+          "first_frequency": 3674,
+          "frequencies": 22
+        },
+        {
+          "destination": 168,
+          "first_frequency": 3696,
+          "frequencies": 22
+        },
+        {
+          "destination": 169,
+          "first_frequency": 3718,
+          "frequencies": 22
+        },
+        {
+          "destination": 170,
+          "first_frequency": 3740,
+          "frequencies": 22
+        },
+        {
+          "destination": 171,
+          "first_frequency": 3762,
+          "frequencies": 22
+        },
+        {
+          "destination": 172,
+          "first_frequency": 3784,
+          "frequencies": 22
+        },
+        {
+          "destination": 173,
+          "first_frequency": 3806,
+          "frequencies": 22
+        },
+        {
+          "destination": 174,
+          "first_frequency": 3828,
+          "frequencies": 22
+        },
+        {
+          "destination": 175,
+          "first_frequency": 3850,
+          "frequencies": 22
+        },
+        {
+          "destination": 176,
+          "first_frequency": 3872,
+          "frequencies": 22
+        },
+        {
+          "destination": 177,
+          "first_frequency": 3894,
+          "frequencies": 22
+        },
+        {
+          "destination": 178,
+          "first_frequency": 3916,
+          "frequencies": 22
+        },
+        {
+          "destination": 179,
+          "first_frequency": 3938,
+          "frequencies": 22
+        },
+        {
+          "destination": 180,
+          "first_frequency": 3960,
+          "frequencies": 22
+        },
+        {
+          "destination": 181,
+          "first_frequency": 3982,
+          "frequencies": 22
+        },
+        {
+          "destination": 182,
+          "first_frequency": 4004,
+          "frequencies": 22
+        },
+        {
+          "destination": 183,
+          "first_frequency": 4026,
+          "frequencies": 22
+        },
+        {
+          "destination": 184,
+          "first_frequency": 4048,
+          "frequencies": 22
+        },
+        {
+          "destination": 185,
+          "first_frequency": 4070,
+          "frequencies": 22
+        },
+        {
+          "destination": 186,
+          "first_frequency": 4092,
+          "frequencies": 4
+        }
+      ]
+    }
+  ]
+}

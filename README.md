@@ -6,7 +6,7 @@
 
 ## 当前范围
 
-2026-11-03：**规划和解析容量模型**。尚未生成算法 RTL，尚未执行新的 Vivado 综合、实现或上板测试。解析估计不能当作器件能力实测。
+2026-11-03：**规划、解析预算与离线协议参考**。已建立AFP1编解码和路由测试；尚未生成算法 RTL，尚未执行新的 Vivado 综合、实现或上板测试。解析估计不能当作器件能力实测。
 
 - 1024 个物理天线，双极化，共 2048 路电压。
 - 可调谐范围 0.5–1.5 GHz；同时处理带宽优先 200 MHz，扩展 500 MHz，1 GHz 为对照。
@@ -17,6 +17,8 @@
 
 ## 阅读入口
 
+- [第一阶段实施进度与证据](reports/phase1-progress.md)
+- [输入与硬件契约](docs/input-and-hardware-contract.zh-CN.md)、[AFP1包格式](docs/packet-contract-v1.zh-CN.md)
 - [第一阶段任务目标与验收清单](docs/phase-1-objectives.zh-CN.md)
 - [架构、器件选择与容量推导](docs/feasibility.zh-CN.md)
 - [综合、实现和科学验证计划](docs/benchmark-plan.zh-CN.md)

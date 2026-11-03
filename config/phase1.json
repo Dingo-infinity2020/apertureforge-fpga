@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "antennas": 1024,
+  "polarizations": 2,
+  "inputs_per_source": 8,
+  "science_bits_per_component": 8,
+  "udp_ip_mtu": 9000,
+  "line_bps": 100000000000,
+  "science_budget_bps": 90000000000,
+  "pfb_taps_assumed": 4,
+  "hardware": {
+    "part": "xcku5p-ffvb676-1-i",
+    "independent_100g_ports_budgeted": 1,
+    "dsp": 1824,
+    "raw_bram_uram_mib_approx": 4.36,
+    "ddr_physical_bits_static_evidence": 72,
+    "ddr_data_bits_if_ecc": 64,
+    "ddr_rate_mtps_measured": null,
+    "ddr_capacity_bytes_verified": null,
+    "qsfp_to_cmac_gt_route_verified": false
+  },
+  "scenarios": [
+    {"id":"ideal200", "evidence":"DESIGN_ASSUMPTION_NOT_RFDC_CONFIGURATION", "adc_hz":3200000000, "ddc_decimation":16, "complex_hz":200000000, "fft_size":4096, "hop":4096, "retained_shifted_bin_start":0, "retained_bins":4096, "spectra_per_packet":2, "channels_per_destination":56, "rf_center_hz":600000000},
+    {"id":"mapped320", "evidence":"320MSPS_RATE_FROM_EXISTING_PROJECT_NEW_PFB_NOT_IMPLEMENTED", "adc_hz":3840000000, "ddc_decimation":12, "complex_hz":320000000, "fft_size":4096, "hop":4096, "retained_shifted_bin_start":768, "retained_bins":2560, "spectra_per_packet":2, "channels_per_destination":35, "rf_center_hz":600000000},
+    {"id":"ideal500", "evidence":"DESIGN_ASSUMPTION_NOT_RFDC_CONFIGURATION", "adc_hz":4000000000, "ddc_decimation":8, "complex_hz":500000000, "fft_size":4096, "hop":4096, "retained_shifted_bin_start":0, "retained_bins":4096, "spectra_per_packet":4, "channels_per_destination":22, "rf_center_hz":1000000000}
+  ],
+  "time_contract": {
+    "epoch_adc_sample": "0",
+    "epoch_utc": null,
+    "pfb_reference": "first_ADC_sample_of_nominal_window_start",
+    "calibrated_group_delay_adc_ticks": null,
+    "valid_start_spectrum": "0",
+    "note": "Synthetic tests only; physical UTC, MTS/NCO alignment, settling and group delay require later calibration"
+  }
+}
