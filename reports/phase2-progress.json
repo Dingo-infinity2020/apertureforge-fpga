@@ -8,17 +8,22 @@
   "source_sha256": {
     "constraints/af_control_ooc.xdc": "525aeb7aa59c127709cce4c2a094b5bf791e10a222bb8b5387d0faeb31bea47c",
     "constraints/af_header_ooc.xdc": "4e8658c0c316d36d8b7ecdd4c126364931b467a0f6ff831cf0da5b32a64d0f08",
+    "constraints/af_parser_ooc.xdc": "80328b5c534fa6922d63603dd37a93e072b5e774b0f5250e9e2816cc5bb832a7",
     "constraints/af_store_ooc.xdc": "8c7a07afd81b9b363a932b92b3d6856ca5eda3a043b64f783e50362162db3719",
     "models/ethernet-frame.mjs": "46a52dfa02ea68e2105a9b0ea02a3eedd54822c839d156cc80a0ed0d22158a84",
     "models/packet.mjs": "e1fbbc61f67f286a90f01d03a8d55e94d96a3ea75e41fe865168815243251033",
     "rtl/af_afp1_header_check.sv": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+    "rtl/af_packet_parser.sv": "d0feaac58986ad707540f8e031c9dd45f9bd91045cd77f09fc182ed39f5872e0",
     "rtl/af_ring_control.sv": "baea246f902ffd3d4e5769712d9eb77969389df873d415b737331c83edf6e161",
     "rtl/af_ring_store.sv": "53870341ae019c6ac52b426993b20a93dd8f183cd7690936dac2c9718134cc03",
+    "scripts/export-phase2-parser-vectors.mjs": "06437975ec4615a69849932e6cfd7e92fbacd0f77b031094206afaa6da3bd407",
     "scripts/generate-phase2-header-vectors.mjs": "925f688dc15bc2a66fb0a7540f20ef84bcc8e5c068bff361acb440ebe7d265e5",
     "scripts/generate-phase2-network-vectors.mjs": "4e2212027278a9fef47824484c87d3683f46187371ac6541adc5b8c21411d53b",
-    "scripts/phase2-evidence.mjs": "03db2b39dfcc068539ca279a978a4461f849e61b25d5bb0c6c5a8dfc29603596",
+    "scripts/phase2-evidence.mjs": "c1b8806199a47fd5e18073554093de0e7becbb884d73a2f38708f928f7bb148c",
     "scripts/phase2-snapshot.mjs": "238d072e80be1b5f1208baba6d2b0580179354c0885faec73108c604e9d9a659",
     "sim/tb_af_afp1_header_check.sv": "b3c37b81728f49f77e2b4dd4e006caccdf3ec9a291834e968f16c3d066906fca",
+    "sim/tb_af_packet_parser.sv": "566ebb97e9947723d9d860d8fe68e3959ea2f02b4a657c064d194e1f4635e19b",
+    "sim/tb_af_packet_parser_perf.sv": "4da9af2c891c6b21e8cfc35cfd5859b5a35089a45c2a4df6b11b149ae32de750",
     "sim/tb_af_ring_control.sv": "41ba9f4c62bf11fedb59bdc00f45d7c64cda20ad2aeee660d2803a248929f154",
     "sim/tb_af_ring_control_time.sv": "7c5375c83886dbb846a4d5023a7aaca1bdf5454e504e85f50aa2f04c86c60f5f",
     "sim/tb_af_ring_store.sv": "b78f054c56cac6aa3928ae65bb9780ee87568c1b415199a3490caf15479efeb1",
@@ -26,7 +31,10 @@
     "tcl/phase2_control_time.tcl": "0c5af4304f482d3cf3005457e3885d3a3c94545bf94ef1d1ca08cd613029ac10",
     "tcl/phase2_environment.tcl": "59671d85f9fc12958bb54e1927e44addbac317f8180c847b64737ba1162977bb",
     "tcl/phase2_header.tcl": "050a9438984d991fe2be6433b5a87348cc4bc4cfec02793c3a6c4192924b1500",
+    "tcl/phase2_netlist.tcl": "82fccdfa67470963c8de19755ad51ed50a5ff7280812e0bf9446f9a8b8365ab2",
     "tcl/phase2_observe.tcl": "ee935ca62c526660a989f18b73e19d3374bb860ac3c38c4ba343ba9efbc6bd88",
+    "tcl/phase2_parser.tcl": "89d2f8cf7245f93518a52660f7ff8b2f16a455e35b200d635aa72acafc1b1500",
+    "tcl/phase2_parser_perf.tcl": "4918f87c9e5d996e2dae0bf9d013776b369e3fd0393d1bb129df6e7fe08c2042",
     "tcl/phase2_store.tcl": "ade67bb628eaf301bc3a6b8af2af1401b4b7b708393673c30960d05a672fa65a",
     "tests/ethernet-frame.test.mjs": "4925cff62b4c81b3cbd782da8756fab4623f993f6b2daefd2a757825e67eecdf"
   },
@@ -46,7 +54,8 @@
     "hardware": "NOT_RUN"
   },
   "network_reference": {
-    "evidence": "SOFTWARE_REFERENCE_PASS; RTL_REPLAY_NOT_RUN",
+    "source_artifact_evidence": "SOFTWARE_REFERENCE_PASS; RTL_REPLAY_NOT_RUN",
+    "rtl_replay_status": "DERIVED_PARSER_REPLAY_PASS",
     "external_vector_file": "D:/work/build/apertureforge-fpga/p2_01_network_20261103_01/vectors/network_vectors.json",
     "sha256": "70903dbd1c0d737b6cfd02c0183a732a504c5035bff31d71d464c587ee88c3a3",
     "cases": 102,
@@ -106,7 +115,13 @@
           "ff": 1260,
           "bram36_tiles": 0,
           "uram": 0,
-          "dsp": 8
+          "dsp": 8,
+          "lut_logic": 411,
+          "lut_memory": 0,
+          "lut_distributed_ram": null,
+          "lut_shift_register": null,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": -2.259,
@@ -126,7 +141,13 @@
           "ff": 1260,
           "bram36_tiles": 0,
           "uram": 0,
-          "dsp": 8
+          "dsp": 8,
+          "lut_logic": 409,
+          "lut_memory": 0,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 0,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": -2.288,
@@ -161,6 +182,18 @@
           "internal_no_clock": 0
         }
       },
+      "parser_performance": null,
+      "routed_quality": {
+        "routing_errors": 0,
+        "drc_checks": 13,
+        "drc_severity": {
+          "Error": 0,
+          "Critical Warning": 0,
+          "Warning": 13
+        },
+        "scope": "OOC internal paths; external I/O delays, board connectivity and real CDC not established"
+      },
+      "parser_performance_netlist": "NOT_RUN",
       "artifact_sha256": {
         "reports/utilization_synth.rpt": "64c9a71f5d23646257016cadbedd1239a78415bdd9fd3821f9ab11d5731f7a78",
         "reports/timing_synth.rpt": "162a9e8782382d8a6c1b4d31c159381bd10d11aba5d03d6c920b60a4c4da2692",
@@ -172,6 +205,7 @@
         "reports/drc.rpt": "861e8f8cd13c5082c4eb451571f8dbef74c49f7512e1960693d7272cd72ed42f",
         "reports/cdc.rpt": "1fe1a00d62545c92e14399019f5c2167f688ecc8b79920e9beefaad34319c8e3",
         "vectors/simulation_pass.txt": "f33dc3367517ba18774fdb7a9b90333dd0f15307ca129e07d7229a45cb294d6e",
+        "vectors/headers.mem": "1d6585ca3967fe154795a5299bda5cf6fe6fbb97bd2e56fee696f5391b77364b",
         "vectors/vector_manifest.json": "c0ad40dfe4f05cd2b1f927caf78920cf807a0be1691226193b5846810338a769"
       }
     },
@@ -202,7 +236,13 @@
           "ff": 514,
           "bram36_tiles": 0,
           "uram": 56,
-          "dsp": 0
+          "dsp": 0,
+          "lut_logic": 15,
+          "lut_memory": 0,
+          "lut_distributed_ram": null,
+          "lut_shift_register": null,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": 0.772,
@@ -222,7 +262,13 @@
           "ff": 514,
           "bram36_tiles": 0,
           "uram": 56,
-          "dsp": 0
+          "dsp": 0,
+          "lut_logic": 13,
+          "lut_memory": 0,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 0,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": 0.345,
@@ -236,6 +282,18 @@
         }
       },
       "same_route_clock_rechecks": {},
+      "parser_performance": null,
+      "routed_quality": {
+        "routing_errors": 0,
+        "drc_checks": 0,
+        "drc_severity": {
+          "Error": 0,
+          "Critical Warning": 0,
+          "Warning": 0
+        },
+        "scope": "OOC internal paths; external I/O delays, board connectivity and real CDC not established"
+      },
+      "parser_performance_netlist": "NOT_RUN",
       "artifact_sha256": {
         "reports/utilization_synth_1.rpt": "add739fed358fda7a75680a0f50efea2bf4e2343407be22f22c3da91caac4f76",
         "reports/timing_synth_1.rpt": "faaf89f89b1cde2cae4659d666e80bcaaa8a6bfbaf2e31d901eba7990ddb171a",
@@ -276,7 +334,13 @@
           "ff": 514,
           "bram36_tiles": 0,
           "uram": 56,
-          "dsp": 0
+          "dsp": 0,
+          "lut_logic": 14,
+          "lut_memory": 0,
+          "lut_distributed_ram": null,
+          "lut_shift_register": null,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": 0.772,
@@ -296,7 +360,13 @@
           "ff": 514,
           "bram36_tiles": 0,
           "uram": 56,
-          "dsp": 0
+          "dsp": 0,
+          "lut_logic": 13,
+          "lut_memory": 0,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 0,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": 0.361,
@@ -310,6 +380,18 @@
         }
       },
       "same_route_clock_rechecks": {},
+      "parser_performance": null,
+      "routed_quality": {
+        "routing_errors": 0,
+        "drc_checks": 0,
+        "drc_severity": {
+          "Error": 0,
+          "Critical Warning": 0,
+          "Warning": 0
+        },
+        "scope": "OOC internal paths; external I/O delays, board connectivity and real CDC not established"
+      },
+      "parser_performance_netlist": "NOT_RUN",
       "artifact_sha256": {
         "reports/utilization_synth_1.rpt": "6421d6debaa9bb8b5c1cdc1b52f644c267575eb230316a2867333017ebc7f622",
         "reports/timing_synth_1.rpt": "e5f818c35287a8684ad19f19cd9af24e8395c2561fb9730aa42c41de69c847d9",
@@ -354,7 +436,13 @@
           "ff": 1721,
           "bram36_tiles": 0,
           "uram": 0,
-          "dsp": 8
+          "dsp": 8,
+          "lut_logic": 403,
+          "lut_memory": 616,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 616,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": 2.094,
@@ -374,7 +462,13 @@
           "ff": 1721,
           "bram36_tiles": 0,
           "uram": 0,
-          "dsp": 8
+          "dsp": 8,
+          "lut_logic": 401,
+          "lut_memory": 312,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 312,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": 1.638,
@@ -388,6 +482,18 @@
         }
       },
       "same_route_clock_rechecks": {},
+      "parser_performance": null,
+      "routed_quality": {
+        "routing_errors": 0,
+        "drc_checks": 9,
+        "drc_severity": {
+          "Error": 0,
+          "Critical Warning": 0,
+          "Warning": 9
+        },
+        "scope": "OOC internal paths; external I/O delays, board connectivity and real CDC not established"
+      },
+      "parser_performance_netlist": "NOT_RUN",
       "artifact_sha256": {
         "reports/utilization_synth.rpt": "102a4de56d74d35484bb75fcd62b9782662d2c4cf3020f82da551903ba39e794",
         "reports/timing_synth.rpt": "35c0ee0205e7995575cc2c09a5dbb3365bd4bbc3957250616b6b24103c87adbd",
@@ -399,6 +505,7 @@
         "vectors/simulation_pass.txt": "98194a04462b88f1531e666cae1f70f44c76406dadb993fb70384d09f187bcd8",
         "vectors/behavioral_simulation_pass.txt": "98194a04462b88f1531e666cae1f70f44c76406dadb993fb70384d09f187bcd8",
         "vectors/post_implementation_simulation_pass.txt": "98194a04462b88f1531e666cae1f70f44c76406dadb993fb70384d09f187bcd8",
+        "vectors/headers.mem": "81f78dff15d28762a7b51d642ca2ede1637bdd04b4398f7b348a42d6d9eddb55",
         "vectors/vector_manifest.json": "96db8875635a76b1ce1b19afc9e27d088498308b7a7573f588ee9c0ab8e63fa3"
       }
     },
@@ -420,14 +527,14 @@
       "part": "xcku5p-ffvb676-1-i",
       "clock_period_ns": 4,
       "simulation": "PASS sources=256 slots=10 commands=541 descriptors=13 committed=259 consumed=258 discarded=1 canceled=4",
-      "post_implementation_simulation": "NOT_COLLECTED",
+      "post_implementation_simulation": "PASS sources=256 slots=10 commands=541 descriptors=13 committed=259 consumed=258 discarded=1 canceled=4",
       "time_edges": "PASS invalid_configs=4 max_sequence=PASS deadline_above_2p63=PASS",
       "last_observed_run_state": {
-        "observed_utc": "2026-11-03T11:25:32Z",
+        "observed_utc": "2026-11-03T12:03:00Z",
         "synthesis_status": "synth_design Complete!",
         "synthesis_progress": "100%",
         "synthesis_directive": "Default",
-        "implementation_status": "Running route_design..."
+        "implementation_status": "route_design Complete!"
       },
       "supplementary_source_snapshot": {
         "schema": 1,
@@ -446,7 +553,13 @@
           "ff": 8342,
           "bram36_tiles": 0,
           "uram": 0,
-          "dsp": 0
+          "dsp": 0,
+          "lut_logic": 12357,
+          "lut_memory": 0,
+          "lut_distributed_ram": null,
+          "lut_shift_register": null,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": -1.149,
@@ -460,13 +573,78 @@
         }
       },
       "routed": {
-        "status": "NOT_COLLECTED"
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 12358,
+          "ff": 8343,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 0,
+          "lut_logic": 12358,
+          "lut_memory": 0,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 0,
+          "ramb18": 0,
+          "ramb36_fifo": 0
+        },
+        "timing": {
+          "wns_ns": -1.94,
+          "tns_ns": -9489.697,
+          "setup_failing_endpoints": 7291,
+          "whs_ns": 0.042,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
       },
-      "same_route_clock_rechecks": {},
+      "same_route_clock_rechecks": {
+        "125": {
+          "wns_ns": 2.06,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.042,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        },
+        "200": {
+          "wns_ns": -0.94,
+          "tns_ns": -3319.743,
+          "setup_failing_endpoints": 5692,
+          "whs_ns": 0.042,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "parser_performance": null,
+      "routed_quality": {
+        "routing_errors": 0,
+        "drc_checks": 0,
+        "drc_severity": {
+          "Error": 0,
+          "Critical Warning": 0,
+          "Warning": 0
+        },
+        "scope": "OOC internal paths; external I/O delays, board connectivity and real CDC not established"
+      },
+      "parser_performance_netlist": "NOT_RUN",
       "artifact_sha256": {
         "reports/utilization_synth_1.rpt": "bf7e54f0b4d038c4bb0db303674dc503f00fca0b95eca95b4ab64126b5c51326",
         "reports/timing_synth_1.rpt": "850136f1141146319d71a55546a659fe3058ce18f587d4cf9c0ec63458346815",
+        "reports/utilization_impl_1.rpt": "08ccfb745f6d49eeb8886145c8760f877b8d846b22cea5c7e8248a1bf8e0ab8b",
+        "reports/timing_impl_1.rpt": "41b5f666d2cbfc3c07b5ba504a81e2192581e4b858777d7228ec2584deb81243",
+        "reports/timing_route_recheck_200mhz.rpt": "34e495a39c905c2e30fadb43d9e3f0c5ca42c93915d52bc54abf28591d55e6a9",
+        "reports/timing_route_recheck_125mhz.rpt": "7ebec71e53c6809448abc66585392d9f457b9e640804a5fd01c1b1922e50cc31",
+        "reports/route_status.rpt": "1a5994f4485b238d8df3f6c058ca761ccb9d94b598f018644a767b645d2afb66",
+        "reports/drc.rpt": "3a456689e129a00a3426d95d6aff41e46f0d1b101c282c39b9e1f1ed714e3b3f",
+        "reports/cdc.rpt": "a5563ab3121187a5883dd2382d38794e5f1c6705fb5529d500c2e0335872de89",
         "vectors/simulation_pass.txt": "b7b989a6c07301dc175572edc707c8e040ed84b38143ece7a48183599a9ceabb",
+        "vectors/behavioral_simulation_pass.txt": "b7b989a6c07301dc175572edc707c8e040ed84b38143ece7a48183599a9ceabb",
+        "vectors/post_implementation_simulation_pass.txt": "b7b989a6c07301dc175572edc707c8e040ed84b38143ece7a48183599a9ceabb",
         "vectors/time_edges_pass.txt": "68db4461393217217028ce3855299836be1b09bcd2d8ba64d8b35a7e80497ae7"
       }
     },
@@ -488,14 +666,14 @@
       "part": "xcku5p-ffvb676-1-i",
       "clock_period_ns": 4,
       "simulation": "PASS sources=256 slots=10 commands=541 descriptors=13 committed=259 consumed=258 discarded=1 canceled=4",
-      "post_implementation_simulation": "NOT_COLLECTED",
+      "post_implementation_simulation": "PASS sources=256 slots=10 commands=541 descriptors=13 committed=259 consumed=258 discarded=1 canceled=4",
       "time_edges": "PASS invalid_configs=4 max_sequence=PASS deadline_above_2p63=PASS",
       "last_observed_run_state": {
-        "observed_utc": "2026-11-03T11:25:32Z",
+        "observed_utc": "2026-11-03T12:03:00Z",
         "synthesis_status": "synth_design Complete!",
         "synthesis_progress": "100%",
         "synthesis_directive": "RuntimeOptimized",
-        "implementation_status": "Running place_design..."
+        "implementation_status": "route_design Complete!"
       },
       "supplementary_source_snapshot": {
         "schema": 1,
@@ -514,7 +692,13 @@
           "ff": 8343,
           "bram36_tiles": 0,
           "uram": 0,
-          "dsp": 0
+          "dsp": 0,
+          "lut_logic": 14921,
+          "lut_memory": 0,
+          "lut_distributed_ram": null,
+          "lut_shift_register": null,
+          "ramb18": 0,
+          "ramb36_fifo": 0
         },
         "timing": {
           "wns_ns": -0.818,
@@ -528,20 +712,298 @@
         }
       },
       "routed": {
-        "status": "NOT_COLLECTED"
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 15419,
+          "ff": 8344,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 0,
+          "lut_logic": 15419,
+          "lut_memory": 0,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 0,
+          "ramb18": 0,
+          "ramb36_fifo": 0
+        },
+        "timing": {
+          "wns_ns": -2.296,
+          "tns_ns": -12502.116,
+          "setup_failing_endpoints": 8784,
+          "whs_ns": 0.042,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
       },
-      "same_route_clock_rechecks": {},
+      "same_route_clock_rechecks": {
+        "125": {
+          "wns_ns": 1.704,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.042,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        },
+        "200": {
+          "wns_ns": -1.296,
+          "tns_ns": -5478.27,
+          "setup_failing_endpoints": 5830,
+          "whs_ns": 0.042,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "parser_performance": null,
+      "routed_quality": {
+        "routing_errors": 0,
+        "drc_checks": 0,
+        "drc_severity": {
+          "Error": 0,
+          "Critical Warning": 0,
+          "Warning": 0
+        },
+        "scope": "OOC internal paths; external I/O delays, board connectivity and real CDC not established"
+      },
+      "parser_performance_netlist": "NOT_RUN",
       "artifact_sha256": {
         "reports/utilization_synth_1.rpt": "fb732052ed70d1630b120e903dedb7296abe346d742dc78592566a8b46596f71",
         "reports/timing_synth_1.rpt": "0582770e44125615a6c461df21bb87115313cc0999265d44bf02a54ab9c34437",
+        "reports/utilization_impl_1.rpt": "f70dd26f8b6133e22e7e7703d49a4dc523c3413813db7d9a591926494c5534d6",
+        "reports/timing_impl_1.rpt": "fd526c8a2e18797c42a61a8ed6ea0924ccd8923bd62b20eb1ab8a3cefd9ebdb9",
+        "reports/timing_route_recheck_200mhz.rpt": "a48cb22efbec13abc2e51cf51371ba9823ac0f9bbd30c4e52871bf449fc4b349",
+        "reports/timing_route_recheck_125mhz.rpt": "c34f2cbdd17251161a2667cfe1f8a4f49c84ccb46f44144e8a1f1a629dddfec3",
+        "reports/route_status.rpt": "4b7b0c71255a8495d0745652f4d4b6c97cec9d9e30efa819fb338e9e30af58e8",
+        "reports/drc.rpt": "eedd6c811023ec1ea4112f80712015c773a0880f97a05cd3b9a4785cf5cbabbf",
+        "reports/cdc.rpt": "b57e988690cb1ae33965b912b27ffbfbe1b9384577c8bfc0212571439f1b03f2",
         "vectors/simulation_pass.txt": "b7b989a6c07301dc175572edc707c8e040ed84b38143ece7a48183599a9ceabb",
+        "vectors/behavioral_simulation_pass.txt": "b7b989a6c07301dc175572edc707c8e040ed84b38143ece7a48183599a9ceabb",
+        "vectors/post_implementation_simulation_pass.txt": "b7b989a6c07301dc175572edc707c8e040ed84b38143ece7a48183599a9ceabb",
         "vectors/time_edges_pass.txt": "68db4461393217217028ce3855299836be1b09bcd2d8ba64d8b35a7e80497ae7"
+      }
+    },
+    {
+      "id": "p2_03_parser_w32_20261103_01",
+      "scope": "Ethernet/IPv4/UDP/AFP1 parser width 32, ideal external admission",
+      "source_snapshot": {
+        "schema": 1,
+        "baseline_commit": "e50960c18fabd7c36e5e0d67c272368e57925a57",
+        "normalization": "UTF-8 text, CRLF converted to LF",
+        "source_sha256": {
+          "rtl/af_packet_parser.sv": "d0feaac58986ad707540f8e031c9dd45f9bd91045cd77f09fc182ed39f5872e0",
+          "rtl/af_afp1_header_check.sv": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+          "sim/tb_af_packet_parser.sv": "566ebb97e9947723d9d860d8fe68e3959ea2f02b4a657c064d194e1f4635e19b",
+          "tcl/phase2_parser.tcl": "89d2f8cf7245f93518a52660f7ff8b2f16a455e35b200d635aa72acafc1b1500",
+          "scripts/export-phase2-parser-vectors.mjs": "06437975ec4615a69849932e6cfd7e92fbacd0f77b031094206afaa6da3bd407"
+        }
+      },
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_03_parser_w32_20261103_01",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS width=32 frames=53 commits=33 rejects=20 decisions=53 cycles=17983 reset_inflight=PASS",
+      "post_implementation_simulation": "NOT_COLLECTED",
+      "time_edges": "NOT_RUN",
+      "last_observed_run_state": null,
+      "supplementary_source_snapshot": null,
+      "synthesis": {
+        "status": "NOT_COLLECTED"
+      },
+      "routed": {
+        "status": "NOT_COLLECTED"
+      },
+      "same_route_clock_rechecks": {},
+      "parser_performance": null,
+      "routed_quality": null,
+      "parser_performance_netlist": "NOT_RUN",
+      "artifact_sha256": {
+        "vectors/simulation_pass.txt": "682e55028d34e0fec5b6e576a89595bec0f48e8b4c99552333cd9b130f011075",
+        "vectors/behavioral_simulation_pass.txt": "682e55028d34e0fec5b6e576a89595bec0f48e8b4c99552333cd9b130f011075",
+        "vectors/parser_vectors.json": "9102a25a3a75e924698f54ca809f2e85db74a76ee284a86a6db830f4365d3384",
+        "vectors/beats.mem": "6a6b82f5fc4aa49671299cc7026c83e02f9b47374d337dc241dd6f9cc9aaeff3",
+        "vectors/info.mem": "cdd7977eeda3cd74eea27564fcea99452186cb79d2f473c5ff639b761d8b9593",
+        "vectors/headers.mem": "3f9315615616117c6de82aefd88911eff52e0f540234e155e9e1c091bc65a547",
+        "vectors/gold.mem": "326583aee7de6f10c963b8710d43a4fabcb6dd94c3c33edaf7cd2a355cf183d3"
+      }
+    },
+    {
+      "id": "p2_03_parser_w64_20261103_01",
+      "scope": "Ethernet/IPv4/UDP/AFP1 parser width 64, ideal external admission",
+      "source_snapshot": {
+        "schema": 1,
+        "baseline_commit": "e50960c18fabd7c36e5e0d67c272368e57925a57",
+        "normalization": "UTF-8 text, CRLF converted to LF",
+        "source_sha256": {
+          "rtl/af_packet_parser.sv": "d0feaac58986ad707540f8e031c9dd45f9bd91045cd77f09fc182ed39f5872e0",
+          "rtl/af_afp1_header_check.sv": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+          "sim/tb_af_packet_parser.sv": "566ebb97e9947723d9d860d8fe68e3959ea2f02b4a657c064d194e1f4635e19b",
+          "tcl/phase2_parser.tcl": "89d2f8cf7245f93518a52660f7ff8b2f16a455e35b200d635aa72acafc1b1500",
+          "scripts/export-phase2-parser-vectors.mjs": "06437975ec4615a69849932e6cfd7e92fbacd0f77b031094206afaa6da3bd407"
+        }
+      },
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_03_parser_w64_20261103_01",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS width=64 frames=53 commits=33 rejects=20 decisions=53 cycles=9400 reset_inflight=PASS",
+      "post_implementation_simulation": "NOT_COLLECTED",
+      "time_edges": "NOT_RUN",
+      "last_observed_run_state": null,
+      "supplementary_source_snapshot": null,
+      "synthesis": {
+        "status": "NOT_COLLECTED"
+      },
+      "routed": {
+        "status": "NOT_COLLECTED"
+      },
+      "same_route_clock_rechecks": {},
+      "parser_performance": null,
+      "routed_quality": null,
+      "parser_performance_netlist": "NOT_RUN",
+      "artifact_sha256": {
+        "vectors/simulation_pass.txt": "6fcb48ef8e5098b3b905d2973ccd05d960da0ac52a89c2a5115375e90dac8261",
+        "vectors/behavioral_simulation_pass.txt": "6fcb48ef8e5098b3b905d2973ccd05d960da0ac52a89c2a5115375e90dac8261",
+        "vectors/parser_vectors.json": "bfb904ee6267af5513f4d58fd417c59618e791a50b50a6f59a3acfa6ac24d01c",
+        "vectors/beats.mem": "15d10206cd785c59bf723df0c52692aa06d4aceb1d849c6ece303dec52ed2824",
+        "vectors/info.mem": "e6c3c8ae8f789ea3f3c2468c4d857cf6e2f92af9913e96024eec3b1e8e917ac3",
+        "vectors/headers.mem": "3f9315615616117c6de82aefd88911eff52e0f540234e155e9e1c091bc65a547",
+        "vectors/gold.mem": "326583aee7de6f10c963b8710d43a4fabcb6dd94c3c33edaf7cd2a355cf183d3"
+      }
+    },
+    {
+      "id": "p2_03_parser_w512_20261103_01",
+      "scope": "Ethernet/IPv4/UDP/AFP1 parser width 512, ideal external admission",
+      "source_snapshot": {
+        "schema": 1,
+        "baseline_commit": "e50960c18fabd7c36e5e0d67c272368e57925a57",
+        "normalization": "UTF-8 text, CRLF converted to LF",
+        "source_sha256": {
+          "rtl/af_packet_parser.sv": "d0feaac58986ad707540f8e031c9dd45f9bd91045cd77f09fc182ed39f5872e0",
+          "rtl/af_afp1_header_check.sv": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+          "sim/tb_af_packet_parser.sv": "566ebb97e9947723d9d860d8fe68e3959ea2f02b4a657c064d194e1f4635e19b",
+          "sim/tb_af_packet_parser_perf.sv": "4da9af2c891c6b21e8cfc35cfd5859b5a35089a45c2a4df6b11b149ae32de750",
+          "constraints/af_parser_ooc.xdc": "80328b5c534fa6922d63603dd37a93e072b5e774b0f5250e9e2816cc5bb832a7",
+          "tcl/phase2_parser.tcl": "89d2f8cf7245f93518a52660f7ff8b2f16a455e35b200d635aa72acafc1b1500",
+          "tcl/phase2_parser_perf.tcl": "4918f87c9e5d996e2dae0bf9d013776b369e3fd0393d1bb129df6e7fe08c2042",
+          "tcl/phase2_netlist.tcl": "82fccdfa67470963c8de19755ad51ed50a5ff7280812e0bf9446f9a8b8365ab2",
+          "scripts/export-phase2-parser-vectors.mjs": "06437975ec4615a69849932e6cfd7e92fbacd0f77b031094206afaa6da3bd407",
+          "models/packet.mjs": "e1fbbc61f67f286a90f01d03a8d55e94d96a3ea75e41fe865168815243251033",
+          "models/ethernet-frame.mjs": "46a52dfa02ea68e2105a9b0ea02a3eedd54822c839d156cc80a0ed0d22158a84"
+        }
+      },
+      "external_build_dir": "D:/work/build/apertureforge-fpga/p2_03_parser_w512_20261103_01",
+      "part": "xcku5p-ffvb676-1-i",
+      "clock_period_ns": 4,
+      "simulation": "PASS width=512 frames=60 commits=33 rejects=27 decisions=61 cycles=2381 reset_inflight=PASS",
+      "post_implementation_simulation": "PASS width=512 frames=60 commits=33 rejects=27 decisions=61 cycles=2381 reset_inflight=PASS",
+      "time_edges": "NOT_RUN",
+      "last_observed_run_state": null,
+      "supplementary_source_snapshot": null,
+      "synthesis": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 4111,
+          "ff": 3081,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 8,
+          "lut_logic": 3975,
+          "lut_memory": 136,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 136,
+          "ramb18": 0,
+          "ramb36_fifo": 0
+        },
+        "timing": {
+          "wns_ns": 0.236,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.058,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "routed": {
+        "status": "COLLECTED",
+        "resources": {
+          "lut": 4027,
+          "ff": 3081,
+          "bram36_tiles": 0,
+          "uram": 0,
+          "dsp": 8,
+          "lut_logic": 3955,
+          "lut_memory": 72,
+          "lut_distributed_ram": 0,
+          "lut_shift_register": 72,
+          "ramb18": 0,
+          "ramb36_fifo": 0
+        },
+        "timing": {
+          "wns_ns": 0.06,
+          "tns_ns": 0,
+          "setup_failing_endpoints": 0,
+          "whs_ns": 0.032,
+          "ths_ns": 0,
+          "hold_failing_endpoints": 0,
+          "internal_unconstrained_endpoints": 0,
+          "internal_no_clock": 0
+        }
+      },
+      "same_route_clock_rechecks": {},
+      "parser_performance": {
+        "packets": 1024,
+        "total_cycles": 24576,
+        "interval_min": 24,
+        "interval_max": 24,
+        "first_finish": 62,
+        "last_finish": 24614,
+        "science_bytes": 655360,
+        "scope": "Repeated identical mapped128 packet, ideal grant and no sink stall; parser only, NOT receiver throughput",
+        "clock_hz": 250000000,
+        "packets_per_second": 10416666.666666666,
+        "science_bits_per_second": 53333333333.333336,
+        "routed_clock_internal_pass": true
+      },
+      "routed_quality": {
+        "routing_errors": 0,
+        "drc_checks": 9,
+        "drc_severity": {
+          "Error": 0,
+          "Critical Warning": 0,
+          "Warning": 9
+        },
+        "scope": "OOC internal paths; external I/O delays, board connectivity and real CDC not established"
+      },
+      "parser_performance_netlist": "PASS packets=1024 total_cycles=24576 interval_min=24 interval_max=24 first_finish=62 last_finish=24614 science_bytes=655360",
+      "artifact_sha256": {
+        "reports/utilization_synth_1.rpt": "bda0af43e679c7fc70e86788830e05feda9096504fe9589a60678dfd5d36b03a",
+        "reports/timing_synth_1.rpt": "bf36f4f6262a662f65fa933edf215fe83b9ee9f820d42b8632fcde75a2059498",
+        "reports/utilization_impl_1.rpt": "da811b8373d37b3e91983a6e857ee8322e6bb94b858e0f1aba179e944008f29b",
+        "reports/timing_impl_1.rpt": "ef090f9b9bbfdf24dd0dc56bf49f951e5e0868b7558fce0dbc297258d0f76257",
+        "reports/route_status.rpt": "fcae64c1d7c6c46e0b1f826342c2a135fb09f91f2b964948f895faf12643986f",
+        "reports/drc.rpt": "f75025023c83161d668244f07f95a758e92502a7ac4a2ca28a43e1a9982d0feb",
+        "reports/cdc.rpt": "2e76d1d109fb7e3e5935b2f9f5564cf2dd830583f4b8fe87dbaa9e1caaa37cb5",
+        "vectors/simulation_pass.txt": "c652fce594d5c7f6957e166bdfb37c58ad1b9ad04f215bdaf92fb7a41c2afd32",
+        "vectors/behavioral_simulation_pass.txt": "c652fce594d5c7f6957e166bdfb37c58ad1b9ad04f215bdaf92fb7a41c2afd32",
+        "vectors/post_implementation_simulation_pass.txt": "c652fce594d5c7f6957e166bdfb37c58ad1b9ad04f215bdaf92fb7a41c2afd32",
+        "vectors/parser_perf_pass.txt": "20d460ee471366e9d29903d30cdd0e1b3200bd38b76778418f16cd3aeb68c6ae",
+        "vectors/parser_perf_netlist_pass.txt": "20d460ee471366e9d29903d30cdd0e1b3200bd38b76778418f16cd3aeb68c6ae",
+        "vectors/parser_vectors.json": "7af632362bec0694cdbf14a712a40d863c0d2f72c544fe980bb4ba20a2c5d79f",
+        "vectors/beats.mem": "8777d19899378898add239ed07f7805aa0b1c3fe3cc76affc438ac8f63b4330b",
+        "vectors/info.mem": "03674b1c846ab49291472ac1c723b43a25094a0e66f5a183bdde331b8250ab86",
+        "vectors/headers.mem": "69cdd1dfc600c28b77fd5b8603b903416e4c51bf56d8bdac2960cff82737052f",
+        "vectors/gold.mem": "3a8582c73760f689fc824c0e42da09551ceb591c240c0848a84dfa524d8fbe01"
       }
     }
   ],
   "limits": [
     "Modules not connected into a receiver",
-    "No Ethernet/IP/UDP RTL parser or CDC yet; transaction metadata tested independently",
+    "Parser tested with ideal admission; real ring admission/store and non-stallable ingress/CDC not connected",
     "OOC external I/O delays and physical CMAC clock tree absent; internal timing only",
     "RAM store does not implement slot ownership, generation or source masks",
     "Science algorithms and RFSoC equivalent frontend not yet built",
