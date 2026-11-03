@@ -17,6 +17,7 @@
 
 ## 阅读入口
 
+- [第一阶段任务目标与验收清单](docs/phase-1-objectives.zh-CN.md)
 - [架构、器件选择与容量推导](docs/feasibility.zh-CN.md)
 - [综合、实现和科学验证计划](docs/benchmark-plan.zh-CN.md)
 - [RFSoC 频率分发与接收缓存重点方案](docs/corner-turn-and-buffer.zh-CN.md)
