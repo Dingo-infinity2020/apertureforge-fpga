@@ -1,0 +1,719 @@
+{
+  "evidence": "ANALYTICAL_MEMORY_AND_BANDWIDTH_WITH_SMALL_INTEGER_REFERENCE_TESTS",
+  "assumptions": {
+    "blocks": 512,
+    "seeds": [
+      20261103,
+      97
+    ],
+    "jitter_us": 100,
+    "source_assembly_banks": 3,
+    "switch_queue_bytes": 524288,
+    "raw_ram_fraction_budget": 0.85,
+    "ingress_fifo_bytes_assumed": 262144,
+    "algorithm_work_bytes_reserved": 1048576,
+    "slot_metadata_bytes_assumed": 96,
+    "weight_banks": 2,
+    "scenarios": [
+      {
+        "id": "reference74",
+        "base": "ideal200",
+        "channels": 56,
+        "depth": 7
+      },
+      {
+        "id": "candidate128",
+        "base": "ideal200",
+        "channels": 32,
+        "depth": 7
+      },
+      {
+        "id": "mapped128",
+        "base": "mapped320",
+        "channels": 20,
+        "depth": 10
+      },
+      {
+        "id": "extension342",
+        "base": "ideal500",
+        "channels": 12,
+        "depth": 8
+      }
+    ],
+    "acceptance": "zero source/switch loss; zero ring rejection/missing/resident; final-quarter mean switch wait <= middle-quarter mean + one-quarter period for every destination; source max wait < one period; raw allocation <=85% of approximate raw on-chip RAM. Finite deterministic trace acceptance only, no arbitrary-delay guarantee."
+  },
+  "rows": [
+    {
+      "id": "reference74",
+      "beams": 1,
+      "slots": 7,
+      "channels": 56,
+      "coefficients_bytes": 917504,
+      "metadata_bytes": 672,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 393216,
+      "raw": {
+        "total_onchip_bytes": 5440160,
+        "data_bytes": 3211264,
+        "full_write_read_bytes_s": 22400000000,
+        "within_budget": false
+      },
+      "arrival": {
+        "total_onchip_bytes": 2260256,
+        "accumulators_bytes": 25088,
+        "weight_power_bytes": 6272,
+        "within_budget": true,
+        "complex_macs_per_s": 5600000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 3146400,
+        "ddr_spill_bytes": 2293760,
+        "worst_full_spill_write_read_bytes_s": 22400000000,
+        "within_onchip_budget": true,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": false
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": false
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": false
+        }
+      ]
+    },
+    {
+      "id": "reference74",
+      "beams": 4,
+      "slots": 7,
+      "channels": 56,
+      "coefficients_bytes": 3670016,
+      "metadata_bytes": 672,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 393216,
+      "raw": {
+        "total_onchip_bytes": 8192672,
+        "data_bytes": 3211264,
+        "full_write_read_bytes_s": 22400000000,
+        "within_budget": false
+      },
+      "arrival": {
+        "total_onchip_bytes": 5106848,
+        "accumulators_bytes": 100352,
+        "weight_power_bytes": 25088,
+        "within_budget": false,
+        "complex_macs_per_s": 22400000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 5898912,
+        "ddr_spill_bytes": 2293760,
+        "worst_full_spill_write_read_bytes_s": 22400000000,
+        "within_onchip_budget": false,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": false
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": false
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": false
+        }
+      ]
+    },
+    {
+      "id": "reference74",
+      "beams": 16,
+      "slots": 7,
+      "channels": 56,
+      "coefficients_bytes": 14680064,
+      "metadata_bytes": 672,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 393216,
+      "raw": {
+        "total_onchip_bytes": 19202720,
+        "data_bytes": 3211264,
+        "full_write_read_bytes_s": 22400000000,
+        "within_budget": false
+      },
+      "arrival": {
+        "total_onchip_bytes": 16493216,
+        "accumulators_bytes": 401408,
+        "weight_power_bytes": 100352,
+        "within_budget": false,
+        "complex_macs_per_s": 89600000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 16908960,
+        "ddr_spill_bytes": 2293760,
+        "worst_full_spill_write_read_bytes_s": 22400000000,
+        "within_onchip_budget": false,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": false
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": false
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": false
+        }
+      ]
+    },
+    {
+      "id": "candidate128",
+      "beams": 1,
+      "slots": 7,
+      "channels": 32,
+      "coefficients_bytes": 524288,
+      "metadata_bytes": 672,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 393216,
+      "raw": {
+        "total_onchip_bytes": 3670688,
+        "data_bytes": 1835008,
+        "full_write_read_bytes_s": 12800000000,
+        "within_budget": true
+      },
+      "arrival": {
+        "total_onchip_bytes": 1853600,
+        "accumulators_bytes": 14336,
+        "weight_power_bytes": 3584,
+        "within_budget": true,
+        "complex_macs_per_s": 3200000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 2359968,
+        "ddr_spill_bytes": 1310720,
+        "worst_full_spill_write_read_bytes_s": 12800000000,
+        "within_onchip_budget": true,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    },
+    {
+      "id": "candidate128",
+      "beams": 4,
+      "slots": 7,
+      "channels": 32,
+      "coefficients_bytes": 2097152,
+      "metadata_bytes": 672,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 393216,
+      "raw": {
+        "total_onchip_bytes": 5243552,
+        "data_bytes": 1835008,
+        "full_write_read_bytes_s": 12800000000,
+        "within_budget": false
+      },
+      "arrival": {
+        "total_onchip_bytes": 3480224,
+        "accumulators_bytes": 57344,
+        "weight_power_bytes": 14336,
+        "within_budget": true,
+        "complex_macs_per_s": 12800000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 3932832,
+        "ddr_spill_bytes": 1310720,
+        "worst_full_spill_write_read_bytes_s": 12800000000,
+        "within_onchip_budget": false,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    },
+    {
+      "id": "candidate128",
+      "beams": 16,
+      "slots": 7,
+      "channels": 32,
+      "coefficients_bytes": 8388608,
+      "metadata_bytes": 672,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 393216,
+      "raw": {
+        "total_onchip_bytes": 11535008,
+        "data_bytes": 1835008,
+        "full_write_read_bytes_s": 12800000000,
+        "within_budget": false
+      },
+      "arrival": {
+        "total_onchip_bytes": 9986720,
+        "accumulators_bytes": 229376,
+        "weight_power_bytes": 57344,
+        "within_budget": false,
+        "complex_macs_per_s": 51200000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 10224288,
+        "ddr_spill_bytes": 1310720,
+        "worst_full_spill_write_read_bytes_s": 12800000000,
+        "within_onchip_budget": false,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    },
+    {
+      "id": "mapped128",
+      "beams": 1,
+      "slots": 10,
+      "channels": 20,
+      "coefficients_bytes": 327680,
+      "metadata_bytes": 960,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 245760,
+      "raw": {
+        "total_onchip_bytes": 3277760,
+        "data_bytes": 1638400,
+        "full_write_read_bytes_s": 12800000000.000002,
+        "within_budget": true
+      },
+      "arrival": {
+        "total_onchip_bytes": 1655360,
+        "accumulators_bytes": 12800,
+        "weight_power_bytes": 3200,
+        "within_budget": true,
+        "complex_macs_per_s": 3200000000.0000005,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 1967040,
+        "ddr_spill_bytes": 1310720,
+        "worst_full_spill_write_read_bytes_s": 12800000000.000002,
+        "within_onchip_budget": true,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    },
+    {
+      "id": "mapped128",
+      "beams": 4,
+      "slots": 10,
+      "channels": 20,
+      "coefficients_bytes": 1310720,
+      "metadata_bytes": 960,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 245760,
+      "raw": {
+        "total_onchip_bytes": 4260800,
+        "data_bytes": 1638400,
+        "full_write_read_bytes_s": 12800000000.000002,
+        "within_budget": false
+      },
+      "arrival": {
+        "total_onchip_bytes": 2686400,
+        "accumulators_bytes": 51200,
+        "weight_power_bytes": 12800,
+        "within_budget": true,
+        "complex_macs_per_s": 12800000000.000002,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 2950080,
+        "ddr_spill_bytes": 1310720,
+        "worst_full_spill_write_read_bytes_s": 12800000000.000002,
+        "within_onchip_budget": true,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    },
+    {
+      "id": "mapped128",
+      "beams": 16,
+      "slots": 10,
+      "channels": 20,
+      "coefficients_bytes": 5242880,
+      "metadata_bytes": 960,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 245760,
+      "raw": {
+        "total_onchip_bytes": 8192960,
+        "data_bytes": 1638400,
+        "full_write_read_bytes_s": 12800000000.000002,
+        "within_budget": false
+      },
+      "arrival": {
+        "total_onchip_bytes": 6810560,
+        "accumulators_bytes": 204800,
+        "weight_power_bytes": 51200,
+        "within_budget": false,
+        "complex_macs_per_s": 51200000000.00001,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 6882240,
+        "ddr_spill_bytes": 1310720,
+        "worst_full_spill_write_read_bytes_s": 12800000000.000002,
+        "within_onchip_budget": false,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    },
+    {
+      "id": "extension342",
+      "beams": 1,
+      "slots": 8,
+      "channels": 12,
+      "coefficients_bytes": 196608,
+      "metadata_bytes": 768,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 786432,
+      "raw": {
+        "total_onchip_bytes": 3080960,
+        "data_bytes": 1572864,
+        "full_write_read_bytes_s": 12000000000,
+        "within_budget": true
+      },
+      "arrival": {
+        "total_onchip_bytes": 1521920,
+        "accumulators_bytes": 12288,
+        "weight_power_bytes": 1536,
+        "within_budget": true,
+        "complex_macs_per_s": 3000000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 1901312,
+        "ddr_spill_bytes": 1179648,
+        "worst_full_spill_write_read_bytes_s": 12000000000,
+        "within_onchip_budget": true,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    },
+    {
+      "id": "extension342",
+      "beams": 4,
+      "slots": 8,
+      "channels": 12,
+      "coefficients_bytes": 786432,
+      "metadata_bytes": 768,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 786432,
+      "raw": {
+        "total_onchip_bytes": 3670784,
+        "data_bytes": 1572864,
+        "full_write_read_bytes_s": 12000000000,
+        "within_budget": true
+      },
+      "arrival": {
+        "total_onchip_bytes": 2153216,
+        "accumulators_bytes": 49152,
+        "weight_power_bytes": 6144,
+        "within_budget": true,
+        "complex_macs_per_s": 12000000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 2491136,
+        "ddr_spill_bytes": 1179648,
+        "worst_full_spill_write_read_bytes_s": 12000000000,
+        "within_onchip_budget": true,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    },
+    {
+      "id": "extension342",
+      "beams": 16,
+      "slots": 8,
+      "channels": 12,
+      "coefficients_bytes": 3145728,
+      "metadata_bytes": 768,
+      "algorithm_reserved_bytes": 1048576,
+      "ingress_fifo_bytes": 262144,
+      "source_assembly_data_bytes": 786432,
+      "raw": {
+        "total_onchip_bytes": 6030080,
+        "data_bytes": 1572864,
+        "full_write_read_bytes_s": 12000000000,
+        "within_budget": false
+      },
+      "arrival": {
+        "total_onchip_bytes": 4678400,
+        "accumulators_bytes": 196608,
+        "weight_power_bytes": 24576,
+        "within_budget": false,
+        "complex_macs_per_s": 48000000000,
+        "note": "Weighted-sum arithmetic only validated at small scale; rate is a requirement, NOT synthesized throughput"
+      },
+      "hybrid": {
+        "total_onchip_bytes": 4850432,
+        "ddr_spill_bytes": 1179648,
+        "worst_full_spill_write_read_bytes_s": 12000000000,
+        "within_onchip_budget": false,
+        "ddr_verified": false,
+        "note": "Capacity estimate, not tested arbitration/latency. Must guarantee mixed burst throughput and deadline."
+      },
+      "ddr_examples": [
+        {
+          "mtps": 2400,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 14400000000,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 2666.6666666667,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 16000000000.000202,
+          "full_spill_requirement_fits_assumption": true
+        },
+        {
+          "mtps": 3200,
+          "data_bits": 64,
+          "efficiency_assumed": 0.75,
+          "effective_read_plus_write_bytes_s": 19200000000,
+          "full_spill_requirement_fits_assumption": true
+        }
+      ]
+    }
+  ]
+}

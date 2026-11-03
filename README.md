@@ -19,6 +19,7 @@
 
 - [第一阶段实施进度与证据](reports/phase1-progress.md)
 - [事件模型语义](docs/event-model-contract.zh-CN.md)、[网络结果](reports/phase1-transport.md)、[环形槽扫描](reports/phase1-ring.md)
+- [512块持续轨迹](reports/phase1-sustained.md)、[原始槽/到包累加/DDR比较](reports/phase1-buffer-comparison.md)
 - [输入与硬件契约](docs/input-and-hardware-contract.zh-CN.md)、[AFP1包格式](docs/packet-contract-v1.zh-CN.md)
 - [第一阶段任务目标与验收清单](docs/phase-1-objectives.zh-CN.md)
 - [架构、器件选择与容量推导](docs/feasibility.zh-CN.md)
@@ -36,6 +37,8 @@
 node scripts/capacity.mjs
 node scripts/transport-budget.mjs
 ```
+
+第一阶段离线证据的一条命令入口为 `node scripts/run-phase1.mjs`，包含测试、原有预算、事件矩阵、512块持续轨迹和缓存比较，可能运行数分钟。当前持续轨迹已检查全部网络目的地；ring回放仍针对目的地0，逐目的地联合复核和最终决策报告尚待完成。
 
 容量结果写入 `reports/capacity.json` 和 `reports/capacity.md`，包级预算写入 `reports/transport.json` 和 `reports/transport.md`。修改 `config/scenarios.json` 可调整带宽、位宽、PFB 过采样、频率通道数、波束数、网格和缓冲窗口。DSP 模型故意保留可审查的通用算术假设；后续应以对应 RTL 的实测资源与吞吐替换。包级模型还会检查报文开销造成的源端/接收端超载；平均科学载荷表不能代替该检查。
 

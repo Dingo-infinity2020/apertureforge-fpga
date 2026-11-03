@@ -1,0 +1,19 @@
+{
+  "blocks": 512,
+  "seeds": [20261103, 97],
+  "jitter_us": 100,
+  "source_assembly_banks": 3,
+  "switch_queue_bytes": 524288,
+  "raw_ram_fraction_budget": 0.85,
+  "ingress_fifo_bytes_assumed": 262144,
+  "algorithm_work_bytes_reserved": 1048576,
+  "slot_metadata_bytes_assumed": 96,
+  "weight_banks": 2,
+  "scenarios": [
+    {"id":"reference74", "base":"ideal200", "channels":56, "depth":7},
+    {"id":"candidate128", "base":"ideal200", "channels":32, "depth":7},
+    {"id":"mapped128", "base":"mapped320", "channels":20, "depth":10},
+    {"id":"extension342", "base":"ideal500", "channels":12, "depth":8}
+  ],
+  "acceptance": "zero source/switch loss; zero ring rejection/missing/resident; final-quarter mean switch wait <= middle-quarter mean + one-quarter period for every destination; source max wait < one period; raw allocation <=85% of approximate raw on-chip RAM. Finite deterministic trace acceptance only, no arbitrary-delay guarantee."
+}
