@@ -17,6 +17,7 @@
 
 ## 阅读入口
 
+- [第二阶段详细计划：RTL、综合与布局布线](docs/phase-2-plan.zh-CN.md)（计划已发布，尚未执行第二阶段构建）
 - [第一阶段实施进度与证据](reports/phase1-progress.md)
 - [第一阶段决策报告](reports/phase1-decision.zh-CN.md)、[逐项验收审计](docs/phase1-acceptance-audit.zh-CN.md)
 - [事件模型语义](docs/event-model-contract.zh-CN.md)、[网络结果](reports/phase1-transport.md)、[环形槽扫描](reports/phase1-ring.md)
