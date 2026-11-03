@@ -8,10 +8,11 @@ module tb_af_ring_control_time;
  reg [1:0] op;reg [63:0] seq,gen;wire [63:0] rg;wire [3:0] slot;
  wire dv;reg dr=0,done=0;wire done_ready;wire [63:0] ds,dg;wire [255:0] mask;
  wire [8:0] count;wire [63:0] committed,consumed;integer fd,cycles=0;
- af_ring_control dut(.clk(clk),.rst_n(rst_n),.now_tick(tick),.cfg_valid(cfg_valid),.cfg_ready(cfg_ready),
+ af_ring_control #(.PREVIEW(0)) dut(.clk(clk),.rst_n(rst_n),.now_tick(tick),.cfg_valid(cfg_valid),.cfg_ready(cfg_ready),
  .cfg_epoch(32'd1),.cfg_config(32'd2),.cfg_period_ticks(period),.cfg_first_sequence(first_seq),.cfg_first_deadline(first_deadline),.cfg_blocks(blocks),
  .active(active),.cfg_fault(fault),.generation(generation),
  .cmd_valid(cv),.cmd_ready(cr),.cmd_op(op),.cmd_epoch(32'd1),.cmd_config(32'd2),.cmd_sequence(seq),.cmd_generation(gen),.cmd_source(16'd0),.cmd_slot(4'd0),
+ .cmd_pre_valid(1'b0),.cmd_pre_epoch(32'd0),.cmd_pre_config(32'd0),.cmd_pre_sequence(64'd0),.cmd_pre_source(16'd0),
  .rsp_valid(rv),.rsp_ready(1'b1),.rsp_accepted(accepted),.rsp_reason(reason),.rsp_slot(slot),.rsp_generation(rg),
  .write_slot(4'd0),.write_sequence(64'd0),.write_generation(64'd0),.write_source(16'd0),
  .desc_valid(dv),.desc_ready(dr),.desc_sequence(ds),.desc_generation(dg),.desc_mask(mask),.desc_count(count),

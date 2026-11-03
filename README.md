@@ -6,7 +6,7 @@
 
 ## 当前范围
 
-2026-11-03：**第一阶段验收完成，第二阶段暂停，尚未验收**。已连接完整帧解包、真实ring事务控制和1.5625MiB原始数据存储；异常用例及4096包/40960个数据字的RTL比较通过。组合实际布线占18415 LUT、13012 FF、8 DSP、56 URAM；250MHz时序失败，同一布线125MHz重查通过。即使假设250MHz，周期吞吐也只有约9.615Mpps，未达到10Mpps目标。科学核、非停顿入口/CDC和完整CMAC组合未完成，未上板。用户已取得CMAC授权，新授权尚待实际验证。详见[最新组合结果](reports/phase2-core.zh-CN.md)。
+2026-11-03：**第一阶段验收完成，第二阶段恢复执行，尚未验收**。已连接完整帧解包、真实ring事务控制和1.5625MiB原始数据存储；异常用例及4096包/40960个数据字的RTL比较通过。组合实际布线占18415 LUT、13012 FF、8 DSP、56 URAM；250MHz时序失败，同一布线125MHz重查通过。即使假设250MHz，周期吞吐也只有约9.615Mpps，未达到10Mpps目标。科学核、非停顿入口/CDC和完整CMAC组合未完成，未上板。2026-11-03 opencode 已在 `oc-p2_00-20261103-01` 完成 CMAC IP OOC 综合/授权 checkout；`cmd_pre_valid` 预览把 routed WNS 改善到 −3.406ns，但 250MHz 和 10Mpps 仍未通过；完整 CMAC shell 仍未验证。详见[最新组合结果](reports/phase2-core.zh-CN.md)和[opencode 执行记录](reports/phase2-oc-20261103.zh-CN.md)。
 
 - 1024 个物理天线，双极化，共 2048 路电压。
 - 可调谐范围 0.5–1.5 GHz；同时处理带宽优先 200 MHz，扩展 500 MHz，1 GHz 为对照。
@@ -17,11 +17,11 @@
 
 ## 阅读入口
 
-- [第二阶段最新组合结果](reports/phase2-core.zh-CN.md)、[第三批解包结果](reports/phase2-parser.zh-CN.md)、[第二批](reports/phase2-control.zh-CN.md)、[首批历史结果](reports/phase2-progress.zh-CN.md)、[机器可读证据](reports/phase2-progress.json)
+- [第二阶段最新组合结果](reports/phase2-core.zh-CN.md)、[opencode 执行记录](reports/phase2-oc-20261103.zh-CN.md)、[第三批解包结果](reports/phase2-parser.zh-CN.md)、[第二批](reports/phase2-control.zh-CN.md)、[首批历史结果](reports/phase2-progress.zh-CN.md)、[机器可读证据](reports/phase2-progress.json)
 - [组合接收核接口与复现](docs/phase2-receive-core.md)
 - [完整帧解包接口与复现](docs/phase2-parser.md)、[ring事务控制](docs/phase2-ring-control.md)
 - [环境与依赖实查](docs/phase2-environment.md)、[独立模块接口与复现](docs/phase2-independent-modules.md)
-- [第二阶段详细计划：RTL、综合与布局布线](docs/phase-2-plan.zh-CN.md)（暂停）
+- [第二阶段详细计划：RTL、综合与布局布线](docs/phase-2-plan.zh-CN.md)（恢复执行）
 - [第一阶段实施进度与证据](reports/phase1-progress.md)
 - [第一阶段决策报告](reports/phase1-decision.zh-CN.md)、[逐项验收审计](docs/phase1-acceptance-audit.zh-CN.md)
 - [事件模型语义](docs/event-model-contract.zh-CN.md)、[网络结果](reports/phase1-transport.md)、[环形槽扫描](reports/phase1-ring.md)

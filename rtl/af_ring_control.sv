@@ -3,7 +3,7 @@
 // now_tick is monotonic within a session. Equality with a deadline is LATE.
 // Statistics wrap modulo 2^64; protocol tags/deadlines never wrap silently.
 module af_ring_control #(
- parameter integer SOURCES=256,SLOTS=10,SW=$clog2(SLOTS)
+ parameter integer SOURCES=256,SLOTS=10,SW=$clog2(SLOTS),PREVIEW=1
 )(
  input wire clk,rst_n,input wire [63:0] now_tick,
  input wire cfg_valid,output wire cfg_ready,
@@ -14,6 +14,8 @@ module af_ring_control #(
  input wire cmd_valid,output wire cmd_ready,input wire [1:0] cmd_op,
  input wire [31:0] cmd_epoch,cmd_config,input wire [63:0] cmd_sequence,cmd_generation,
  input wire [15:0] cmd_source,input wire [SW-1:0] cmd_slot,
+ input wire cmd_pre_valid,input wire [31:0] cmd_pre_epoch,cmd_pre_config,
+ input wire [63:0] cmd_pre_sequence,input wire [15:0] cmd_pre_source,
  output reg rsp_valid,input wire rsp_ready,output reg rsp_accepted,output reg [3:0] rsp_reason,
  output reg [SW-1:0] rsp_slot,output reg [63:0] rsp_sequence,rsp_generation,
  // Every payload write must still possess the pending reservation.
@@ -35,16 +37,32 @@ module af_ring_control #(
  reg [63:0] head_sequence,last_sequence,remaining;
  reg [SW-1:0] head,init_index;reg initializing,busy;
  reg [64:0] init_sequence,init_deadline;
+ reg pre_a_valid,pre_b_valid;
+ reg [SW-1:0] pre_a_slot,pre_b_slot;
+ reg [15:0] pre_a_source,pre_b_source;
+ reg [31:0] pre_a_epoch,pre_a_config,pre_b_epoch,pre_b_config;
+ reg [63:0] pre_a_sequence,pre_a_head_sequence,pre_a_delta;
+ reg [63:0] pre_b_sequence,pre_b_head_sequence,pre_b_delta,pre_b_tag,pre_b_deadline;
+ reg [SOURCES-1:0] pre_a_pending,pre_a_present;
+ reg pre_a_live,pre_a_sealed,pre_b_pending_bit,pre_b_present_bit,pre_b_live,pre_b_sealed;
  wire [64:0] cfg_last={1'b0,cfg_first_sequence}+{1'b0,cfg_blocks}-1;
  wire [63:0] delta=cmd_sequence-head_sequence;
  wire [SW:0] slot_sum={1'b0,head}+{1'b0,delta[SW-1:0]};
  wire [SW-1:0] reserve_slot=slot_sum>=SLOTS?slot_sum-SLOTS:slot_sum;
- wire [SW-1:0] selected_slot=cmd_op==0?reserve_slot:cmd_slot;
  wire seal_now=active && !busy && !desc_valid && (present_count[head]==SOURCES || now_tick>=deadline[head]);
  wire rsp_free=!rsp_valid || rsp_ready;
+ wire [63:0] pre_delta=cmd_pre_sequence-head_sequence;
+ wire [SW:0] pre_slot_sum={1'b0,head}+{1'b0,pre_delta[SW-1:0]};
+ wire [SW-1:0] pre_reserve_slot=pre_slot_sum>=SLOTS?pre_slot_sum-SLOTS:pre_slot_sum;
+ wire pre_invalidate=cfg_valid&&cfg_ready || initializing || (done_valid&&done_ready) || seal_now;
+ wire pre_fresh=PREVIEW!=0 && pre_b_valid && !pre_invalidate && pre_b_head_sequence==head_sequence &&
+  pre_b_sequence==cmd_sequence && pre_b_source==cmd_source && pre_b_epoch==cmd_epoch && pre_b_config==cmd_config;
+ wire use_pre=PREVIEW!=0 && cmd_op==0 && pre_fresh;
+ wire use_legacy_reserve=PREVIEW==0 && cmd_op==0;
+ wire reserve_ready=cmd_op!=0 || use_pre || use_legacy_reserve;
  assign cfg_ready=rst_n && !initializing && generation!=64'hffffffffffffffff;
  assign done_ready=rst_n && !initializing && !cfg_valid;
- assign cmd_ready=rst_n && !initializing && !cfg_valid && !done_valid && !seal_now && rsp_free;
+ assign cmd_ready=rst_n && !initializing && !cfg_valid && !done_valid && !seal_now && rsp_free && reserve_ready;
  wire write_index_valid=write_slot<SLOTS && write_source<SOURCES;
  assign write_permit=rst_n && active && !cfg_valid && write_index_valid &&
   write_generation==generation && live[write_slot] && !sealed[write_slot] &&
@@ -52,20 +70,73 @@ module af_ring_control #(
  reg [3:0] reason;
  always @* begin
   reason=0;
-  if(!active)reason=7;
-  else if(cmd_epoch!=epoch_q || cmd_config!=config_q || (cmd_op!=0 && cmd_generation!=generation))reason=1;
-  else if(cmd_source>=SOURCES || cmd_op==3 || (cmd_op!=0 && cmd_slot>=SLOTS))reason=2;
-  else if(cmd_sequence<head_sequence)reason=3;
-  else if(delta>=SLOTS || cmd_sequence>last_sequence)reason=4;
-  else if(!live[selected_slot] || tag[selected_slot]!=cmd_sequence)reason=6;
-  else if(sealed[selected_slot] || now_tick>=deadline[selected_slot])reason=3;
-  else if(cmd_op==0 && (pending[selected_slot][cmd_source] || present[selected_slot][cmd_source]))reason=5;
-  else if(cmd_op!=0 && !pending[selected_slot][cmd_source])reason=6;
+  if(use_pre)begin
+   if(!active)reason=7;
+   else if(pre_b_epoch!=epoch_q || pre_b_config!=config_q)reason=1;
+   else if(pre_b_source>=SOURCES)reason=2;
+   else if(pre_b_sequence<head_sequence)reason=3;
+   else if(pre_b_delta>=SLOTS || pre_b_sequence>last_sequence)reason=4;
+   else if(!pre_b_live || pre_b_tag!=pre_b_sequence)reason=6;
+   else if(pre_b_sealed || now_tick>=pre_b_deadline)reason=3;
+   else if(pre_b_pending_bit || pre_b_present_bit)reason=5;
+  end else if(cmd_op!=0)begin
+   if(!active)reason=7;
+   else if(cmd_epoch!=epoch_q || cmd_config!=config_q || cmd_generation!=generation)reason=1;
+   else if(cmd_source>=SOURCES || cmd_op==3 || cmd_slot>=SLOTS)reason=2;
+   else if(cmd_sequence<head_sequence)reason=3;
+   else if(delta>=SLOTS || cmd_sequence>last_sequence)reason=4;
+   else if(!live[cmd_slot] || tag[cmd_slot]!=cmd_sequence)reason=6;
+   else if(sealed[cmd_slot] || now_tick>=deadline[cmd_slot])reason=3;
+   else if(!pending[cmd_slot][cmd_source])reason=6;
+  end else if(PREVIEW==0)begin
+   if(!active)reason=7;
+   else if(cmd_epoch!=epoch_q || cmd_config!=config_q)reason=1;
+   else if(cmd_source>=SOURCES)reason=2;
+   else if(cmd_sequence<head_sequence)reason=3;
+   else if(delta>=SLOTS || cmd_sequence>last_sequence)reason=4;
+   else if(!live[reserve_slot] || tag[reserve_slot]!=cmd_sequence)reason=6;
+   else if(sealed[reserve_slot] || now_tick>=deadline[reserve_slot])reason=3;
+   else if(pending[reserve_slot][cmd_source] || present[reserve_slot][cmd_source])reason=5;
+  end else reason=7;
  end
+ wire [SW-1:0] eff_slot=use_pre?pre_b_slot:(PREVIEW==0?(cmd_op==0?reserve_slot:cmd_slot):cmd_slot);
+ wire [15:0] eff_source=use_pre?pre_b_source:cmd_source;
+ wire [63:0] eff_sequence=use_pre?pre_b_sequence:cmd_sequence;
  wire [64:0] next_tag={1'b0,tag[head]}+SLOTS;
  wire [63:0] recycle_delta=period_q*SLOTS;
  wire [64:0] next_deadline={1'b0,deadline[head]}+{1'b0,recycle_delta};
  integer i;
+ always @(posedge clk)begin
+  if(!rst_n)begin
+   pre_a_valid<=0;pre_b_valid<=0;
+   pre_a_slot<=0;pre_b_slot<=0;pre_a_source<=0;pre_b_source<=0;
+   pre_a_epoch<=0;pre_a_config<=0;pre_b_epoch<=0;pre_b_config<=0;
+   pre_a_sequence<=0;pre_a_head_sequence<=0;pre_a_delta<=0;
+   pre_b_sequence<=0;pre_b_head_sequence<=0;pre_b_delta<=0;pre_b_tag<=0;pre_b_deadline<=0;
+   pre_a_pending<=0;pre_a_present<=0;
+   pre_a_live<=0;pre_a_sealed<=0;pre_b_pending_bit<=0;pre_b_present_bit<=0;pre_b_live<=0;pre_b_sealed<=0;
+  end else begin
+   if(cmd_pre_valid)begin
+    pre_a_valid<=1;
+    pre_a_slot<=pre_reserve_slot;
+    pre_a_source<=cmd_pre_source;
+    pre_a_epoch<=cmd_pre_epoch;pre_a_config<=cmd_pre_config;
+    pre_a_sequence<=cmd_pre_sequence;pre_a_head_sequence<=head_sequence;pre_a_delta<=pre_delta;
+    pre_a_pending<=pending[pre_reserve_slot];pre_a_present<=present[pre_reserve_slot];
+    pre_a_live<=live[pre_reserve_slot];pre_a_sealed<=sealed[pre_reserve_slot];
+   end else pre_a_valid<=0;
+   if(pre_a_valid)begin
+    pre_b_valid<=1;
+    pre_b_slot<=pre_a_slot;pre_b_source<=pre_a_source;
+    pre_b_epoch<=pre_a_epoch;pre_b_config<=pre_a_config;
+    pre_b_sequence<=pre_a_sequence;pre_b_head_sequence<=pre_a_head_sequence;pre_b_delta<=pre_a_delta;
+    pre_b_tag<=tag[pre_a_slot];pre_b_deadline<=deadline[pre_a_slot];
+    pre_b_pending_bit<=pre_a_pending[pre_a_source];pre_b_present_bit<=pre_a_present[pre_a_source];
+    pre_b_live<=pre_a_live;pre_b_sealed<=pre_a_sealed;
+   end
+   if(pre_invalidate || (cmd_valid && cmd_ready))pre_b_valid<=0;
+  end
+ end
  always @(posedge clk)begin
   if(!rst_n)begin
    active<=0;cfg_fault<=0;generation<=0;initializing<=0;busy<=0;
@@ -112,16 +183,16 @@ module af_ring_control #(
     pending[head]<=0;pending_count[head]<=0;
    end else if(cmd_valid && cmd_ready)begin
     requests<=requests+1;rsp_valid<=1;rsp_accepted<=reason==0;rsp_reason<=reason;
-    rsp_slot<=selected_slot;rsp_sequence<=cmd_sequence;rsp_generation<=generation;
+    rsp_slot<=eff_slot;rsp_sequence<=eff_sequence;rsp_generation<=generation;
     if(reason!=0)rejected<=rejected+1;
     else if(cmd_op==0)begin
-     reserved<=reserved+1;pending_total<=pending_total+1;pending_count[selected_slot]<=pending_count[selected_slot]+1;
-     pending[selected_slot][cmd_source]<=1;
+     reserved<=reserved+1;pending_total<=pending_total+1;pending_count[eff_slot]<=pending_count[eff_slot]+1;
+     pending[eff_slot][eff_source]<=1;
     end else begin
-     pending[selected_slot][cmd_source]<=0;pending_count[selected_slot]<=pending_count[selected_slot]-1;pending_total<=pending_total-1;
+     pending[eff_slot][eff_source]<=0;pending_count[eff_slot]<=pending_count[eff_slot]-1;pending_total<=pending_total-1;
      if(cmd_op==1)begin
-      committed<=committed+1;resident<=resident+1;present_count[selected_slot]<=present_count[selected_slot]+1;
-      present[selected_slot][cmd_source]<=1;
+      committed<=committed+1;resident<=resident+1;present_count[eff_slot]<=present_count[eff_slot]+1;
+      present[eff_slot][eff_source]<=1;
      end else aborted<=aborted+1;
     end
    end

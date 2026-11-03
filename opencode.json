@@ -1,0 +1,38 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "mcp": {
+    "vivado_apertureforge": {
+      "type": "local",
+      "command": [
+        "D:/work/tools/vivado-mcp-native/.venv/Scripts/python.exe",
+        "-u",
+        "-B",
+        "D:/work/KU5P_Sim/tools/vivado_mcp_server.py"
+      ],
+      "cwd": "D:/work/build/apertureforge-fpga/_agent_sessions/opencode",
+      "enabled": true,
+      "timeout": 7200000,
+      "environment": {
+        "AF_VIVADO_MCP_SESSION": "D:/work/build/apertureforge-fpga/_agent_sessions/opencode",
+        "VIVADO_PATH": "D:/AMDDesignTools/2026.1/Vivado/bin/vivado.bat",
+        "VIVADO_MCP_OUTPUT_ENCODING": "cp936",
+        "TEMP": "D:/tmp/vivado-mcp-native",
+        "TMP": "D:/tmp/vivado-mcp-native"
+      }
+    }
+  },
+  "permission": {
+    "edit": {
+      "*": "allow",
+      "D:/work/KU5P_FX_Accelerator/**": "deny"
+    },
+    "external_directory": {
+      "*": "ask",
+      "D:/work/build/apertureforge-fpga/**": "allow",
+      "D:/work/tools/vivado-mcp-native/**": "allow",
+      "D:/tmp/vivado-mcp-native/**": "allow",
+      "D:/work/KU5P_FX_Accelerator/**": "ask"
+    }
+  }
+}

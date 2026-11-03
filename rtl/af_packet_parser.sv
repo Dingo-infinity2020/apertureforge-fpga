@@ -13,7 +13,7 @@ module af_packet_parser #(
  input wire [15:0] cfg_destination,cfg_frequencies,input wire [1:0] cfg_t_log2,
  input wire [63:0] cfg_epoch_adc,
  input wire [47:0] cfg_mac,input wire [31:0] cfg_ip,input wire [15:0] cfg_port,cfg_mtu,
- output wire h_valid,input wire h_ready,h_accept,output wire [511:0] h_header,output wire [15:0] h_errors,
+ output wire h_valid,h_pre_valid,input wire h_ready,h_accept,output wire [511:0] h_header,output wire [15:0] h_errors,
  output reg p_valid,input wire p_ready,output reg [WIDTH-1:0] p_data,
  output reg [BYTES-1:0] p_keep,output reg p_last,
  output wire f_valid,input wire f_ready,output wire f_reserved,f_commit,
@@ -71,7 +71,8 @@ module af_packet_parser #(
   net_errors[14]=ip_length>mtu_q || {1'b0,ip_length}+17'd14>MAX_FRAME_BYTES || prefix[752+:32]>MAX_FRAME_BYTES-106;
  end
  wire [15:0] final_errors=errors | (({1'b0,frame_bytes}!=33'd106+{1'b0,expected_body} || (reserved_q && generated!=expected_body))?16'h4000:16'd0);
- assign h_valid=rst_n && state==DECIDE;assign h_header=prefix[336+:512];assign h_errors=errors;
+ assign h_valid=rst_n && state==DECIDE;assign h_pre_valid=rst_n && (state==SEND_HEADER || state==WAIT_HEADER);
+ assign h_header=prefix[336+:512];assign h_errors=errors;
  assign f_valid=rst_n && state==REPORT && !p_valid;
  assign f_reserved=reserved_q;assign f_commit=reserved_q && final_errors==0;
  assign f_errors=final_errors;assign f_header=prefix[336+:512];

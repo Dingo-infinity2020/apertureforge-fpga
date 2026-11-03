@@ -1,6 +1,20 @@
 # 第二阶段计划：RTL、真实综合与布局布线
 
-日期：2026-11-03。状态：**暂停，阶段尚未验收**。本计划最初在 `75b4bc6` 发布；最新已完成工作见[组合接收核结果](../reports/phase2-core.zh-CN.md)与[环境实查](phase2-environment.md)。用户已取得CMAC授权，尚未重新验证实际checkout；KU11P/KU15P器件库仍缺。按用户澄清，本项目只评估KU5P及候选器件能力，不开发RFSoC；其格式、速率与流量只作为测试输入。
+日期：2026-11-03。状态：**恢复执行，阶段尚未验收**。本计划最初在 `75b4bc6` 发布；最新已完成工作见[组合接收核结果](../reports/phase2-core.zh-CN.md)、[opencode 执行记录](../reports/phase2-oc-20261103.zh-CN.md)与[环境实查](phase2-environment.md)。2026-11-03 opencode 已在 `oc-p2_00-20261103-01` 完成 CMAC IP OOC 综合/授权 checkout；完整 CMAC shell 仍未验证；KU11P/KU15P器件库仍缺。按用户澄清，本项目只评估KU5P及候选器件能力，不开发RFSoC；其格式、速率与流量只作为测试输入。
+
+## 2026-11-03 恢复执行目标
+
+第二阶段不直接跳到科学核。先把接收路径做成可复现、可验收的闭环，再进入算法核。执行顺序与验收边界如下：
+
+| 里程碑 | 目标 | 必须留下的证据 | 失败时怎么写 |
+|---|---|---|---|
+| M1 环境与授权（P2-00） | 在新外部构建中重新验证 KU5P part、CMAC IP 生成和 secure IP synthesis checkout | 新鲜 `environment.tsv`、`cmac_defaults.tsv`、IP synth 的 `STATUS/PROGRESS` 与原始日志 | 记录具体 license feature 和失败阶段，保持 `NOT VERIFIED` |
+| M2 接收核闭环（P2-02/P2-06） | 组合接收核在新构建中重跑 SIM/SYNTH/ROUTED；补非停顿入口/CDC 后检查额定流量；尝试关闭 250MHz 时序和 10Mpps 周期缺口 | `source_snapshot.json`、fresh SIM PASS、SYNTH/ROUTED 报告、零黑盒/零内部未约束检查、周期计数、post-route 功能网表仿真 | 给出实测 WNS/WHS、最大可用频率、每包周期缺口和负载边界，不写成 250MHz 或 10Mpps PASS |
+| M3 CMAC shell（P2-11） | 真实 CMAC + AXIS RX + CDC + 接收核，先小分片再逼近单口上限 | 零黑盒、真实 IP 资源、时钟/CDC 约束和报告 | 依赖未验证就单独标 `NOT VERIFIED`，不用假接收器冒充整体通过 |
+| M4 科学核（P2-07/08/09） | 波束、完整二维 FFTT、EPIC 各自完成独立参考、SIM、SYNTH 和至少边界点 ROUTED | 每个核的数值/故障向量、资源、周期吞吐和失败边界 | 不用单个乘法器或缩小核代替完整核结论 |
+| M5 器件与阶段决策（P2-12） | 用实际资源和周期回灌容量模型，给出 KU5P 可实现配置或明确失败边界 | 器件比较表、模型回灌记录、阶段决策 | KU11P/KU15P 无器件库时保持 `NOT VERIFIED` |
+
+M1 已执行；M2 已完成三轮 RTL 实验（`oc-p2_06-20261103-01`、`...-02`、`...-04`）。`cmd_pre_valid` 两级预览把 routed WNS 从 −3.805ns 改善到 −3.406ns，但 250MHz 和 10Mpps 仍未通过；剩余瓶颈是 `tx_source`/`present_count` 高 fanout 与 route。下一步继续缩短该路径，再补 post-route 网表仿真和非停顿入口/CDC。每次改动都必须重新生成证据，不能沿用旧构建的时序或吞吐数字。
 
 ## 本阶段要回答什么
 

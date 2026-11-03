@@ -15,10 +15,11 @@ module tb_af_ring_control;
  wire dv;reg dr=0;wire [63:0] ds,dg;wire [SW-1:0] dslot;wire [N-1:0] mask;wire [8:0] count;
  reg done=0;wire done_ready;reg [63:0] done_seq,done_gen;
  wire [63:0] requests,reserved,committed,aborted,rejected,consumed,discarded,canceled,resident,pending_total,bad_done;
- af_ring_control dut(.clk(clk),.rst_n(rst_n),.now_tick(now_tick),.cfg_valid(cfg_valid),.cfg_ready(cfg_ready),
+ af_ring_control #(.PREVIEW(0)) dut(.clk(clk),.rst_n(rst_n),.now_tick(now_tick),.cfg_valid(cfg_valid),.cfg_ready(cfg_ready),
  .cfg_epoch(cfg_epoch),.cfg_config(cfg_config),.cfg_period_ticks(cfg_period),.cfg_first_sequence(first_sequence),
  .cfg_first_deadline(first_deadline),.cfg_blocks(blocks),.active(active),.cfg_fault(cfg_fault),.generation(generation),
  .cmd_valid(cv),.cmd_ready(cr),.cmd_op(op),.cmd_epoch(ce),.cmd_config(cc),.cmd_sequence(seq),.cmd_generation(gen),.cmd_source(src),.cmd_slot(slot),
+ .cmd_pre_valid(1'b0),.cmd_pre_epoch(32'd0),.cmd_pre_config(32'd0),.cmd_pre_sequence(64'd0),.cmd_pre_source(16'd0),
  .rsp_valid(rv),.rsp_ready(rr),.rsp_accepted(accepted),.rsp_reason(reason),.rsp_slot(rs),.rsp_sequence(rseq),.rsp_generation(rgen),
  .write_slot(ws),.write_sequence(wseq),.write_generation(wgen),.write_source(wsrc),.write_permit(wp),
  .desc_valid(dv),.desc_ready(dr),.desc_sequence(ds),.desc_generation(dg),.desc_slot(dslot),.desc_mask(mask),.desc_count(count),

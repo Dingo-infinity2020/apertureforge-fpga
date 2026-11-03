@@ -32,11 +32,17 @@ module af_receive_core #(
  assign desc_valid=pipe_rst_n && control_desc_valid;
  assign data_valid=pipe_rst_n && store_valid;
  wire hv,pv,pl,fv,frsv,fc;wire [511:0] hh,pd,fh;wire [15:0] he,fe,fb,sb;wire [63:0] pk;
+ wire h_pre_valid;
+ wire [31:0] pre_epoch=hh[64+:32],pre_config=hh[96+:32];
+ wire [63:0] pre_sequence=hh[448+:64];
+ wire [15:0] pre_source=hh[128+:16];
+ wire pre_valid=pipe_rst_n && state==WAIT_HEADER && h_pre_valid;
  reg hr,ha,pr,fr;reg cv,rr;wire cr,rv,ra;wire [3:0] reason;
  reg [1:0] op;reg [31:0] ce,cc;reg [63:0] cs,cg;reg [15:0] source;reg [SW-1:0] slot;
  wire [SW-1:0] reply_slot;wire [63:0] reply_seq,reply_gen;
  reg [31:0] tx_epoch,tx_config;reg [63:0] tx_seq,tx_gen;reg [15:0] tx_source;
  reg [SW-1:0] tx_slot;reg [WW-1:0] word_index;reg write_fault,finish_commit;reg [3:0] admission_reason;
+ reg [31:0] h_epoch_q,h_config_q;reg [63:0] h_seq_q;reg [15:0] h_source_q,h_errors_q;reg payload_len_ok_q;
  wire write_permit,store_wr,store_rr,collision,control_done_ready;
  wire [AW-1:0] write_address=((tx_slot*256)+tx_source)*WORDS_PER_PACKET+word_index;
  wire write_ok=state==PAYLOAD && write_permit && word_index<WORDS_PER_PACKET && (&pk) && store_wr;
@@ -53,13 +59,14 @@ module af_receive_core #(
   .cfg_epoch(cfg_epoch),.cfg_config(cfg_config),.cfg_first_frequency(cfg_first_frequency),.cfg_adc_stride(cfg_adc_stride),
   .cfg_destination(cfg_destination),.cfg_frequencies(cfg_frequencies),.cfg_t_log2(cfg_t_log2),.cfg_epoch_adc(cfg_epoch_adc),
   .cfg_mac(cfg_mac),.cfg_ip(cfg_ip),.cfg_port(cfg_port),.cfg_mtu(cfg_mtu),
-  .h_valid(hv),.h_ready(hr),.h_accept(ha),.h_header(hh),.h_errors(he),
+  .h_valid(hv),.h_pre_valid(h_pre_valid),.h_ready(hr),.h_accept(ha),.h_header(hh),.h_errors(he),
   .p_valid(pv),.p_ready(pr),.p_data(pd),.p_keep(pk),.p_last(pl),
   .f_valid(fv),.f_ready(fr),.f_reserved(frsv),.f_commit(fc),.f_errors(fe),.f_header(fh),.f_frame_bytes(fb),.f_science_bytes(sb));
  af_ring_control #(.SLOTS(SLOTS)) control(.clk(clk),.rst_n(rst_n),.now_tick(now_tick),.cfg_valid(cfg_valid),.cfg_ready(cfg_ready),
   .cfg_epoch(cfg_epoch),.cfg_config(cfg_config),.cfg_period_ticks(cfg_period_ticks),.cfg_first_sequence(cfg_first_sequence),
   .cfg_first_deadline(cfg_first_deadline),.cfg_blocks(cfg_blocks),.active(active),.cfg_fault(cfg_fault),.generation(generation),
   .cmd_valid(cv),.cmd_ready(cr),.cmd_op(op),.cmd_epoch(ce),.cmd_config(cc),.cmd_sequence(cs),.cmd_generation(cg),.cmd_source(source),.cmd_slot(slot),
+  .cmd_pre_valid(pre_valid),.cmd_pre_epoch(pre_epoch),.cmd_pre_config(pre_config),.cmd_pre_sequence(pre_sequence),.cmd_pre_source(pre_source),
   .rsp_valid(rv),.rsp_ready(rr),.rsp_accepted(ra),.rsp_reason(reason),.rsp_slot(reply_slot),.rsp_sequence(reply_seq),.rsp_generation(reply_gen),
   .write_slot(tx_slot),.write_sequence(tx_seq),.write_generation(tx_gen),.write_source(tx_source),.write_permit(write_permit),
   .desc_valid(control_desc_valid),.desc_ready(desc_ready && pipe_rst_n),.desc_sequence(desc_sequence),.desc_generation(desc_generation),.desc_slot(desc_slot),.desc_mask(desc_mask),.desc_count(desc_count),
@@ -74,8 +81,8 @@ module af_receive_core #(
   if(pipe_rst_n)case(state)
    WAIT_HEADER:begin
     if(hv)begin
-     if(he!=0 || hh[416+:32]!=WORDS_PER_PACKET*64)hr=1;
-     else begin cv=1;ce=hh[64+:32];cc=hh[96+:32];cs=hh[448+:64];source=hh[128+:16];cg=0;slot=0;end
+     if(h_errors_q!=0 || !payload_len_ok_q)hr=1;
+     else begin cv=1;ce=h_epoch_q;cc=h_config_q;cs=h_seq_q;source=h_source_q;cg=0;slot=0;end
     end
     if(fv)fr=1;
    end
@@ -89,13 +96,18 @@ module af_receive_core #(
  always @(posedge clk)begin
   if(!pipe_rst_n)begin
    state<=WAIT_HEADER;result_pending<=0;word_index<=0;write_fault<=0;consumer_live<=0;outstanding<=0;
+   h_epoch_q<=0;h_config_q<=0;h_seq_q<=0;h_source_q<=0;h_errors_q<=0;payload_len_ok_q<=0;
   end else begin
+   if(state==WAIT_HEADER)begin
+    h_epoch_q<=hh[64+:32];h_config_q<=hh[96+:32];h_seq_q<=hh[448+:64];h_source_q<=hh[128+:16];
+    h_errors_q<=he;payload_len_ok_q<=hh[416+:32]==WORDS_PER_PACKET*64;
+   end
    case({read_fire,data_valid&&data_ready})2'b10:outstanding<=outstanding+1;2'b01:outstanding<=outstanding-1;default:begin end endcase
    if(desc_valid&&desc_ready)begin consumer_live<=1;consumer_slot<=desc_slot;consumer_seq<=desc_sequence;consumer_gen<=desc_generation;consumer_mask<=desc_mask;end
    if(done_valid&&done_ready&&consumer_live&&done_sequence==consumer_seq&&done_generation==consumer_gen)consumer_live<=0;
    case(state)
     WAIT_HEADER:begin
-     if(hv&&hr)begin admission_reason<=he==0?2:0;state<=REJECTED;end
+     if(hv&&hr)begin admission_reason<=h_errors_q==0?2:0;state<=REJECTED;end
      else if(cv&&cr)begin tx_epoch<=ce;tx_config<=cc;tx_seq<=cs;tx_source<=source;state<=WAIT_RESERVE;end
      if(fv&&fr)begin
       result_pending<=1;result_commit<=0;result_write_fault<=0;result_errors<=fe;result_reason<=0;
