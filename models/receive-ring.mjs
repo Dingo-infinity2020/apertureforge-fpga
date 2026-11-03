@@ -1,10 +1,10 @@
 // Abstract post-parser time slots. Packet wire validation precedes admission (packet.mjs).
 // Buffers hold raw science bytes conceptually; outputs are metadata audit records, not hardware RAM.
 export class ReceiveRing {
- constructor({sources,blocks,depth,period_us,deadline_us,service_us=0,epoch=1,config=1,pauses=[],onAccept=()=>{},onOutput=()=>{},onAbort=()=>{}}) {
+ constructor({sources,blocks,depth,period_us,deadline_us,service_us=0,epoch=1,config=1,pauses=[],onAccept=()=>{},onOutput=()=>{},onAbort=()=>{},compact_outputs=false}) {
   if(![sources,blocks,depth].every(x=>Number.isInteger(x)&&x>0)||period_us<=0||deadline_us<0||service_us<0)throw Error('ring parameters');
   if(pauses.some(([a,b],i)=>a<0||b<=a||(i>0&&a<pauses[i-1][1])))throw Error('pause order');
-  Object.assign(this,{sources,blocks,depth,period_us,deadline_us,service_us,epoch,config,pauses,onAccept,onOutput,onAbort});
+  Object.assign(this,{sources,blocks,depth,period_us,deadline_us,service_us,epoch,config,pauses,onAccept,onOutput,onAbort,compact_outputs});
   this.next=0;this.clock=0;this.epoch_origin_us=0;this.slots=new Map();this.busy=null;this.outputs=[];
   this.stats={arrived:0,accepted:0,rejected:0,consumed:0,discarded:0,missing:0,peak_slots:0,deadline_lateness_us:0,reasons:{}};
  }
@@ -23,9 +23,12 @@ export class ReceiveRing {
     this.clock=this.busy.end;
     const b=this.next,slot=this.slots.get(b%this.depth);
     const sources=slot?[...slot.sources].sort((a,b)=>a-b):[];
-    this.outputs.push({epoch:this.epoch,config:this.config,block:b,sources,valid_sources:sources.length,
-      missing_sources:this.sources-sources.length,deadline:this.deadline(b),start:this.busy.start,end:this.clock});
-    this.onOutput(this.outputs.at(-1));
+    const record={epoch:this.epoch,config:this.config,block:b,sources,valid_sources:sources.length,
+      missing_sources:this.sources-sources.length,deadline:this.deadline(b),start:this.busy.start,end:this.clock};
+    this.onOutput(record);
+    if(this.compact_outputs){const bitmap=Buffer.alloc(Math.ceil(this.sources/8));for(const src of sources)bitmap[src>>3]|=1<<(src%8);
+      const {sources:ignored,...summary}=record;this.outputs.push({...summary,source_bitmap_hex:bitmap.toString('hex')});
+    }else this.outputs.push(record);
     this.stats.consumed+=sources.length;this.stats.missing+=this.sources-sources.length;
     if(slot)this.slots.delete(b%this.depth);
     this.busy=null;this.next++;continue;

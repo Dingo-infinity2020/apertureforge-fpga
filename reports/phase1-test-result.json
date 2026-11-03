@@ -1,0 +1,12 @@
+{
+  "exit_code": 0,
+  "tests": 18,
+  "passed": 18,
+  "failed": 0,
+  "test_hashes": {
+    "tests/arrival-beam.test.mjs": "caa80f3bc587c48584d6b74ae2e362249ef30846398e129ad631721d59f85e88",
+    "tests/network-stream.test.mjs": "b2c56a1aabf98985b86b33db0104f9204b4c366c6367d2dc1d9aad8b2c76c8a8",
+    "tests/packet.test.mjs": "e1761371435b7f296454b15059aac5e25382d7152488f6eee0da0993121a95eb",
+    "tests/transport.test.mjs": "a18301ced2cdb1b02d79d15c108e1ae8ecf320da7427319a2b5eee433c393a6b"
+  }
+}

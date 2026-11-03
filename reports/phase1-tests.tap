@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: frequency dependent integer complex weights, disorder, duplicates and missing-source masks match raw reference
+ok 1 - frequency dependent integer complex weights, disorder, duplicates and missing-source masks match raw reference
+  ---
+  duration_ms: 8.2013
+  type: 'test'
+  ...
+# Subtest: epoch abort clears partial sums and new coefficients do not leak into old window
+ok 2 - epoch abort clears partial sums and new coefficients do not leak into old window
+  ---
+  duration_ms: 0.4647
+  type: 'test'
+  ...
+# Subtest: mid-sum saturation changes with order: only wide sum then final rounding is acceptable
+ok 3 - mid-sum saturation changes with order: only wide sum then final rounding is acceptable
+  ---
+  duration_ms: 0.1247
+  type: 'test'
+  ...
+# Subtest: wire codec to network arrival to bounded beam slots matches independent raw payload sums
+ok 4 - wire codec to network arrival to bounded beam slots matches independent raw payload sums
+  ---
+  duration_ms: 2.767
+  type: 'test'
+  ...
+# Subtest: heap matches independent numeric sort including ties
+ok 5 - heap matches independent numeric sort including ties
+  ---
+  duration_ms: 1.3329
+  type: 'test'
+  ...
+# Subtest: online destination rings equal independent offline per-destination replay, including remainder group
+ok 6 - online destination rings equal independent offline per-destination replay, including remainder group
+  ---
+  duration_ms: 2.6
+  type: 'test'
+  ...
+# Subtest: streamed all-destination execution matches batch packet oracle under delay and finite queues
+ok 7 - streamed all-destination execution matches batch packet oracle under delay and finite queues
+  ---
+  duration_ms: 8.8323
+  type: 'test'
+  ...
+# Subtest: all sources and retained bins assigned exactly once, rates conserve
+ok 8 - all sources and retained bins assigned exactly once, rates conserve
+  ---
+  duration_ms: 7.3927
+  type: 'test'
+  ...
+# Subtest: actual packet round trip for 256 sources, first and remainder routes, every byte indexed
+ok 9 - actual packet round trip for 256 sources, first and remainder routes, every byte indexed
+  ---
+  duration_ms: 41.5582
+  type: 'test'
+  ...
+# Subtest: independent fixed wire vector uses exact 64-bit times
+ok 10 - independent fixed wire vector uses exact 64-bit times
+  ---
+  duration_ms: 0.5687
+  type: 'test'
+  ...
+# Subtest: malformed wire and wrong session/route/time are rejected
+ok 11 - malformed wire and wrong session/route/time are rejected
+  ---
+  duration_ms: 0.4424
+  type: 'test'
+  ...
+# Subtest: small network matches independent per-link list schedule
+ok 12 - small network matches independent per-link list schedule
+  ---
+  duration_ms: 1.5829
+  type: 'test'
+  ...
+# Subtest: analytic byte/packet accounting and overload control
+ok 13 - analytic byte/packet accounting and overload control
+  ---
+  duration_ms: 250.5789
+  type: 'test'
+  ...
+# Subtest: ring reorders, releases by fixed deadlines, tracks duplicate/loss and wraps generations
+ok 14 - ring reorders, releases by fixed deadlines, tracks duplicate/loss and wraps generations
+  ---
+  duration_ms: 1.1025
+  type: 'test'
+  ...
+# Subtest: ahead, source error, session change and finite slots under downstream pauses
+ok 15 - ahead, source error, session change and finite slots under downstream pauses
+  ---
+  duration_ms: 0.2204
+  type: 'test'
+  ...
+# Subtest: window full has explicit loss accounting during stalled service
+ok 16 - window full has explicit loss accounting during stalled service
+  ---
+  duration_ms: 0.1079
+  type: 'test'
+  ...
+# Subtest: fault traces match independent group/filter oracle with nonbinding depth
+ok 17 - fault traces match independent group/filter oracle with nonbinding depth
+  ---
+  duration_ms: 4.3627
+  type: 'test'
+  ...
+# Subtest: all-missing blocks expire, exact deadline arrivals are late; arrival order independent source membership
+ok 18 - all-missing blocks expire, exact deadline arrivals are late; arrival order independent source membership
+  ---
+  duration_ms: 0.8581
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 329.9532

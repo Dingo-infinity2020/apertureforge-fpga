@@ -1,0 +1,35 @@
+{
+  "exit_code": 0,
+  "command": "node scripts/run-phase1.mjs --reuse-verified-sustained",
+  "entrypoint_hash": "7d7d9fbd0a7bfd1e24a275aba6acebde53ce61c30b72de816eeced732ebe9a51",
+  "steps": [
+    {
+      "script": "capacity.mjs",
+      "status": "executed_exit_0"
+    },
+    {
+      "script": "transport-budget.mjs",
+      "status": "executed_exit_0"
+    },
+    {
+      "script": "generate-routes.mjs",
+      "status": "executed_exit_0"
+    },
+    {
+      "script": "simulate-corner-turn.mjs",
+      "status": "executed_exit_0"
+    },
+    {
+      "script": "phase1-extended.mjs",
+      "status": "reused_verified"
+    },
+    {
+      "script": "phase1-packet-sweep.mjs",
+      "status": "executed_exit_0"
+    },
+    {
+      "script": "compare-phase1-buffers.mjs",
+      "status": "executed_exit_0"
+    }
+  ]
+}

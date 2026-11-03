@@ -51,7 +51,9 @@ export function simulateStream(c,s,o={}) {
   d.latency[p.block]=Math.max(d.latency[p.block],d.free-p.release);
   st.delivered++;st.delivered_wire_bytes+=p.bytes;st.max_release_to_arrival_us=Math.max(st.max_release_to_arrival_us,d.free-p.release);
   const r=d.ranges.get(p.block)??[Infinity,-Infinity];r[0]=Math.min(r[0],d.free);r[1]=Math.max(r[1],d.free);d.ranges.set(p.block,r);
-  if(o.retain_all||p.destination===(o.destination??0))selected.push({...p,time:d.free});
+  const delivered={...p,time:d.free};
+  if(o.onDelivered)o.onDelivered(delivered);
+  if(o.retain_all||(o.retain_selected!==false&&p.destination===(o.destination??0)))selected.push(delivered);
  }
  while(egress.length){const item=egress.pop(),p=item.packet;
   while(transit.length&&transit.peek().ingress<p.source_end-1e-10)receive(transit.pop());

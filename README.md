@@ -6,7 +6,7 @@
 
 ## 当前范围
 
-2026-11-03：**规划、解析预算与离线协议参考**。已建立AFP1编解码和路由测试；尚未生成算法 RTL，尚未执行新的 Vivado 综合、实现或上板测试。解析估计不能当作器件能力实测。
+2026-11-03：**第一阶段离线架构与接收契约验收完成**。18项测试、8条512块全网络/全目的地接收轨迹及包长对照通过对应验收。尚未生成算法 RTL，尚未执行新的 Vivado 综合、实现或上板测试；离线结果不能当作器件能力实测。
 
 - 1024 个物理天线，双极化，共 2048 路电压。
 - 可调谐范围 0.5–1.5 GHz；同时处理带宽优先 200 MHz，扩展 500 MHz，1 GHz 为对照。
@@ -18,6 +18,7 @@
 ## 阅读入口
 
 - [第一阶段实施进度与证据](reports/phase1-progress.md)
+- [第一阶段决策报告](reports/phase1-decision.zh-CN.md)、[逐项验收审计](docs/phase1-acceptance-audit.zh-CN.md)
 - [事件模型语义](docs/event-model-contract.zh-CN.md)、[网络结果](reports/phase1-transport.md)、[环形槽扫描](reports/phase1-ring.md)
 - [512块持续轨迹](reports/phase1-sustained.md)、[原始槽/到包累加/DDR比较](reports/phase1-buffer-comparison.md)
 - [输入与硬件契约](docs/input-and-hardware-contract.zh-CN.md)、[AFP1包格式](docs/packet-contract-v1.zh-CN.md)
@@ -38,7 +39,7 @@ node scripts/capacity.mjs
 node scripts/transport-budget.mjs
 ```
 
-第一阶段离线证据的一条命令入口为 `node scripts/run-phase1.mjs`，包含测试、原有预算、事件矩阵、512块持续轨迹和缓存比较，可能运行数分钟。当前持续轨迹已检查全部网络目的地；ring回放仍针对目的地0，逐目的地联合复核和最终决策报告尚待完成。
+第一阶段完整离线复现入口为 `node scripts/run-phase1.mjs`，包含测试、预算、事件矩阵、512块全目的地接收轨迹、包长对照和缓存比较，可能运行数分钟；决策/验收证据生成命令为 `node scripts/finalize-phase1.mjs`。本轮已完整运行核心流程，补入包长对照后又以 `--reuse-verified-sustained` 运行统一入口；该选项仅在模型/配置内容hash和全目的地覆盖检查均一致时复用刚完成的512块证据。记录见 `reports/phase1-reproduction.json`。
 
 容量结果写入 `reports/capacity.json` 和 `reports/capacity.md`，包级预算写入 `reports/transport.json` 和 `reports/transport.md`。修改 `config/scenarios.json` 可调整带宽、位宽、PFB 过采样、频率通道数、波束数、网格和缓冲窗口。DSP 模型故意保留可审查的通用算术假设；后续应以对应 RTL 的实测资源与吞吐替换。包级模型还会检查报文开销造成的源端/接收端超载；平均科学载荷表不能代替该检查。
 
