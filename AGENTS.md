@@ -488,4 +488,4 @@ Codex，`codex/m2-m3-receiver` / 基线`ae69ad0`。用户要求“请规划M4，
 - 参考/容差：6项M4测试、28项Node测试全部通过；`scripts/m4-tolerance-study.mjs` 32-seed研究已冻结首轮门槛（波束RMS≤0.012、FFT L2≤0.008、EPIC L2≤0.008、Stokes Q≤0.02），结果`reports/m4-00-tolerance.json`。M4-00环境/IP/契约/容差/参考首轮完成，M4未验收。
 - M4-01首轮：`oc-m4-01-20261104-01` 的`af_science_reader`全源2560读/样本/2566周期、缺源40读/252跳过、反压714周期、复位通过；8ns OOC SYNTH WNS +5.812ns、233 LUT/1620 FF/0 BRAM/URAM/DSP。仅单slot store模型，缺源只交mask/count给下游零填，未接真实core/极化产品/积分/FIFO。
 - 下一步：把reader接真实`af_receive_core`并补零填/极性映射/产品/积分/输出FIFO；之后才进入M4-02低L波束闭环。不把IP OOC资源或8ns OOC时序写成完整科学核或125MHz系统通过。
-- 本轮未提交/未推送；Codex接手前先核对其未提交M2/M3清单与本M4文件，不要静默覆盖。
+- 本轮已按用户要求提交：`opencode/m4-science` / `0976a5b`，并推送分支与`main`。Codex接手前先核对Git状态、M2/M3证据与M4文件；不要静默覆盖。
