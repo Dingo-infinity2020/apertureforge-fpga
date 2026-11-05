@@ -25,7 +25,7 @@ for(const [n,rows]of [['beats',beats],['info',info],['gold',gold]])fs.writeFileS
 const file=n=>path.join(out,n).replaceAll('\\','/');
 fs.writeFileSync(file('af_core_config.svh'),[
  ['AF_CORE_BEAT_COUNT',beats.length],['AF_CORE_GOLD_WORDS',gold.length],...['beats','info','gold'].map(n=>['AF_CORE_'+n.toUpperCase(),'"'+file('core_'+n+'.mem')+'"']),
- ['AF_CORE_PASS','"'+file('simulation_pass.txt')+'"']
+ ['AF_CORE_PASS','"'+file('simulation_pass.txt')+'"'],['AF_CORE_PREVIEW_PASS','"'+file('preview_pass.txt')+'"']
 ].map(([k,v])=>'`define '+k+' '+v).join('\n')+'\n');
 fs.writeFileSync(file('core_vectors.json'),JSON.stringify({schema:1,scope:'Real mapped128 transaction/store integration, full 256-source 10-slot instance',records},null,2)+'\n');
 console.log(`Generated ${records.length} core packets, ${beats.length} physical beats`);

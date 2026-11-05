@@ -1,0 +1,373 @@
+{
+  "schema": 1,
+  "collected_utc": "2026-11-04T13:00:11.601Z",
+  "tool": "Vivado 2025.1",
+  "part": "xcku5p-ffvb676-1-i",
+  "build": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01",
+  "collector": {
+    "path": "D:\\work\\KU5P_Sim\\scripts\\phase2-v2025-evidence.mjs",
+    "sha256": "606966957c3b77b32123b1f049b4578e8159db7042dd14bd63732dd0b66f2fd6"
+  },
+  "source_snapshot": {
+    "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/source_snapshot.json",
+    "sha256": "a9e77fcf713d9959f601a288281af4654443ed51dc4ab845c60654e1a0a7862b"
+  },
+  "identity": {
+    "scope": "Same RTL re-created with 2025.1 IP, not backwards opening a 2026 DCP",
+    "rtl": [
+      {
+        "name": "af_afp1_header_check",
+        "sha256": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+        "identical": true
+      },
+      {
+        "name": "af_packet_parser",
+        "sha256": "d76568396b110e63f69c5788e51dc0b24d4fe3b659e16abcfebcde508cda8c32",
+        "identical": true
+      },
+      {
+        "name": "af_ring_control",
+        "sha256": "15b8a7ec4c810e410b62b89d5da83c338ffc9e079404807cd1d9baf5fa123aa0",
+        "identical": true
+      },
+      {
+        "name": "af_ring_store",
+        "sha256": "53870341ae019c6ac52b426993b20a93dd8f183cd7690936dac2c9718134cc03",
+        "identical": true
+      },
+      {
+        "name": "af_receive_core",
+        "sha256": "d438835552e63d1f6e46c2c19db0f7df6d56715d0bd5611200a04085195e5f80",
+        "identical": true
+      },
+      {
+        "name": "af_rx_ingress",
+        "sha256": "5fd0dcfc9d04391fb0fefe64f77877a6a5bda0fa4aee4d3b1ac2d4b086e24e23",
+        "identical": true
+      },
+      {
+        "name": "af_receive_pipeline",
+        "sha256": "a28e4ecb428dc693a32b868143a97aee823130574a85847a12d3c45b58168462",
+        "identical": true
+      },
+      {
+        "name": "af_cmac_rx",
+        "sha256": "b3dad9f252f3333ca7778e4eb48a4f93c5e096738b3966ce3b5d391149a3a7a1",
+        "identical": true
+      },
+      {
+        "name": "af_cmac_receive_shell",
+        "sha256": "1adb1796e8774fcd3085d87e0a2e724a9699621caed02917d31a9d3099eb7555",
+        "identical": true
+      }
+    ]
+  },
+  "integrity": {
+    "implementation_sources": [
+      {
+        "file": "rtl/af_afp1_header_check.sv",
+        "expected": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_packet_parser.sv",
+        "expected": "d76568396b110e63f69c5788e51dc0b24d4fe3b659e16abcfebcde508cda8c32",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_ring_control.sv",
+        "expected": "15b8a7ec4c810e410b62b89d5da83c338ffc9e079404807cd1d9baf5fa123aa0",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_ring_store.sv",
+        "expected": "53870341ae019c6ac52b426993b20a93dd8f183cd7690936dac2c9718134cc03",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_receive_core.sv",
+        "expected": "d438835552e63d1f6e46c2c19db0f7df6d56715d0bd5611200a04085195e5f80",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_rx_ingress.sv",
+        "expected": "5fd0dcfc9d04391fb0fefe64f77877a6a5bda0fa4aee4d3b1ac2d4b086e24e23",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_receive_pipeline.sv",
+        "expected": "a28e4ecb428dc693a32b868143a97aee823130574a85847a12d3c45b58168462",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_cmac_rx.sv",
+        "expected": "b3dad9f252f3333ca7778e4eb48a4f93c5e096738b3966ce3b5d391149a3a7a1",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_cmac_receive_shell.sv",
+        "expected": "1adb1796e8774fcd3085d87e0a2e724a9699621caed02917d31a9d3099eb7555",
+        "verified": true
+      },
+      {
+        "file": "constraints/af_cmac_shell_ooc.xdc",
+        "expected": "33b590013947a0079da9a876fea50a9b5e7296517d5ed655898c9f08dfa70181",
+        "verified": true
+      },
+      {
+        "file": "tcl/phase2_cmac_shell.tcl",
+        "expected": "a316ce0e46e5bc1afd5b342ac0d689b29f8aa76a32965192a6c2efd284682ea7",
+        "verified": true
+      },
+      {
+        "file": "scripts/prepare-phase2-cmac-shell-run.mjs",
+        "expected": "52f628799a082e67c80efae3e4359199c25f5d9bb24d62afadc19faf0f729d03",
+        "verified": true
+      },
+      {
+        "file": "scripts/generate-cmac-shell.mjs",
+        "expected": "d8e95d5dc90f73169331be142393688b41bc8b9df144d070d81df75c8afe2085",
+        "verified": true
+      }
+    ],
+    "standard_hardware_sources": [
+      {
+        "file": "rtl/af_afp1_header_check.sv",
+        "expected": "9874db785a425427f7b55caf0cf9b3042d598e9c7489aeca09c0bc41947fe5c3",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_packet_parser.sv",
+        "expected": "d76568396b110e63f69c5788e51dc0b24d4fe3b659e16abcfebcde508cda8c32",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_ring_control.sv",
+        "expected": "15b8a7ec4c810e410b62b89d5da83c338ffc9e079404807cd1d9baf5fa123aa0",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_ring_store.sv",
+        "expected": "53870341ae019c6ac52b426993b20a93dd8f183cd7690936dac2c9718134cc03",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_receive_core.sv",
+        "expected": "d438835552e63d1f6e46c2c19db0f7df6d56715d0bd5611200a04085195e5f80",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_rx_ingress.sv",
+        "expected": "5fd0dcfc9d04391fb0fefe64f77877a6a5bda0fa4aee4d3b1ac2d4b086e24e23",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_receive_pipeline.sv",
+        "expected": "a28e4ecb428dc693a32b868143a97aee823130574a85847a12d3c45b58168462",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_cmac_rx.sv",
+        "expected": "b3dad9f252f3333ca7778e4eb48a4f93c5e096738b3966ce3b5d391149a3a7a1",
+        "verified": true
+      },
+      {
+        "file": "rtl/af_cmac_receive_shell.sv",
+        "expected": "1adb1796e8774fcd3085d87e0a2e724a9699621caed02917d31a9d3099eb7555",
+        "verified": true
+      },
+      {
+        "file": "constraints/af_cmac_shell_ooc.xdc",
+        "expected": "33b590013947a0079da9a876fea50a9b5e7296517d5ed655898c9f08dfa70181",
+        "verified": true
+      },
+      {
+        "file": "tcl/phase2_cmac_shell.tcl",
+        "expected": "a316ce0e46e5bc1afd5b342ac0d689b29f8aa76a32965192a6c2efd284682ea7",
+        "verified": true
+      },
+      {
+        "file": "scripts/prepare-phase2-cmac-shell-run.mjs",
+        "expected": "52f628799a082e67c80efae3e4359199c25f5d9bb24d62afadc19faf0f729d03",
+        "verified": true
+      },
+      {
+        "file": "scripts/generate-cmac-shell.mjs",
+        "expected": "d8e95d5dc90f73169331be142393688b41bc8b9df144d070d81df75c8afe2085",
+        "verified": true
+      }
+    ],
+    "hardware_rtl_matches_current_worktree": true,
+    "compiled_testbench": {
+      "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/source/sim/tb_af_cmac_receive_shell.sv",
+      "sha256": "55b5d8fc98199fc1218f220f6704b0c977d6d7e354198e4af85c63250274753d"
+    },
+    "compiled_testbench_verified": true,
+    "marker_fresh": true
+  },
+  "cmac_configuration": {
+    "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/reports/cmac_configuration.tsv",
+    "sha256": "033140639e7c44f90cbff0d7bbf4ba79c31b965e25c50aa92165d0371188fe5b"
+  },
+  "simulation": {
+    "scope": "Two actual CMAC/GT endpoints over serial lines and real receive shell; no GT bypass",
+    "status": "COMPLETE",
+    "phase": "done",
+    "error": null,
+    "acceptance": "PASS packets=4096 read_words=98304 end_to_end_cycles=222708 ingress_peak_words=3831 peak_resident_sources=385 pause_cycles=2500 pause_windows=1",
+    "metrics": {
+      "packets": 4096,
+      "read_words": 98304,
+      "end_to_end_cycles": 222708,
+      "ingress_peak_words": 3831,
+      "peak_resident_sources": 385,
+      "pause_cycles": 2500,
+      "pause_windows": 1
+    },
+    "functional_pass": true,
+    "last_progress": "AF_SERIAL_TIME time=1901437 ns",
+    "artifacts": [
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/source_snapshot.json",
+        "sha256": "2ad66806643e3c86e1a263b318916d316b88f44a7063efa7c226c9e81767d21d"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/generated_config.json",
+        "sha256": "01238331d54682f28e4bdff123998199a80548e232671158153e7fb5c2e314ad"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/job_spec.json",
+        "sha256": "8452d7cc9ba65212c7d3aa9206a16319dca310ee8109ae1b15e12f41fb058e0b"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/job_status.json",
+        "sha256": "e2edf380c38039253565f4cd8c325c1022419521258c820532bb397f078108ec"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/compile.stdout.txt",
+        "sha256": "44cba4c09e74e6ab4a8b3c684b560a9319a46389d9e5adb1d2377d722226f19d"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/elaborate.stdout.txt",
+        "sha256": "084e72b6dff06befbd0e1200f4fcacc4b4859ba98eb4c6e6156153f547200cf0"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/simulate.stdout.txt",
+        "sha256": "7a61cc699996cce0cb4fda92fb6088fa973a5d98788ba2a349e438fd439369cd"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/serial_peer_verification/vectors/pipeline_pass.txt",
+        "sha256": "e4537490cef0eadced53e9770df18effdad67c654c3f448500668043baa3336e"
+      }
+    ]
+  },
+  "simulation_configuration_synthesis": {
+    "scope": "FAST_SIM_MODE=1 synthesis only; shortened marker interval, not the standard hardware configuration",
+    "reports": [
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/reports/utilization_synth_1.rpt",
+        "sha256": "f0b21dd4a8bfe209be899a617c15d0e46ef79afee9778ad376f391fa24fe84dd"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/reports/timing_synth_1.rpt",
+        "sha256": "b29537c94a3c9f1429c95c8befdfa7e494982889ac882f4bfd7b40169b6e5ad6"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-01/reports/physical_cells_synth_1.tsv",
+        "sha256": "c3dfbd04cd9da35c86c59a20b2b770df7dfa1a0c5d20896069f999dbfe5f397f"
+      }
+    ]
+  },
+  "implementation": {
+    "build": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02",
+    "scope": "Standard FAST_SIM_MODE=0 2025.1 hardware implementation; never import 2026 timing as migration PASS",
+    "routed_quality": {
+      "resources": {
+        "lut": 17794,
+        "ff": 15926,
+        "dsp": 10,
+        "uram": 64,
+        "bram36_equivalent": 64.5
+      },
+      "timing": {
+        "wns_ns": 0.03,
+        "tns_ns": 0,
+        "whs_ns": 0.018,
+        "wpws_ns": 0.003
+      },
+      "no_clock": 0,
+      "unconstrained_internal": 0,
+      "cdc": {
+        "unsafe": 0,
+        "unknown": 0
+      },
+      "drc": {
+        "Warning": 15,
+        "Critical Warning": 0,
+        "Error": 0
+      },
+      "route_errors": 0,
+      "fully_routed": 51878,
+      "routable": 51878,
+      "bus_skew_min_slack_ns": 2.385,
+      "physical": {
+        "blackboxes": 0,
+        "cmac": 1,
+        "gt_channel": 4,
+        "gt_common": 1
+      }
+    },
+    "configuration_differences_from_2026": [],
+    "source_snapshot": {
+      "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/source_snapshot.json",
+      "sha256": "a9e77fcf713d9959f601a288281af4654443ed51dc4ab845c60654e1a0a7862b"
+    },
+    "configuration": {
+      "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/cmac_configuration.tsv",
+      "sha256": "1c28fdcc1b023be1dc4cf92479b2372a37a466f98c8e0b539a842066a66bde96"
+    },
+    "SYNTH": "REPORT_COLLECTED",
+    "ROUTED": "REPORT_COLLECTED",
+    "reports": [
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/utilization_synth_1.rpt",
+        "sha256": "7a42dd4f184d3b158dad902c56e3f5ebd4861f9cd988fbbd1cee79e13f614e25"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/timing_synth_1.rpt",
+        "sha256": "2bb39f6fff5f92291719fd618acbd4a71a2949d4c932fef62ea00389cf2b5f2d"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/utilization_impl_1.rpt",
+        "sha256": "dafd0e91dfb18bec6060cca2a82b79eb3bc574f29826e4e01b9f5da8dd379cf4"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/timing_impl_1.rpt",
+        "sha256": "99319597b22e4848ddf49e6c26ffab193baeea6fe3b7d0df523e8974d4e5d3da"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/route_status.rpt",
+        "sha256": "2bab6164d49a0150b06084e3683bc702652feceeb37d65ac741e4bb34dc4fa23"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/drc.rpt",
+        "sha256": "7d28e6e3015ce9e74889f1e7a84e7ebb35f4ad62f7bde027e32acb1c83f98781"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/cdc_impl_1.rpt",
+        "sha256": "de9b1bddc35a2f1e7e29bace0ae09f255ce11537379e03504dc9c21499c61676"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/clocks_impl_1.rpt",
+        "sha256": "4fad3c0ee714bb6c53dcffb1fac8bfd731170dccb8456b4794da76faae58cbee"
+      },
+      {
+        "path": "D:/work/build/apertureforge-fpga/cx-p2_11-shell-v2025-20261104-02/reports/bus_skew.rpt",
+        "sha256": "5a371a6fb54ebbaf616f32a11ebd6b52a40e615b066703b498faa4ab1d12d75e"
+      }
+    ]
+  },
+  "board": "NOT RUN",
+  "science_kernels": "NOT STARTED",
+  "m3_completion": "See phase2-cx-m3.json milestone_audit; this collector covers migration only"
+}

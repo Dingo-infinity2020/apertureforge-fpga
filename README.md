@@ -6,7 +6,13 @@
 
 ## 当前范围
 
-2026-11-03：**第一阶段验收完成，第二阶段恢复执行，尚未验收**。已连接完整帧解包、真实ring事务控制和1.5625MiB原始数据存储；异常用例及4096包/40960个数据字的RTL比较通过。组合实际布线占18415 LUT、13012 FF、8 DSP、56 URAM；250MHz时序失败，同一布线125MHz重查通过。即使假设250MHz，周期吞吐也只有约9.615Mpps，未达到10Mpps目标。科学核、非停顿入口/CDC和完整CMAC组合未完成，未上板。2026-11-03 opencode 已在 `oc-p2_00-20261103-01` 完成 CMAC IP OOC 综合/授权 checkout；`cmd_pre_valid` 预览把 routed WNS 改善到 −3.406ns，但 250MHz 和 10Mpps 仍未通过；完整 CMAC shell 仍未验证。详见[最新组合结果](reports/phase2-core.zh-CN.md)和[opencode 执行记录](reports/phase2-oc-20261103.zh-CN.md)。
+**最新验收（2026-11-04）：本轮 M2、M3 已完成，停在 M4 之前。** 2025.1完整真实CMAC＋GT串行测试4096包/98304字逐字通过，含20µs停顿；标准硬件配置125MHz ROUTED，WNS +0.030ns，17794 LUT/15926 FF/10 DSP/64 URAM/64.5 BRAM36，零黑盒、CDC unsafe/unknown及严重DRC。接收RTL长测与post-route功能网表证据已齐。已验证配置为12bin/T8/5槽，名义科学输入30.72Gb/s；13bin同缓存突发拒收3包。原250MHz/10Mpps未达到，板级/DDR/SDF/科学核未验证。逐项结论见[最终验收](reports/phase2-m2-m3-acceptance.zh-CN.md)和[机器摘要](reports/phase2-cx-m3.json)。
+
+下面带时间的状态为开发过程历史记录，授权阻塞与RUNNING已由上述终态取代。
+
+2026-11-04：**第一阶段验收完成；M2所测12bin接收配置验证证据已齐，M3数字组合验证推进中，完整GT串行验证仍受模拟器规模限制，未进入M4科学核。** 不可停顿入口、CDC和真实ring/RAM通过RTL长测、配置切换及4096包/98304字布线后功能网表比对。真实单CMAC/四GT组合125MHz ROUTED通过（WNS +0.105ns、WHS +0.014ns），15092 LUT、15701 FF、10 DSP、64 URAM、64.5 BRAM36，零黑盒/route errors/DRC Error或Critical；ring已用满URAM。13bin同缓存首burst空间拒收；原20bin/T2/250MHz/10Mpps目标仍未通过。
+
+新鲜复核的真实CMAC串行peer为226930实例，当前XSim BASIC上限50000，仿真引擎拒绝启动；这与已可用的CMAC IP综合授权不同。IP内部2项CDC-10原始告警仍保留，M3不能写整体验证PASS。器件级GT/参考引脚已约束，板卡映射仍未验证；未上板、未开发RFSoC。源hash、构建目录与验收逐项审计见[Codex最新记录](reports/phase2-cx-m3.zh-CN.md)、[机器证据](reports/phase2-cx-m3.json)及[opencode历史交接](reports/phase2-oc-20261103.zh-CN.md)。
 
 - 1024 个物理天线，双极化，共 2048 路电压。
 - 可调谐范围 0.5–1.5 GHz；同时处理带宽优先 200 MHz，扩展 500 MHz，1 GHz 为对照。
@@ -15,9 +21,22 @@
 - KU15P 尚未选板，主方案暂按 2×100G 假设预算；器件级四个硬核不等于板卡四个可用端口。KU5P 双口聚合、KU15P 四口均已移出默认容量表。
 - **重点工作包 AF-000：输入频率分片/pacing合同、KU5P时间重排与有界ring buffer评估。** 输入端只建模，不实现RFSoC前端；先验证接收与缓存开销，再确定算法可持续带宽。
 
+持续负荷补充：同12bin接收RTL在128块32768包/786432字RTL测试中通过，含每8块一次20µs停顿，共16次，入口峰值仍3833字。长测试台的32位ps调度溢出已复现/修复，错误激励记录保留并排除出容量结论；不把该RTL长测当完整CMAC或网表PASS。
+
+最新网表补充：12bin的`pipeline-08/netlist_verification_04`已在正确unisims功能库下完成4096包/98304字比对，周期和缓存峰值与RTL相同；SDF未做。M3仍缺完整真实CMAC串行功能验证，当前在全新`serial_peer_verification_02`复核授权状态。
+
+03:11授权复核已结束：全新真实CMAC串行测试仍因226930实例超过BASIC 50000上限而未能启动。**M3未完成、M4未开始**；接收链在所测12bin配置的独立验证证据已齐，原250MHz/10Mpps目标仍未通过。
+
+2025.1迁移已开始：同一份RTL重新生成CMAC/IP，完整真实GT串行仿真引擎已经启动，标准硬件配置正在重建，M3尚未验收。2026.1下10/12bin数字边界测试均已完整PASS。当前进展以[2025.1迁移记录](reports/phase2-v2025-migration.zh-CN.md)及[对应机器摘要](reports/phase2-v2025-migration.json)为准。
+
+按用户要求优先优化实例数量：FAST_SIM_MODE未减少完整串行计数；GT quad单独94889。改用真实CMAC的受支持并行SERDES接口做独立数字验证，两个CMAC加完整接收链实际降至**37121实例（−83.64%）**，当前授权可启动。4096包数字功能测试仍在运行，未报PASS；GT串行/PLL/物理复位不在此测试覆盖范围。详见[实例优化实测及边界](reports/phase2-cmac-instance-optimization.zh-CN.md)与[独立机器证据](reports/phase2-cmac-instance-optimization.json)。完整串行M3缺项保留，不把购买更高授权作为默认下一步。
+
 ## 阅读入口
 
-- [第二阶段最新组合结果](reports/phase2-core.zh-CN.md)、[opencode 执行记录](reports/phase2-oc-20261103.zh-CN.md)、[第三批解包结果](reports/phase2-parser.zh-CN.md)、[第二批](reports/phase2-control.zh-CN.md)、[首批历史结果](reports/phase2-progress.zh-CN.md)、[机器可读证据](reports/phase2-progress.json)
+- [M4科学核详细计划（Vivado 2025.1，仅规划，未启动）](docs/m4-plan-vivado-2025.1.zh-CN.md)：资源/缓存关口、完整波束/二维FFTT/EPIC、真实接收组合和逐项验收。
+
+- [Codex当前M2/M3记录](reports/phase2-cx-m3.zh-CN.md)、[当前机器证据](reports/phase2-cx-m3.json)、[入口与CDC合同](docs/phase2-ingress-design.md)、[真实CMAC shell复现](docs/phase2-cmac-shell.md)
+- [历史组合结果](reports/phase2-core.zh-CN.md)、[opencode 执行记录](reports/phase2-oc-20261103.zh-CN.md)、[第三批解包结果](reports/phase2-parser.zh-CN.md)、[第二批](reports/phase2-control.zh-CN.md)、[首批历史结果](reports/phase2-progress.zh-CN.md)、[历史机器证据](reports/phase2-progress.json)
 - [组合接收核接口与复现](docs/phase2-receive-core.md)
 - [完整帧解包接口与复现](docs/phase2-parser.md)、[ring事务控制](docs/phase2-ring-control.md)
 - [环境与依赖实查](docs/phase2-environment.md)、[独立模块接口与复现](docs/phase2-independent-modules.md)

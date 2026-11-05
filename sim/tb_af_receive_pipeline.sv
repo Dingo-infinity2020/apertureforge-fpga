@@ -1,0 +1,130 @@
+`timescale 1ns/1ps
+`ifdef AF_PIPE_NETLIST
+`include "af_pipeline_verify_config.svh"
+`else
+`include "af_pipeline_config.svh"
+`endif
+// Historical 16-block snapshots predate the periodic-pause test options.
+`ifndef AF_PIPE_REPEAT_PAUSE
+`define AF_PIPE_REPEAT_PAUSE 0
+`endif
+`ifndef AF_PIPE_PAUSE_INTERVAL_TICKS
+`define AF_PIPE_PAUSE_INTERVAL_TICKS (8*`AF_PIPE_PERIOD_TICKS)
+`endif
+module tb_af_receive_pipeline;
+ localparam BLOCKS=`AF_PIPE_BLOCKS,PACKETS=BLOCKS*256,WPP=`AF_PIPE_WPP,SW=$clog2(`AF_PIPE_SLOTS),WW=$clog2(WPP+1),WORDS=`AF_PIPE_WORDS;
+ reg clk=0;always #(`AF_PIPE_CLOCK_PS/2000.0)clk=~clk;
+ reg rx_clk=0;always #1.551515 rx_clk=~rx_clk;
+ reg rst_n=0,running=0,cfgv=0;reg [511:0] sd=0;reg [63:0] sk=0;reg sv=0,sl=0,se=0;
+ integer cycles=0,origin=0,rx_beats=0,results=0,finished=0,qin=0,qout=0,pause_cycles=0,peak_resident=0;
+ wire [63:0] tick=running?cycles-origin:0;
+ wire cfgr,online,active,fault,ro,mo,rf,mf;wire [63:0] generation;
+ wire rv,rc,rwf,dv,mdv,rdr,done_ready;wire [15:0] re,rsrc;wire [3:0] reason;wire [63:0] rseq,rgen,ds,dg;wire [SW-1:0] slot;wire [255:0] mask;wire [8:0] count;
+ reg dr=0,rdv=0,mdr=0,done=0;reg [SW-1:0] rslot=0;reg [WW-1:0] rword=0;reg [15:0] rsource=0;wire [511:0] md;
+ reg [63:0] done_seq=0,done_gen=0;
+ wire [63:0] requests,reserved,committed,aborted,rejected,consumed,discarded,canceled,resident,pending,written,denied,successes,failures;
+ wire [63:0] started,queued,bad,no_space,resyncs,timeouts,oversize,errors,idelivered,idiscarded;wire [12:0] fifo_words,fifo_peak;
+`ifdef AF_PIPE_NETLIST
+ af_receive_pipeline dut(
+`else
+ af_receive_pipeline #(.SLOTS(`AF_PIPE_SLOTS),.WORDS_PER_PACKET(WPP),.DESC_DEPTH(`AF_PIPE_DESC_DEPTH)) dut(
+`endif
+ .rx_clk(rx_clk),.clk(clk),.rst_n(rst_n),.now_tick(tick),.s_data(sd),.s_keep(sk),.s_valid(sv),.s_last(sl),.s_error(se),
+ .cfg_valid(cfgv),.cfg_ready(cfgr),.ready_for_data(online),.cfg_epoch(32'd7),.cfg_config(32'd11),.cfg_period_ticks(32'(`AF_PIPE_PERIOD_TICKS)),
+ .cfg_first_sequence(64'd0),.cfg_first_deadline(64'(`AF_PIPE_FIRST_DEADLINE_TICKS)),.cfg_blocks(64'(BLOCKS)),
+ .cfg_first_frequency(32'd2540),.cfg_adc_stride(32'd49152),.cfg_epoch_adc(64'd9007199254740993),.cfg_destination(16'd127),.cfg_frequencies(16'(`AF_PIPE_NF)),.cfg_t_log2(2'(`AF_PIPE_TLOG)),
+ .cfg_mac(48'h020000000001),.cfg_ip(32'h0a000001),.cfg_port(16'd7148),.cfg_mtu(16'd9000),.active(active),.cfg_fault(fault),.generation(generation),
+ .result_valid(rv),.result_ready(1'b1),.result_commit(rc),.result_write_fault(rwf),.result_errors(re),.result_source(rsrc),.result_reason(reason),.result_sequence(rseq),.result_generation(rgen),
+ .desc_valid(dv),.desc_ready(dr),.desc_sequence(ds),.desc_generation(dg),.desc_slot(slot),.desc_mask(mask),.desc_count(count),
+ .read_valid(rdv),.read_ready(rdr),.read_slot(rslot),.read_source(rsource),.read_word(rword),.data_valid(mdv),.data_ready(mdr),.data_out(md),
+ .done_valid(done),.done_ready(done_ready),.done_sequence(done_seq),.done_generation(done_gen),
+ .ring_requests(requests),.ring_reserved(reserved),.ring_committed(committed),.ring_aborted(aborted),.ring_rejected(rejected),
+ .ring_consumed(consumed),.ring_discarded(discarded),.ring_canceled(canceled),.ring_resident(resident),.ring_pending(pending),
+ .words_written(written),.writes_denied(denied),.results_committed(successes),.results_rejected(failures),
+ .rx_online(ro),.ingress_m_online(mo),.rx_fault(rf),.ingress_m_fault(mf),.rx_started(started),.rx_queued(queued),.rx_bad(bad),.rx_no_space(no_space),
+ .rx_resync_tails(resyncs),.rx_timeouts(timeouts),.rx_oversize(oversize),.rx_error_frames(errors),.rx_data_words(fifo_words),.rx_peak_words(fifo_peak),
+ .ingress_delivered(idelivered),.ingress_discarded(idiscarded));
+ reg [577:0] load[0:`AF_PIPE_BEATS-1];reg [511:0] gold[0:WORDS-1];integer queue[0:WORDS-1];
+ integer cstate=0,source_index=0,word_index=0,expected_source,expected_block,packet,k,index,fd;
+ reg [63:0] consumer_seq,consumer_gen;reg [SW-1:0] consumer_slot;
+ realtime next_launch,first_launch,previous_launch=-1.0;
+ wire paused=tick>=`AF_PIPE_PAUSE_START_TICKS && (`AF_PIPE_REPEAT_PAUSE ?
+  (tick-`AF_PIPE_PAUSE_START_TICKS)%`AF_PIPE_PAUSE_INTERVAL_TICKS<`AF_PIPE_PAUSE_TICKS : tick<`AF_PIPE_PAUSE_START_TICKS+`AF_PIPE_PAUSE_TICKS);
+ reg was_paused=0;integer pause_run=0,pause_windows=0;
+ always @(posedge rx_clk)if(running && sv)rx_beats=rx_beats+1;
+ always @(negedge clk)if(running)begin
+  dr=cstate==0 && !paused;rdv=cstate==1;rslot=consumer_slot;rsource=source_index;rword=word_index;
+  mdr=!paused && tick%32<25;done=cstate==3;done_seq=consumer_seq;done_gen=consumer_gen;
+ end
+ always @(posedge clk)begin
+  cycles=cycles+1;if(cycles>600000+BLOCKS*`AF_PIPE_PERIOD_TICKS)$fatal(1,"pipeline timeout queued=%0d results=%0d finished=%0d",queued,results,finished);
+`ifdef AF_PIPE_NETLIST
+  if(cycles%20000==0)begin $display("AF_PIPELINE_PROGRESS cycle=%0d results=%0d read_words=%0d",cycles,results,qout);$fflush();end
+`endif
+  if(running)begin
+   if(rf || mf || fault)$fatal(1,"pipeline fault");
+   if(paused)begin pause_cycles=pause_cycles+1;pause_run=pause_run+1;end
+   else if(was_paused)begin
+    if(pause_run!=`AF_PIPE_PAUSE_TICKS)$fatal(1,"pause window was not 20us");
+    pause_windows=pause_windows+1;pause_run=0;
+   end
+   was_paused=paused;
+   if(resident>peak_resident)peak_resident=resident;
+   if(rv)begin
+    expected_block=results/256;expected_source=(results%256*73+expected_block*19)%256;
+    if(!rc || rwf || re!=0 || reason!=0 || rgen!=1 || rseq!=expected_block || rsrc!=expected_source)$fatal(1,"pipeline transaction result=%0d seq=%0d src=%0d expected_src=%0d reason=%0d errors=%h no_space=%0d queued=%0d started=%0d",results,rseq,rsrc,expected_source,reason,re,no_space,queued,started);
+    results=results+1;
+   end
+   if(rdv&&rdr)begin
+    queue[qin]=(consumer_seq*256+source_index)*WPP+word_index;qin=qin+1;
+    if(word_index==WPP-1)begin word_index=0;if(source_index==255)cstate=2;else source_index=source_index+1;end else word_index=word_index+1;
+   end
+   if(mdv&&mdr)begin if(qout>=qin || md!==gold[queue[qout]])$fatal(1,"pipeline sample mismatch word=%0d",qout);qout=qout+1;end
+   case(cstate)
+    0:if(dv&&dr)begin
+     if(ds!=finished || mask!=={256{1'b1}} || count!=256 || dg!=1)$fatal(1,"pipeline full mask mismatch seq=%0d count=%0d no_space=%0d queued=%0d",ds,count,no_space,queued);
+     consumer_seq=ds;consumer_gen=dg;consumer_slot=slot;source_index=0;word_index=0;cstate=1;
+    end
+    2:if(qout==qin)cstate=3;
+    3:if(done&&done_ready)begin finished=finished+1;cstate=0;end
+    default:begin end
+   endcase
+   if(finished==BLOCKS)begin
+    #1;
+    if(results!=PACKETS || rx_beats!=`AF_PIPE_BEATS || qout!=WORDS || written!=WORDS || committed!=PACKETS || consumed!=PACKETS ||
+     queued!=PACKETS || started!=PACKETS || idelivered!=PACKETS || idiscarded!=0 || bad!=0 || no_space!=0 || timeouts!=0 || oversize!=0 || errors!=0 ||
+     resident!=0 || pending!=0 || denied!=0 || rejected!=0 || aborted!=0 || discarded!=0 || canceled!=0 || failures!=0 || active)$fatal(1,"pipeline terminal mismatch results=%0d rx=%0d written=%0d queued=%0d no_space=%0d",results,rx_beats,written,queued,no_space);
+    if(!`AF_PIPE_REPEAT_PAUSE && pause_cycles!=`AF_PIPE_PAUSE_TICKS ||
+     `AF_PIPE_REPEAT_PAUSE && pause_windows<BLOCKS/8-1)$fatal(1,"insufficient complete pause windows=%0d cycles=%0d",pause_windows,pause_cycles);
+    if(requests!=reserved+committed+aborted+rejected || reserved!=committed+aborted+canceled+pending || committed!=consumed+discarded+resident)$fatal(1,"pipeline conservation");
+    fd=$fopen(`AF_PIPE_PASS,"w");$fwrite(fd,"PASS packets=%0d read_words=%0d end_to_end_cycles=%0d ingress_peak_words=%0d peak_resident_sources=%0d pause_cycles=%0d pause_windows=%0d\n",results,qout,cycles-origin,fifo_peak,peak_resident,pause_cycles,pause_windows);$fclose(fd);
+    $display("AF_PIPELINE_PASS packets=%0d read_words=%0d",results,qout);$finish;
+   end
+  end
+ end
+ initial begin
+  $readmemh(`AF_PIPE_LOAD_FILE,load);$readmemh(`AF_PIPE_GOLD_FILE,gold);
+  repeat(35)@(negedge clk);rst_n=1;
+  // Optional regression: configure long after processing reset, as after link alignment.
+  if($test$plusargs("AF_DELAY_CONFIGURATION"))repeat(14000)@(negedge clk);
+  @(negedge clk);cfgv=1;do @(posedge clk);while(!cfgr);
+  @(negedge clk);cfgv=0;wait(online);repeat(4)@(negedge rx_clk);
+  sv=1;sl=1;sk=1;sd=0;se=1;@(negedge rx_clk);sv=0;sl=0;se=0;
+  @(negedge clk);origin=cycles;running=1;
+  @(negedge rx_clk);first_launch=$realtime+`AF_PIPE_PERIOD_PS/1000.0;index=0;
+  for(packet=0;packet<PACKETS;packet=packet+1)begin
+   // Convert before multiplying: 21 * 102400000 ps exceeds signed int32.
+   // Convert ps to ns first and keep the complete schedule in real time.
+   if(`AF_PIPE_BURST)next_launch=first_launch+real'(packet/256)*(`AF_PIPE_PERIOD_PS/1000.0)+real'(packet%256)*(`AF_PIPE_LINE_PACKET_PS/1000.0);
+   else next_launch=first_launch+real'(packet)*(`AF_PIPE_PACKET_INTERVAL_PS/1000.0);
+   if(next_launch<previous_launch)$fatal(1,"source schedule moved backwards packet=%0d scheduled_ns=%f previous_ns=%f",packet,next_launch,previous_launch);
+   if(packet%256==0)$display("AF_SOURCE_BLOCK block=%0d scheduled_ns=%f current_ns=%f",packet/256,next_launch,$realtime);
+   previous_launch=next_launch;
+   while($realtime<next_launch)@(negedge rx_clk);
+   for(k=0;k<`AF_PIPE_BEATS_PER_PACKET;k=k+1)begin
+    sv=1;{se,sl,sk,sd}=load[index];index=index+1;@(negedge rx_clk);
+   end
+   sv=0;sl=0;se=0;
+  end
+ end
+endmodule

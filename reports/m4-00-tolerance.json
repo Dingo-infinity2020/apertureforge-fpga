@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-04T15:22:39.362Z",
+  "scope": "Independent numerical quantization study; not RTL or IP equivalence",
+  "beam": {
+    "rms": 0.007990483190111669,
+    "maxAmp": 0.015040629472474407,
+    "phase": 0.03240057517021677
+  },
+  "fft2d": {
+    "l2": 0.00437873711854813,
+    "peakMismatch": 0
+  },
+  "epic": {
+    "l2": 0.004985510329047885
+  },
+  "polarization": {
+    "I": 0.004263500284894282,
+    "Q": 0.01101495853598735,
+    "U": 0.006945812751677164,
+    "V": 0.0065966387973694675
+  },
+  "suggested_tolerances": {
+    "beam_voltage_relative_rms": 0.012,
+    "beam_peak_amplitude_relative": 0.025,
+    "beam_phase_rad": 0.05,
+    "fft2d_relative_l2": 0.008,
+    "fft2d_peak_position_mismatch": 0,
+    "epic_image_relative_l2": 0.008,
+    "stokes_I_relative_l2": 0.008,
+    "stokes_Q_relative_l2": 0.02,
+    "stokes_U_relative_l2": 0.015,
+    "stokes_V_relative_l2": 0.015,
+    "note": "Candidate thresholds derived from 32-seed I/Q8 + I/Q16 independent numerical study; actual RTL/IP error must be measured separately. Thresholds are not relaxed after synthesis."
+  }
+}

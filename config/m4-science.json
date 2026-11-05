@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "status": "M4_00_CANDIDATE_STRUCTURAL_CONTRACT",
+  "evidence": "Numerical tolerances remain TBD until independent M4-00 reference tests are frozen.",
+  "array": {
+    "physical_antennas": 1024,
+    "polarizations": 2,
+    "inputs": 2048,
+    "numbering": "global_input=8*source+local; antenna=floor(global_input/2); pol=global_input%2",
+    "geometry_presets": [
+      "regular32x32",
+      "tiled_irregular_centers",
+      "jittered_same_aperture"
+    ],
+    "default_geometry": "regular32x32",
+    "position_source": "explicit configuration; never inferred from network order"
+  },
+  "input": {
+    "science_bits_per_component": 8,
+    "components_per_input": 2,
+    "format": "I/Q signed 8-bit",
+    "sample_rate_hz": 320000000,
+    "time_fft_length": 4096,
+    "hop": 4096,
+    "bin_hz": 78125,
+    "spectrum_interval_s": 0.0000128,
+    "rfso_scope": "input format/rate/pacing only; no RFSoC PFB/FFT/packetizer development"
+  },
+  "frequency_candidates_hz": [500000000, 1000000000, 1500000000],
+  "frequency_bin_candidates_l": [1, 2, 4, 8, 12],
+  "integration_spectra_candidates": [8, 80, 800, 4000],
+  "beam": {
+    "weights": "runtime arbitrary complex I/Q16 per beam/input/frequency",
+    "voltage_accumulation": "wide accumulate then one final rounding/saturation",
+    "products": ["complex_voltage", "I", "full_stokes"],
+    "missing_source": "zero contribution plus explicit invalid/missing metadata"
+  },
+  "fft2d": {
+    "grid_candidates": [32, 64],
+    "zero_padding_64": "denser angle sampling only; does not add physical antennas or resolution",
+    "pairing": "X/Y polarization per antenna",
+    "path": "calibration/map/zero-pad, row FFT, transpose, column FFT, index/pair, products, integration"
+  },
+  "epic": {
+    "kernel_candidates": [3, 5],
+    "grid_candidate": 64,
+    "nearest_neighbor": "control only",
+    "model": "near-coplanar; diagonal complex gain calibration",
+    "products": ["XX", "YY", "XY*", "YX*"],
+    "autocorrelation_definitions": ["including_autocorrelation", "excluding_autocorrelation"]
+  },
+  "precision": {
+    "input_iq_bits": 8,
+    "weight_iq_bits": 16,
+    "complex_mult_real_imag_bits_min": 25,
+    "beam_sum_bits_candidates": [36, 40],
+    "fft_internal_bits_candidates": [16, 18, 24],
+    "coefficient_bits_candidates": [12, 16, 18],
+    "fixed_point_rule": "RTL and fixed-point oracle must match sample-by-sample and per flag",
+    "rounding_rule": "no mid-accumulation saturation that changes scientific result for reordered inputs"
+  },
+  "outputs": {
+    "beam_voltage_component_bits_candidate": 16,
+    "stokes_output_bits_candidate": 32,
+    "stokes_integration_state_bits_candidate": 64,
+    "interface": "finite ready/valid FIFO with explicit backpressure/loss policy",
+    "zero_backpressure": "upper-bound comparison only",
+    "metadata": ["sequence", "generation", "epoch", "config", "frequency", "time", "valid_source_count", "valid_weight_count", "scale", "fault"]
+  },
+  "integration": {
+    "time_tag": "64-bit scientific time; never converted to JavaScript Number",
+    "window_rule": "integer number of spectra; missing blocks do not extend or fill the planned window",
+    "initial_k_spectra": [8, 80, 800, 4000]
+  },
+  "tolerances": {
+    "status": "CANDIDATE_FROZEN_FROM_INDEPENDENT_I8Q16_STUDY",
+    "beam_voltage_relative_rms": 0.012,
+    "beam_peak_amplitude_relative": 0.025,
+    "beam_phase_rad": 0.05,
+    "fft2d_relative_l2": 0.008,
+    "fft2d_peak_position_mismatch": 0,
+    "epic_image_relative_l2": 0.008,
+    "stokes_I_relative_l2": 0.008,
+    "stokes_Q_relative_l2": 0.02,
+    "stokes_U_relative_l2": 0.015,
+    "stokes_V_relative_l2": 0.015,
+    "statistics_length": "32 deterministic seeds for M4-00 study; RTL/IP revalidation required",
+    "normalization": "relative L2/RMS against independent floating reference with the same integer-coded inputs",
+    "study_evidence": "reports/m4-00-tolerance.json",
+    "note": "Thresholds are not relaxed after synthesis; actual RTL/IP error must be measured separately."
+  },
+  "unknowns": [
+    "exact 2025.1 FFT architecture/SSR/throughput legal configuration",
+    "exact CMY latency and fixed-point rounding behavior in 2025.1",
+    "real antenna coordinates and primary beams are not yet available; synthetic layout/model must be labeled",
+    "DDR/MIG and board output remain out of scope for M4",
+    "K/integration output bandwidth and finite-FIFO overload policy must be frozen after resource ledger"
+  ]
+}

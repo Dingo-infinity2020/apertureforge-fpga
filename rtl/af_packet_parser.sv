@@ -25,14 +25,19 @@ module af_packet_parser #(
  reg [HEADER_BEATS*WIDTH-1:0] prefix;
  reg [WIDTH-1:0] carry;reg [$clog2(BYTES+1)-1:0] carry_count;
  reg [15:0] errors,frame_bytes,generated;reg [31:0] expected_body;
- reg end_seen,reserved_q,resync_after;
+ reg end_seen,reserved_q,resync_after,check_sent;
  reg [$clog2(IDLE_TIMEOUT+1)-1:0] idle_count;
  reg [31:0] epoch_q,config_q,frequency_q,stride_q,ip_q;
  reg [15:0] destination_q,frequencies_q,port_q,mtu_q;
  reg [63:0] base_q;reg [1:0] tlog_q;reg [47:0] mac_q;
- wire header_ready,checked_valid;wire [511:0] checked_header;wire [7:0] checked_errors;
- af_afp1_header_check check_header(.clk(clk),.rst_n(rst_n),.s_header(prefix[336+:512]),
-  .s_valid(state==SEND_HEADER),.s_ready(header_ready),.cfg_epoch(epoch_q),.cfg_config(config_q),
+ wire header_ready,checked_valid,fire;wire [511:0] checked_header;wire [7:0] checked_errors;
+ // At the final prefix beat the complete header already exists on wires.
+ // Start checking then, while the registered prefix/network checks settle.
+ // Retain SEND_HEADER as a fallback if the checker did not accept that beat.
+ wire [HEADER_BEATS*WIDTH-1:0] incoming_prefix={s_data,prefix[0+:(HEADER_BEATS-1)*WIDTH]};
+ wire [511:0] check_input=state==CAPTURE?incoming_prefix[336+:512]:prefix[336+:512];
+ af_afp1_header_check check_header(.clk(clk),.rst_n(rst_n),.s_header(check_input),
+  .s_valid((state==CAPTURE && prefix_index==HEADER_BEATS-1 && fire) || (state==SEND_HEADER && !check_sent)),.s_ready(header_ready),.cfg_epoch(epoch_q),.cfg_config(config_q),
   .cfg_destination(destination_q),.cfg_frequencies(frequencies_q),.cfg_first_frequency(frequency_q),
   .cfg_adc_stride(stride_q),.cfg_epoch_adc(base_q),.cfg_t_log2(tlog_q),
   .m_header(checked_header),.m_errors(checked_errors),.m_valid(checked_valid),.m_ready(state==WAIT_HEADER));
@@ -49,7 +54,7 @@ module af_packet_parser #(
  wire keep_bad=s_keep==0 || (keep_wide&(keep_wide+1))!=0 || (!s_last && !(&s_keep));
  wire p_space=!p_valid || p_ready;
  assign s_ready=rst_n && (state==CAPTURE || state==DRAIN || state==RESYNC || (state==STREAM && p_space));
- wire fire=s_valid && s_ready;
+ assign fire=s_valid && s_ready;
  wire [16:0] next_bytes={1'b0,frame_bytes}+keep_count(s_keep);
  wire [31:0] remaining_body=expected_body-generated;
  wire [WIDTH-1:0] assembled={s_data[0+:PREFIX_BYTES*8],carry[0+:CARRY_BYTES*8]};
@@ -80,7 +85,7 @@ module af_packet_parser #(
  always @(posedge clk)begin
   if(!rst_n)begin
    state<=RESYNC;p_valid<=0;prefix_index<=0;prefix<=0;errors<=0;frame_bytes<=0;generated<=0;
-   expected_body<=0;reserved_q<=0;end_seen<=0;resync_after<=0;idle_count<=0;carry<=0;carry_count<=0;
+   expected_body<=0;reserved_q<=0;end_seen<=0;resync_after<=0;idle_count<=0;carry<=0;carry_count<=0;check_sent<=0;
   end else begin
    if(p_valid && p_ready)p_valid<=0;
    if(fire)idle_count<=0;
@@ -104,10 +109,10 @@ module af_packet_parser #(
      if(s_last && prefix_index!=HEADER_BEATS-1)begin errors[12]<=1;state<=REPORT;end
      else if(prefix_index==HEADER_BEATS-1)begin
       carry<=s_data>>(PREFIX_BYTES*8);n=keep_count(s_keep)-PREFIX_BYTES;
-      carry_count<=n<0?0:n;if(n<0)errors[12]<=1;end_seen<=s_last;state<=SEND_HEADER;
+      carry_count<=n<0?0:n;if(n<0)errors[12]<=1;end_seen<=s_last;check_sent<=header_ready;state<=SEND_HEADER;
      end else prefix_index<=prefix_index+1;
     end
-    SEND_HEADER:if(header_ready)begin errors<=errors|net_errors;expected_body<=prefix[752+:32];state<=WAIT_HEADER;end
+    SEND_HEADER:if(check_sent || header_ready)begin errors<=errors|net_errors;expected_body<=prefix[752+:32];state<=WAIT_HEADER;end
     WAIT_HEADER:if(checked_valid)begin errors[7:0]<=checked_errors;state<=DECIDE;end
     DECIDE:if(h_ready)begin
      reserved_q<=h_accept && errors==0;

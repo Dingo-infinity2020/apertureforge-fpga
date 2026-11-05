@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "agent": "opencode",
+  "branch": "opencode/m4-science",
+  "status": "M4_01_PARTIAL_SHARED_READER",
+  "tool": "Vivado 2025.1",
+  "part": "xcku5p-ffvb676-1-i",
+  "build": "D:/work/build/apertureforge-fpga/oc-m4-01-20261104-01",
+  "source_snapshot": "D:/work/build/apertureforge-fpga/oc-m4-01-20261104-01/source_snapshot.json",
+  "source_snapshot_sha256": "477585a700aa9e0b4ee31f7a35d62243cbb3831e3021c69dd4b2eefb15d599b7",
+  "rtl": {
+    "module": "af_science_reader",
+    "sources": [
+      "rtl/af_science_reader.sv",
+      "rtl/af_ring_store.sv"
+    ],
+    "testbench": "sim/tb_af_science_reader.sv",
+    "tcl": "tcl/m4_reader.tcl",
+    "constraints": "constraints/m4_reader_ooc.xdc",
+    "clock_period_ns": 8.0
+  },
+  "simulation": {
+    "status": "PASS",
+    "marker": "D:/work/build/apertureforge-fpga/oc-m4-01-20261104-01/vectors/behavioral_simulation_pass.txt",
+    "full": {
+      "sources": 256,
+      "words_per_source": 10,
+      "reads": 2560,
+      "samples": 2560,
+      "cycles": 2566
+    },
+    "missing": {
+      "present_sources": 4,
+      "reads": 40,
+      "samples": 40,
+      "scanned_skips": 252,
+      "cycles": 298
+    },
+    "backpressure": {
+      "sources": 256,
+      "reads": 2560,
+      "samples": 2560,
+      "backpressure_cycles": 714,
+      "cycles": 3280
+    },
+    "reset": {
+      "post_reset_present_sources": 2,
+      "reads": 20,
+      "samples": 20,
+      "scanned_skips": 5,
+      "cycles": 31
+    },
+    "total_cycles": 8780,
+    "scope": "Single-slot af_ring_store model; no real receive core/CMAC; block header carries mask/count, downstream zero-fill not implemented yet"
+  },
+  "synthesis": {
+    "status": "synth_design Complete!",
+    "progress": "100%",
+    "errors": 0,
+    "critical_warnings": 0,
+    "warnings": 2,
+    "resources": {
+      "lut": 233,
+      "ff": 1620,
+      "bram36": 0,
+      "uram": 0,
+      "dsp": 0
+    },
+    "timing_8ns": {
+      "wns_ns": 5.812,
+      "failing_setup": 0,
+      "no_clock": 0,
+      "unconstrained_internal_endpoints": 0
+    },
+    "scope": "OOC synthesis only; no routed result, no real receive core or CMAC integration"
+  },
+  "limits": [
+    "Reader streams present sources only; block_mask/block_count are the zero-fill contract for downstream",
+    "done waits for all samples to be accepted by downstream, holding the ring slot until drain",
+    "Missing sources between present ones cost one scan cycle each; full block is 2566 cycles for 2560 words",
+    "No polarization pairing, calibration, products, integration, or output FIFO yet",
+    "No real af_receive_core/CMAC/GT integration",
+    "No routed timing, DRC, CDC, or post-route netlist simulation"
+  ],
+  "next": [
+    "Connect reader to a real af_receive_core descriptor/read/data/done boundary",
+    "Add zero-fill/antenna-pol mapping and polarization pairing/products/integration",
+    "Add finite output FIFO and sustained/backpressure ledger",
+    "Then start M4-02 low-L beam closure"
+  ]
+}

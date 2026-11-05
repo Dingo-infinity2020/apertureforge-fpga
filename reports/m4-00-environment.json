@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "agent": "opencode",
+  "branch": "opencode/m4-science",
+  "head": "ae69ad00cfe553b58391b4778283c4ba6776fc0f",
+  "status": "M4_00_PARTIAL_ENVIRONMENT_AND_CONTRACT",
+  "tool": "Vivado 2025.1",
+  "part": "xcku5p-ffvb676-1-i",
+  "build": "D:/work/build/apertureforge-fpga/oc-m4-00-20261104-03",
+  "source_snapshot": "D:/work/build/apertureforge-fpga/oc-m4-00-20261104-03/source_snapshot.json",
+  "source_snapshot_sha256": "31d1524eccbcfc41f4347045501dc68aa1304d43c9183348c00ee0d80578d46e",
+  "contract_snapshot": "D:/work/build/apertureforge-fpga/oc-m4-00-20261104-04/source_snapshot.json",
+  "contract_snapshot_sha256": "acd30ed45730497c56c26966353e4b06659890d0855a4ac6527986fe17cecaee",
+  "ip": {
+    "xfft": {
+      "vlnv": "xilinx.com:ip:xfft:9.1",
+      "module": "m4_fft_probe",
+      "config": {
+        "transform_length": 64,
+        "input_width": 16,
+        "output_ordering": "natural_order",
+        "throttle_scheme": "nonrealtime",
+        "implementation_options": "automatically_select",
+        "scaling_options": "scaled",
+        "rounding_modes": "convergent_rounding",
+        "super_sample_rates": 1,
+        "target_clock_frequency": 250
+      },
+      "synthesis": {
+        "status": "synth_design Complete!",
+        "progress": "100%",
+        "errors": 0,
+        "critical_warnings": 0,
+        "warnings": 421
+      },
+      "ooc_synth_resources": {
+        "lut": 1435,
+        "ff": 2689,
+        "bram36": 3.5,
+        "uram": 0,
+        "dsp": 9
+      },
+      "ooc_synth_timing_10ns": {
+        "wns_ns": 8.804,
+        "tns_ns": 0.0,
+        "whs_ns": 0.039,
+        "ths_ns": 0.0,
+        "failing_setup": 0,
+        "failing_hold": 0
+      }
+    },
+    "cmpy": {
+      "vlnv": "xilinx.com:ip:cmpy:6.0",
+      "module": "m4_cmpy_probe",
+      "config": {
+        "a_port_width": 16,
+        "b_port_width": 16,
+        "output_width": 33,
+        "flow_control": "NonBlocking",
+        "mult_type": "Use_Mults",
+        "optimize_goal": "Resources"
+      },
+      "synthesis": {
+        "status": "synth_design Complete!",
+        "progress": "100%",
+        "errors": 0,
+        "critical_warnings": 0,
+        "warnings": 19
+      },
+      "ooc_synth_resources": {
+        "lut": 2,
+        "ff": 114,
+        "bram36": 0,
+        "uram": 0,
+        "dsp": 3
+      },
+      "ooc_synth_timing_10ns": {
+        "wns_ns": 98.804,
+        "tns_ns": 0.0,
+        "whs_ns": 0.039,
+        "ths_ns": 0.0,
+        "failing_setup": 0,
+        "failing_hold": 0
+      }
+    }
+  },
+  "simulation": {
+    "targets_generated": {
+      "xfft": true,
+      "cmpy": true
+    },
+    "compile_elaborate": {
+      "xfft_snapshot": "fft_probe_sim",
+      "cmpy_snapshot": "cmpy_probe_sim",
+      "logs": [
+        "D:/work/build/apertureforge-fpga/oc-m4-00-20261104-03/sim_check/fft_xvhdl.log",
+        "D:/work/build/apertureforge-fpga/oc-m4-00-20261104-03/sim_check/fft_xelab.log",
+        "D:/work/build/apertureforge-fpga/oc-m4-00-20261104-03/sim_check/cmpy_xvhdl.log",
+        "D:/work/build/apertureforge-fpga/oc-m4-00-20261104-03/sim_check/cmpy_xelab.log"
+      ],
+      "status": "COMPILE_AND_ELABORATE_PASS"
+    }
+  },
+  "m3_baseline_resources": {
+    "build": "cx-p2_11-shell-v2025-20261104-02",
+    "lut": 17794,
+    "ff": 15926,
+    "dsp": 10,
+    "uram": 64,
+    "bram36": 64.5,
+    "wns_ns": 0.03,
+    "clock_mhz": 125,
+    "scope": "device-level OOC shell, not board"
+  },
+  "remaining_resources_analysis": {
+    "lut": 198166,
+    "ff": 417994,
+    "dsp": 1814,
+    "bram36": 415.5,
+    "uram": 0,
+    "note": "Analysis only; 415.5 BRAM36 is physical bits before port/bank/width rounding. IP OOC resources are not additive to the shell."
+  },
+  "requirements": {
+    "array": "1024 antennas, 2 pol, 2048 inputs",
+    "input": "I/Q8 at 320MS/s, time FFT 4096, hop 4096, 78.125kHz/bin, 12.8us/spectrum",
+    "L_candidates": [1, 2, 4, 8, 12],
+    "science_input_gbps": {
+      "1": 2.56,
+      "2": 5.12,
+      "4": 10.24,
+      "8": 20.48,
+      "12": 30.72
+    },
+    "beam_complex_mac_gs": {
+      "1": 0.16,
+      "2": 0.32,
+      "4": 0.64,
+      "8": 1.28,
+      "12": 1.92
+    },
+    "full_spatial_transform_million_per_s_two_pol": {
+      "1": 0.15625,
+      "2": 0.3125,
+      "4": 0.625,
+      "8": 1.25,
+      "12": 1.875
+    },
+    "notes": [
+      "12bin 64x64 row/column stage requires about 7.68G complex grid points/s; 62 lane equivalent is an ideal lower bound, not an IP count.",
+      "EPIC 3x3 requires about 17.28G kernel complex updates/s.",
+      "These are demand lower bounds, not measured capability."
+    ]
+  },
+  "reference": {
+    "model": "models/m4-science-reference.mjs",
+    "tests": "tests/m4-reference.test.mjs",
+    "m4_tests": 6,
+    "all_node_tests": 28,
+    "all_node_tests_pass": true,
+    "scope": "Floating-point direct beam/DFT/EPIC reference and fixed-point helper checks; not fixed-point RTL equivalence yet"
+  },
+  "tolerance_study": {
+    "script": "scripts/m4-tolerance-study.mjs",
+    "result": "reports/m4-00-tolerance.json",
+    "seeds": 32,
+    "encoding": "I/Q8 input + I/Q16 weight quantization",
+    "observed_max": {
+      "beam_voltage_relative_rms": 0.007990483190111669,
+      "beam_peak_amplitude_relative": 0.015040629472474407,
+      "beam_phase_rad": 0.03240057517021677,
+      "fft2d_relative_l2": 0.00437873711854813,
+      "epic_image_relative_l2": 0.004985510329047885,
+      "stokes_Q_relative_l2": 0.01101495853598735
+    },
+    "frozen_thresholds": {
+      "beam_voltage_relative_rms": 0.012,
+      "beam_peak_amplitude_relative": 0.025,
+      "beam_phase_rad": 0.05,
+      "fft2d_relative_l2": 0.008,
+      "fft2d_peak_position_mismatch": 0,
+      "epic_image_relative_l2": 0.008,
+      "stokes_I_relative_l2": 0.008,
+      "stokes_Q_relative_l2": 0.02,
+      "stokes_U_relative_l2": 0.015,
+      "stokes_V_relative_l2": 0.015
+    },
+    "scope": "Candidate thresholds from independent numerical study; RTL/IP error must be re-measured with the same reference"
+  },
+  "unknowns": [
+    "Numerical tolerances remain TBD",
+    "IP OOC resources are not integrated/routed science-core results",
+    "Real antenna coordinates and primary beams are not available",
+    "DDR, board output, CMAC serial science integration remain NOT RUN",
+    "Fixed-point oracle and RTL equivalence remain NOT RUN"
+  ]
+}

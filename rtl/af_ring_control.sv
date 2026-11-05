@@ -66,11 +66,13 @@ module af_ring_control #(
  wire write_index_valid=write_slot<SLOTS && write_source<SOURCES;
  assign write_permit=rst_n && active && !cfg_valid && write_index_valid &&
   write_generation==generation && live[write_slot] && !sealed[write_slot] &&
-  tag[write_slot]==write_sequence && now_tick<deadline[write_slot] && pending[write_slot][write_source];
+  tag[write_slot]==write_sequence && now_tick<deadline[write_slot] && pending[write_slot][write_source[$clog2(SOURCES)-1:0]];
  reg [3:0] reason;
  always @* begin
   reason=0;
-  if(use_pre)begin
+  // cmd_ready is the preview freshness gate. Keep evaluation/address selection
+  // independent of that gate, so valid/header errors do not select RAM rows.
+  if(PREVIEW!=0 && cmd_op==0)begin
    if(!active)reason=7;
    else if(pre_b_epoch!=epoch_q || pre_b_config!=config_q)reason=1;
    else if(pre_b_source>=SOURCES)reason=2;
@@ -87,7 +89,7 @@ module af_ring_control #(
    else if(delta>=SLOTS || cmd_sequence>last_sequence)reason=4;
    else if(!live[cmd_slot] || tag[cmd_slot]!=cmd_sequence)reason=6;
    else if(sealed[cmd_slot] || now_tick>=deadline[cmd_slot])reason=3;
-   else if(!pending[cmd_slot][cmd_source])reason=6;
+   else if(!pending[cmd_slot][cmd_source[$clog2(SOURCES)-1:0]])reason=6;
   end else if(PREVIEW==0)begin
    if(!active)reason=7;
    else if(cmd_epoch!=epoch_q || cmd_config!=config_q)reason=1;
@@ -96,12 +98,14 @@ module af_ring_control #(
    else if(delta>=SLOTS || cmd_sequence>last_sequence)reason=4;
    else if(!live[reserve_slot] || tag[reserve_slot]!=cmd_sequence)reason=6;
    else if(sealed[reserve_slot] || now_tick>=deadline[reserve_slot])reason=3;
-   else if(pending[reserve_slot][cmd_source] || present[reserve_slot][cmd_source])reason=5;
+   else if(pending[reserve_slot][cmd_source[$clog2(SOURCES)-1:0]] || present[reserve_slot][cmd_source[$clog2(SOURCES)-1:0]])reason=5;
   end else reason=7;
  end
- wire [SW-1:0] eff_slot=use_pre?pre_b_slot:(PREVIEW==0?(cmd_op==0?reserve_slot:cmd_slot):cmd_slot);
- wire [15:0] eff_source=use_pre?pre_b_source:cmd_source;
- wire [63:0] eff_sequence=use_pre?pre_b_sequence:cmd_sequence;
+ wire [SW-1:0] eff_slot=cmd_op==0?(PREVIEW!=0?pre_b_slot:reserve_slot):cmd_slot;
+ // A fresh preview guarantees identity with cmd_source/cmd_sequence. Using
+ // those fields directly removes a redundant high-fanout freshness mux.
+ wire [$clog2(SOURCES)-1:0] eff_source=cmd_source[$clog2(SOURCES)-1:0];
+ wire [63:0] eff_sequence=cmd_sequence;
  wire [64:0] next_tag={1'b0,tag[head]}+SLOTS;
  wire [63:0] recycle_delta=period_q*SLOTS;
  wire [64:0] next_deadline={1'b0,deadline[head]}+{1'b0,recycle_delta};
@@ -131,10 +135,13 @@ module af_ring_control #(
     pre_b_epoch<=pre_a_epoch;pre_b_config<=pre_a_config;
     pre_b_sequence<=pre_a_sequence;pre_b_head_sequence<=pre_a_head_sequence;pre_b_delta<=pre_a_delta;
     pre_b_tag<=tag[pre_a_slot];pre_b_deadline<=deadline[pre_a_slot];
-    pre_b_pending_bit<=pre_a_pending[pre_a_source];pre_b_present_bit<=pre_a_present[pre_a_source];
+    pre_b_pending_bit<=pre_a_pending[pre_a_source[$clog2(SOURCES)-1:0]];
+    pre_b_present_bit<=pre_a_present[pre_a_source[$clog2(SOURCES)-1:0]];
     pre_b_live<=pre_a_live;pre_b_sealed<=pre_a_sealed;
    end
-   if(pre_invalidate || (cmd_valid && cmd_ready))pre_b_valid<=0;
+   // Both stages can contain pre-transaction state. Flushing only B lets
+   // stale A revalidate it one cycle later (e.g. an immediate duplicate).
+   if(pre_invalidate || (cmd_valid && cmd_ready))begin pre_a_valid<=0;pre_b_valid<=0;end
   end
  end
  always @(posedge clk)begin
